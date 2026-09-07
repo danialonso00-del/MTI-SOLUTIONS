@@ -1,0 +1,121 @@
+# Créditos y licencias
+
+## Geometría de la ciudad — OpenStreetMap (ODbL)
+
+Las manzanas, alturas de edificio, calles, parques y masas de agua son **datos reales de
+OpenStreetMap**, descargados con `npm run city:fetch` (Overpass API) y horneados a
+`public/city/<zona>.json`.
+
+> © colaboradores de OpenStreetMap — licencia [ODbL](https://www.openstreetmap.org/copyright)
+
+La atribución se muestra en el pie de la aplicación y en el panel de créditos. Es
+obligatoria: si se despliega la web en otro sitio, tiene que seguir visible.
+
+## Ortofoto aérea — ICGC (CC BY 4.0)
+
+El suelo y las cubiertas de los edificios son **fotografía aérea real** del
+Institut Cartogràfic i Geològic de Catalunya, descargada con `npm run city:ortho`
+desde su servicio WMS abierto (`ortofoto_color_vigent`, 0,76 m/píxel).
+
+> Ortofoto © Institut Cartogràfic i Geològic de Catalunya — [CC BY 4.0](https://www.icgc.cat)
+
+## Fotografías de los paneles — Wikimedia Commons
+
+Las escenas muestran una foto real del activo del que hablan. Se descargan con
+`npm run city:photos`, filtrando solo licencias reutilizables:
+
+| Archivo | Imagen | Autor | Licencia | Origen |
+| ------- | ------ | ----- | -------- | ------ |
+| `water.jpg` | Water meter (aka) clip.jpg | Georg Wiora Dr. Schorsch. Author o | CC BY-SA 2.5 | https://commons.wikimedia.org/wiki/File:Water_meter_(aka)_clip.jpg |
+| `bus.jpg` | Autobús histórico 3036 de TMB.jpg | The STB | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Autob%C3%BAs_hist%C3%B3rico_3036_de_TMB.jpg |
+| `waste-truck.jpg` | Southampton City refuse cart - geograph.org.uk - 150 | Peter Facey | CC BY-SA 2.0 | https://commons.wikimedia.org/wiki/File:Southampton_City_refuse_cart_-_geograph.org.uk_-_1502736.jpg |
+| `cctv.jpg` | 2020-04-05 17.18.01 Pole with surveillance cameras i | µKöff | CC BY 4.0 | https://commons.wikimedia.org/wiki/File:2020-04-05_17.18.01_Pole_with_surveillance_cameras_in_Saarbr%C3%BCcken.jpg |
+| `traffic.jpg` | Torre Agbar - Barcelona, Spain - Jan 2007.jpg | Diliff | CC BY 2.5 | https://commons.wikimedia.org/wiki/File:Torre_Agbar_-_Barcelona,_Spain_-_Jan_2007.jpg |
+| `stadium.jpg` | Camp Nou - Interior (2005).jpg | Mutari 09:33, 21 September 2007 (U | Public domain | https://commons.wikimedia.org/wiki/File:Camp_Nou_-_Interior_(2005).jpg |
+| `control-room.jpg` | CERN control room computer monitors.jpg | Robert Scoble from Half Moon Bay,  | CC BY 2.0 | https://commons.wikimedia.org/wiki/File:CERN_control_room_computer_monitors.jpg |
+| `streetlight.jpg` | DZ6 2576 Streetlight wrapped in colorful LED strands | PattayaPatrol | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:DZ6_2576_Streetlight_wrapped_in_colorful_LED_strands_glows_at_dusk_along_a_busy_city_avenue.jpg |
+| `hospital.jpg` | West Wings, Old Buffalo State Hospital, Richardson O | w_lemay | CC BY-SA 2.0 | https://commons.wikimedia.org/wiki/File:West_Wings,_Old_Buffalo_State_Hospital,_Richardson_Olmsted_Complex,_Elmwood_Village,_Buffalo,_NY.jpg |
+| `containers.jpg` | Public waste recycling containers at the Liefkenshoe | Donald Trung Quoc Don (Chữ Hán: 徵國 | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Public_waste_recycling_containers_at_the_Liefkenshoek,_Winschoten_(2019)_01.jpg |
+| `building.jpg` | Construction of a new office-building near Beatrixkw | Fons Heijnsbroek | CC0 | https://commons.wikimedia.org/wiki/File:Construction_of_a_new_office-building_near_Beatrixkwartier_in_The_Hague_city;_high_resolution_image_by_FotoDutch,_June_2013.jpg |
+| `crane.jpg` | Crane and the Millennium Tower (301 Mission Street)  | Cheers. Trance addict - Armin van  | CC BY-SA 3.0 | https://commons.wikimedia.org/wiki/File:Crane_and_the_Millennium_Tower_(301_Mission_Street)_construction_site,_SF.JPG |
+| `air.jpg` | Air Quality Monitoring Station - geograph.org.uk - 2 | Jonathan Thacker | CC BY-SA 2.0 | https://commons.wikimedia.org/wiki/File:Air_Quality_Monitoring_Station_-_geograph.org.uk_-_2573031.jpg |
+| `slope.jpg` | Myanmar Landslide 2015 (before).jpg | Global Precipitation Measurement S | Public domain | https://commons.wikimedia.org/wiki/File:Myanmar_Landslide_2015_(before).jpg |
+| `flood.jpg` | Dunham Pipe Bridge and River Trent in flood - geogra | Richard Croft | CC BY-SA 2.0 | https://commons.wikimedia.org/wiki/File:Dunham_Pipe_Bridge_and_River_Trent_in_flood_-_geograph.org.uk_-_337925.jpg |
+
+Las licencias CC BY y CC BY-SA obligan a mantener esta atribución.
+
+## Datos en vivo del modo mapa
+
+Las capas en vivo son fuentes públicas y abiertas:
+
+| Capa | Fuente | Licencia / uso |
+| ---- | ------ | -------------- |
+| Bicing en vivo | [GBFS de Bicing Barcelona](https://barcelona.publicbikesystem.net/customer/gbfs/v2/gbfs.json) | feed público del sistema de bicicleta pública |
+| Lluvia (radar) | [RainViewer](https://www.rainviewer.com/api.html) | API pública gratuita, atribución «Radar © RainViewer» |
+
+## Modo mapa — MapLibre GL, CARTO y OpenStreetMap
+
+El botón *Mapa* usa [MapLibre GL JS](https://maplibre.org) (licencia BSD de 3
+cláusulas; el worker y su módulo compartido están copiados en
+`public/maplibre/`) con los estilos base gratuitos de CARTO, construidos sobre
+datos de OpenStreetMap:
+
+> © CARTO · © colaboradores de OpenStreetMap
+
+Esa atribución se pinta en el propio mapa y es obligatoria mantenerla.
+
+## Logotipo
+
+`public/brand/logo-mti.png` es el logotipo corporativo de MTi / Mingo Things,
+tomado de mingothings.com. Es propiedad de la empresa y no se redistribuye
+fuera de esta aplicación.
+
+## Modo fotorrealista — Google Photorealistic 3D Tiles
+
+Opcional, solo si se configura `VITE_GOOGLE_TILES_KEY`. Las imágenes son de Google y su
+atribución la pinta el propio visor (`TilesAttributionOverlay`); no debe ocultarse. El
+servicio se factura por uso según las condiciones de Google Maps Platform.
+
+## Modelos 3D — poly.pizza (CC0 / CC-BY 3.0)
+
+Vehículos, personas y mobiliario urbano son modelos libres descargados de
+[poly.pizza](https://poly.pizza).
+
+Todos los archivos están en [`public/models/`](public/models) y se cargan desde
+[`src/three/assets.js`](src/three/assets.js).
+
+| Archivo               | Modelo              | Autor           | Licencia | Origen                              |
+| --------------------- | ------------------- | --------------- | -------- | ----------------------------------- |
+| `car-hatchback.glb`   | Car                 | Poly by Google  | CC-BY    | https://poly.pizza/m/75h3mi6uHuC    |
+| `car-sedan.glb`       | Red Car             | J-Toastie       | CC-BY    | https://poly.pizza/m/dVLJ5CjB0h     |
+| `car-taxi.glb`        | Taxi                | Poly by Google  | CC-BY    | https://poly.pizza/m/fet47VieV0L    |
+| `car-van.glb`         | Van                 | Poly by Google  | CC-BY    | https://poly.pizza/m/aT_24cDaW1a    |
+| `car-police.glb`      | Police car          | Poly by Google  | CC-BY    | https://poly.pizza/m/0-j0ksmXXtz    |
+| `car-ambulance.glb`   | Ambulance           | Poly by Google  | CC-BY    | https://poly.pizza/m/beDwEv9UB7x    |
+| `bus.glb`             | Bus                 | Poly by Google  | CC-BY    | https://poly.pizza/m/4CPpvEmrMoF    |
+| `truck-waste.glb`     | Truck               | KolosStudios    | CC-BY    | https://poly.pizza/m/jHwRymyg2C     |
+| `cctv-camera.glb`     | Security Camera     | J-Toastie       | CC-BY    | https://poly.pizza/m/a6J7IDufQP     |
+| `traffic-light.glb`   | Traffic light       | Poly by Google  | CC-BY    | https://poly.pizza/m/57rxXzowK8w    |
+| `street-lamp.glb`     | Street Light        | Quaternius      | CC0      | https://poly.pizza/m/nFwrlcLvM5     |
+| `crane-tower.glb`     | Building construction crane | Kieran Farr | CC-BY | https://poly.pizza/m/cm5teXZ5Ctr |
+| `bench.glb`           | Bench               | Ev Amitay       | CC-BY    | https://poly.pizza/m/dOSjmdmKaxi    |
+| `container-a.glb`     | Shipping Container  | Clint Chilcott  | CC-BY    | https://poly.pizza/m/dlBoC4Wkzp2    |
+| `container-b.glb`     | Container           | KolosStudios    | CC-BY    | https://poly.pizza/m/CQMziXZfYh     |
+| `tree-round.glb`      | Tree                | Marc Solà       | CC-BY    | https://poly.pizza/m/6Yjt8nIwLsD    |
+| `tree-pine.glb`       | Pine Trees          | Quaternius      | CC0      | https://poly.pizza/m/oYtDty0fR6     |
+| `person-man.glb`      | Man (animado)       | Quaternius      | CC0      | https://poly.pizza/m/HMnuH5geEG     |
+| `person-woman.glb`    | Animated Woman      | Quaternius      | CC0      | https://poly.pizza/m/9kF7eTDbhO     |
+| `building-block.glb`  | Large Building      | Kenney          | CC0      | https://poly.pizza/m/ppwtREejXg     |
+| `building-office.glb` | Large Building      | Kenney          | CC0      | https://poly.pizza/m/sxXonOmtct     |
+| `building-tower.glb`  | Skyscraper          | Kenney          | CC0      | https://poly.pizza/m/obYD8hWLTZ     |
+
+## Qué implica cada licencia
+
+- **CC0** — dominio público. Uso libre, también comercial, sin atribución.
+- **CC-BY 3.0** — uso libre, también comercial, **citando al autor**. Esa cita es este archivo,
+  y además está dentro de la propia web (Ayuda → *Créditos de los modelos 3D*), de modo que
+  la atribución viaja con la aplicación aunque se despliegue en otro sitio.
+
+Si en algún momento hay que eliminar la dependencia de terceros, cada modelo tiene un
+sustituto primitivo ya programado: al no encontrarse el `.glb`, `assets.js` deja pasar el error
+y la ciudad se dibuja con cajas del tamaño correcto, sin romper la demo.

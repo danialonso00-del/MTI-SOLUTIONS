@@ -1,0 +1,152 @@
+{
+  "preset": "barcelona",
+  "layer": "ortofoto_color_vigent",
+  "attribution": "Ortofoto © Institut Cartogràfic i Geològic de Catalunya (CC BY 4.0)",
+  "world": {
+    "minX": -3890.7929999999997,
+    "maxX": 3920.4529999999995,
+    "minZ": -2545.0766,
+    "maxZ": 2540.4166
+  },
+  "cols": 5,
+  "rows": 3,
+  "tilePx": 2048,
+  "metersPerPixel": 0.76,
+  "tiles": [
+    {
+      "file": "barcelona-ortho/tile-0-0.jpg",
+      "col": 0,
+      "row": 0,
+      "minX": -3890.7929999999997,
+      "maxX": -2328.5438,
+      "minZ": -2545.0766,
+      "maxZ": -849.9122
+    },
+    {
+      "file": "barcelona-ortho/tile-1-0.jpg",
+      "col": 1,
+      "row": 0,
+      "minX": -2328.5438,
+      "maxX": -766.2946000000002,
+      "minZ": -2545.0766,
+      "maxZ": -849.9122
+    },
+    {
+      "file": "barcelona-ortho/tile-2-0.jpg",
+      "col": 2,
+      "row": 0,
+      "minX": -766.2946000000002,
+      "maxX": 795.9545999999996,
+      "minZ": -2545.0766,
+      "maxZ": -849.9122
+    },
+    {
+      "file": "barcelona-ortho/tile-3-0.jpg",
+      "col": 3,
+      "row": 0,
+      "minX": 795.9545999999991,
+      "maxX": 2358.203799999999,
+      "minZ": -2545.0766,
+      "maxZ": -849.9122
+    },
+    {
+      "file": "barcelona-ortho/tile-4-0.jpg",
+      "col": 4,
+      "row": 0,
+      "minX": 2358.2037999999993,
+      "maxX": 3920.452999999999,
+      "minZ": -2545.0766,
+      "maxZ": -849.9122
+    },
+    {
+      "file": "barcelona-ortho/tile-0-1.jpg",
+      "col": 0,
+      "row": 1,
+      "minX": -3890.7929999999997,
+      "maxX": -2328.5438,
+      "minZ": -849.9122,
+      "maxZ": 845.2521999999999
+    },
+    {
+      "file": "barcelona-ortho/tile-1-1.jpg",
+      "col": 1,
+      "row": 1,
+      "minX": -2328.5438,
+      "maxX": -766.2946000000002,
+      "minZ": -849.9122,
+      "maxZ": 845.2521999999999
+    },
+    {
+      "file": "barcelona-ortho/tile-2-1.jpg",
+      "col": 2,
+      "row": 1,
+      "minX": -766.2946000000002,
+      "maxX": 795.9545999999996,
+      "minZ": -849.9122,
+      "maxZ": 845.2521999999999
+    },
+    {
+      "file": "barcelona-ortho/tile-3-1.jpg",
+      "col": 3,
+      "row": 1,
+      "minX": 795.9545999999991,
+      "maxX": 2358.203799999999,
+      "minZ": -849.9122,
+      "maxZ": 845.2521999999999
+    },
+    {
+      "file": "barcelona-ortho/tile-4-1.jpg",
+      "col": 4,
+      "row": 1,
+      "minX": 2358.2037999999993,
+      "maxX": 3920.452999999999,
+      "minZ": -849.9122,
+      "maxZ": 845.2521999999999
+    },
+    {
+      "file": "barcelona-ortho/tile-0-2.jpg",
+      "col": 0,
+      "row": 2,
+      "minX": -3890.7929999999997,
+      "maxX": -2328.5438,
+      "minZ": 845.2521999999999,
+      "maxZ": 2540.4165999999996
+    },
+    {
+      "file": "barcelona-ortho/tile-1-2.jpg",
+      "col": 1,
+      "row": 2,
+      "minX": -2328.5438,
+      "maxX": -766.2946000000002,
+      "minZ": 845.2521999999999,
+      "maxZ": 2540.4165999999996
+    },
+    {
+      "file": "barcelona-ortho/tile-2-2.jpg",
+      "col": 2,
+      "row": 2,
+      "minX": -766.2946000000002,
+      "maxX": 795.9545999999996,
+      "minZ": 845.2521999999999,
+      "maxZ": 2540.4165999999996
+    },
+    {
+      "file": "barcelona-ortho/tile-3-2.jpg",
+      "col": 3,
+      "row": 2,
+      "minX": 795.9545999999991,
+      "maxX": 2358.203799999999,
+      "minZ": 845.2521999999999,
+      "maxZ": 2540.4165999999996
+    },
+    {
+      "file": "barcelona-ortho/tile-4-2.jpg",
+      "col": 4,
+      "row": 2,
+      "minX": 2358.2037999999993,
+      "maxX": 3920.452999999999,
+      "minZ": 845.2521999999999,
+      "maxZ": 2540.4165999999996
+    }
+  ]
+}
