@@ -114,6 +114,27 @@ sirven desde `public/maplibre/` y la aplicación se lo indica con
 `setWorkerUrl()`. Sin eso el mapa se queda cargando para siempre, y sin dar
 ningún error.
 
+## Publicar en Vercel
+
+Con `vercel.json` ya en el repositorio no hace falta configurar nada: framework
+Vite, salida `dist`, reescritura a `index.html` para todo lo que no sea un
+archivo real y caché larga para lo pesado (`/city`, `/models`, `/maplibre`).
+
+Dos avisos, por experiencia propia:
+
+1. **No dejes `VITE_CITY` vacía** en el panel de Vercel. Daba igual antes,
+   porque el código usaba `??` y una cadena vacía no es `null`: se pedía
+   `/city/.json`, que no existe, y la carga se quedaba colgada en la pantalla
+   del logotipo, sin decir nada. Ahora se usa `||` y cualquier valor vacío cae
+   en `barcelona`, pero mejor no ponerla si no se va a usar.
+2. **No hay API en Vercel.** `GET /api/solutions` responde 404 y la aplicación
+   sigue con el catálogo local; lo único que se pierde es la detección
+   automática de qué PDF existe. Para tener eso hay que desplegar también
+   `server/index.js` (Railway, Render, un VPS…) y servir la web desde ahí.
+
+Y si algo falla al cargar, ahora **se ve**: la barra se pone en rojo y debajo
+aparece el motivo, en vez de quedarse girando para siempre.
+
 ## Dos idiomas
 
 En la portada se elige **castellano o inglés** antes de entrar, y la elección se

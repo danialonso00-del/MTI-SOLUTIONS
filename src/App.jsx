@@ -40,13 +40,18 @@ export default function App() {
   // datos reales (OSM + ortofoto), modelos 3D y construcción del mundo
   const [world, setWorld] = useState(null);
   const [loadError, setLoadError] = useState(null);
+  const setLoadErrorStore = useStore((s) => s.setLoadError);
   const applyCityCenter = useStore((s) => s.applyCityCenter);
 
   useEffect(() => {
     let alive = true;
+    /* Ojo con `??` aquí: una variable de entorno vacía —VITE_CITY= en el panel
+       de Vercel, por ejemplo— NO es null, así que `??` la daba por buena y se
+       pedía `/city/.json`, que no existe: la carga se quedaba colgada para
+       siempre. Con `||` cualquier valor vacío cae al preset por defecto. */
     const preset =
-      new URLSearchParams(window.location.search).get('city') ??
-      import.meta.env.VITE_CITY ??
+      new URLSearchParams(window.location.search).get('city') ||
+      import.meta.env.VITE_CITY ||
       'barcelona';
     const lowQ = useStore.getState().quality === 'baja';
 
@@ -71,7 +76,13 @@ export default function App() {
       if (!alive) return;
       setWorld({ city, traffic, cityData, library });
       setProgress(0.95);
-    })().catch((err) => alive && setLoadError(err.message));
+    })().catch((err) => {
+      if (!alive) return;
+      // que se vea: si algo falla, mejor un mensaje que una barra parada
+      console.error('MTI · carga del mundo:', err);
+      setLoadError(err.message);
+      setLoadErrorStore(err.message);
+    });
 
     return () => {
       alive = false;

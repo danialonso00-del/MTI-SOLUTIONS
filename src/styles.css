@@ -3479,3 +3479,23 @@ svg {
   background: linear-gradient(120deg, var(--gold), #ffd57a);
   color: #10151f;
 }
+
+
+/* la carga que falla se ve: barra en rojo y el motivo debajo */
+.loader__bar--err i {
+  background: #f43f5e;
+}
+
+.loader__status--err {
+  display: grid;
+  gap: 6px;
+  max-width: 46ch;
+  color: #fecaca;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.loader__status--err small {
+  color: var(--text-soft);
+  font-size: 12px;
+}

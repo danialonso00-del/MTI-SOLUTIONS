@@ -177,6 +177,10 @@ export const useStore = create((set, get) => ({
     );
   },
 
+  /* --- carga: si algo falla, se cuenta en pantalla ---------------------- */
+  loadError: null,
+  setLoadError: (loadError) => set({ loadError }),
+
   /* --- idioma de la presentación --------------------------------------- */
   lang: (typeof localStorage !== 'undefined' && localStorage.getItem('mti-lang')) || 'es',
   setLang: (lang) => {

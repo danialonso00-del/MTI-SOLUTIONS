@@ -49,6 +49,7 @@ const STEPS = [
 export function Loader() {
   const phase = useStore((s) => s.phase);
   const progress = useStore((s) => s.progress);
+  const loadError = useStore((s) => s.loadError);
   const step = STEPS[Math.min(Math.floor(progress * (STEPS.length - 1)), STEPS.length - 1)];
   return (
     <div className={`loader${phase === 'loading' ? '' : ' done'}`}>
@@ -60,10 +61,17 @@ export function Loader() {
           </span>
           <span className="brand__name">Mingo Things</span>
         </div>
-        <div className="loader__bar">
+        <div className={`loader__bar${loadError ? ' loader__bar--err' : ''}`}>
           <i style={{ width: `${Math.round(progress * 100)}%` }} />
         </div>
-        <p className="loader__status">{step}</p>
+        {loadError ? (
+          <p className="loader__status loader__status--err">
+            No se ha podido cargar la ciudad: {loadError}
+            <small>Recarga la página; si sigue igual, revisa que estén los archivos de /city.</small>
+          </p>
+        ) : (
+          <p className="loader__status">{step}</p>
+        )}
       </div>
     </div>
   );

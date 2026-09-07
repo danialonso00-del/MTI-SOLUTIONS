@@ -150,8 +150,14 @@ export function buildRoadNetwork(roads) {
 /* ------------------------------------------------------------------ */
 
 export async function loadCityData(preset = 'barcelona') {
-  const res = await fetch(`/city/${preset}.json`);
-  if (!res.ok) throw new Error(`No se pudo cargar la ciudad ${preset}`);
+  const url = `/city/${preset || 'barcelona'}.json`;
+  const res = await fetch(url);
+  // en un alojamiento estático, lo que no existe devuelve el index.html: si no
+  // se comprueba, el fallo aparece como un error de JSON incomprensible
+  if (!res.ok) throw new Error(`no se encuentra ${url} (HTTP ${res.status})`);
+  if (!/json/i.test(res.headers.get('content-type') ?? '')) {
+    throw new Error(`${url} no devuelve JSON: revisa que el archivo esté publicado`);
+  }
   const city = await res.json();
 
   // ?ortho=off dibuja la ciudad sin foto aérea (útil para comparar y depurar)
