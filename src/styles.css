@@ -154,6 +154,13 @@ svg {
 .loader.done {
   opacity: 0;
   visibility: hidden;
+  /* la cuadrícula lleva transformación 3D y, al desvanecerse, podía seguir
+     recibiendo el clic destinado a la portada */
+  pointer-events: none;
+}
+
+.loader.done * {
+  pointer-events: none;
 }
 
 .loader__inner {
@@ -3498,4 +3505,211 @@ svg {
 .loader__status--err small {
   color: var(--text-soft);
   font-size: 12px;
+}
+
+/* City view controls */
+.citycontrols { width: min(340px, calc(100vw - 32px)); }
+.styleswitch__row { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.citycontrols__toggle b { max-width: 108px; overflow: hidden; text-overflow: ellipsis; }
+.citycontrols.open .citycontrols__body {
+  max-height: min(680px, calc(100dvh - 170px));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #48606d transparent;
+}
+.layers__row { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.layer-chip { border-radius: 10px; padding: 9px 8px; font-size: 10px; text-align: left; }
+.layer-chip svg { flex-shrink: 0; }
+.layers__source { color: #8499a7; font-size: 9px; line-height: 1.5; margin: 10px 0 0; }
+.layers__legend { flex-wrap: wrap; }
+.layers__legend b { width: 100%; font-size: 9px; }
+.city-ambience {
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--glass);
+  backdrop-filter: var(--blur);
+}
+.city-ambience__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+.city-ambience__grid button {
+  display: flex; align-items: center; gap: 6px; padding: 8px 7px;
+  border: 1px solid var(--line); border-radius: 9px;
+  color: var(--text-dim); background: rgba(148,163,184,.04);
+  font-size: 10px; text-align: left; cursor: pointer;
+}
+.city-ambience__grid svg { width: 13px; height: 13px; flex-shrink: 0; }
+.city-ambience__grid i { margin-left: auto; width: 5px; height: 5px; border-radius: 50%; background: #415462; flex-shrink: 0; }
+.city-ambience__grid .on { color: #d6e9e5; border-color: rgba(94,234,212,.22); background: rgba(94,234,212,.06); }
+.city-ambience__grid .on i { background: #5eead4; box-shadow: 0 0 8px #5eead455; }
+.timeline__presets { grid-column: 1 / -1; display: flex; gap: 5px; }
+.timeline__presets button {
+  flex: 1; padding: 6px 4px; border-radius: 7px; border: 1px solid var(--line);
+  background: rgba(148,163,184,.04); color: var(--text-dim); font-size: 10px; cursor: pointer;
+}
+.timeline__presets button[aria-pressed='true'] { color: #f5d99a; border-color: #e6a81766; background: #e6a81714; }
+.citycontrols button:focus-visible, .citycontrols input:focus-visible { outline: 2px solid #5eead4; outline-offset: 3px; }
+.sidebar--compact { max-height: max(140px, calc(100dvh - 745px)); }
+@media (max-width: 600px) {
+  .citycontrols { left: 16px; bottom: 52px; }
+  .citycontrols.open .citycontrols__body { max-height: calc(100dvh - 210px); }
+  .citycontrols.open { z-index: 40; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .citycontrols, .citycontrols *, .layer-chip { animation: none !important; transition: none !important; }
+}
+
+/* =====================================================================
+   Entrada: elegir entre conocer MTI o explorar las soluciones
+   ===================================================================== */
+
+.intro__choice {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.choice {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 16px;
+  text-align: left;
+  padding: 20px 22px;
+  border-radius: var(--r-lg);
+  border: 1px solid var(--line-strong);
+  background: linear-gradient(150deg, rgba(20, 29, 51, 0.7), rgba(10, 15, 30, 0.45));
+  color: inherit;
+  cursor: pointer;
+  transition: transform 0.28s var(--ease), border-color 0.28s, background 0.28s,
+    box-shadow 0.28s;
+}
+
+.choice:hover {
+  transform: translateY(-3px);
+  border-color: rgba(230, 168, 23, 0.55);
+  box-shadow: 0 22px 50px -26px rgba(230, 168, 23, 0.55);
+}
+
+.choice:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.choice--deck {
+  border-color: rgba(230, 168, 23, 0.45);
+  background: linear-gradient(150deg, rgba(230, 168, 23, 0.14), rgba(10, 15, 30, 0.5));
+}
+
+.choice__icon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+  background: var(--gold-soft);
+  color: var(--gold);
+}
+
+.choice__icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.choice__body {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.choice__body strong {
+  font-size: 18px;
+  letter-spacing: -0.02em;
+}
+
+.choice__body span {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--text-soft);
+}
+
+.choice__arrow {
+  width: 20px;
+  height: 20px;
+  color: var(--gold);
+  transition: transform 0.28s var(--ease);
+}
+
+.choice:hover .choice__arrow {
+  transform: translateX(4px);
+}
+
+/* La interfaz de la ciudad, apartada mientras manda el recorrido. */
+.city-ui--away {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease);
+}
+
+.city-ui--away * {
+  pointer-events: none !important;
+}
+
+.chip-btn--deck {
+  border-color: rgba(230, 168, 23, 0.45) !important;
+  color: var(--gold) !important;
+}
+
+/* Arranque del recorrido: el fondo ya es el suyo, no hay salto de color. */
+.deck-boot {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 22px;
+  background: radial-gradient(120% 90% at 50% -10%, #12203c 0%, var(--navy-950) 62%);
+}
+
+.deck-boot img {
+  height: 40px;
+  opacity: 0.9;
+}
+
+.deck-boot i {
+  display: block;
+  width: 120px;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(148, 163, 184, 0.2);
+  overflow: hidden;
+  position: relative;
+}
+
+.deck-boot i::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 40%;
+  background: var(--gold);
+  animation: deck-boot 1.1s var(--ease-in-out) infinite;
+}
+
+@keyframes deck-boot {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(300%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .deck-boot i::after {
+    animation: none;
+  }
 }

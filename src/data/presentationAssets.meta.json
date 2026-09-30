@@ -1,0 +1,720 @@
+{
+ "brand-mti-group": {
+  "width": 384,
+  "height": 384,
+  "srcWidth": 384,
+  "bytes": 13948
+ },
+ "client-aena": {
+  "width": 900,
+  "height": 425,
+  "srcWidth": 1280,
+  "bytes": 21496
+ },
+ "client-tmb": {
+  "width": 900,
+  "height": 317,
+  "srcWidth": 3840,
+  "bytes": 35458
+ },
+ "client-navantia": {
+  "width": 271,
+  "height": 186,
+  "srcWidth": 271,
+  "bytes": 2204
+ },
+ "client-fcb": {
+  "width": 900,
+  "height": 913,
+  "srcWidth": 3840,
+  "bytes": 79788
+ },
+ "client-abertis": {
+  "width": 747,
+  "height": 176,
+  "bytes": 10261
+ },
+ "client-moventia": {
+  "width": 400,
+  "height": 72,
+  "srcWidth": 400,
+  "bytes": 19450
+ },
+ "client-fujitsu": {
+  "width": 140,
+  "height": 140,
+  "srcWidth": 140,
+  "bytes": 3402
+ },
+ "client-indra": {
+  "width": 900,
+  "height": 290,
+  "srcWidth": 3840,
+  "bytes": 7702
+ },
+ "client-gmv": {
+  "width": 900,
+  "height": 517,
+  "srcWidth": 1489,
+  "bytes": 20148
+ },
+ "client-etra": {
+  "width": 140,
+  "height": 140,
+  "srcWidth": 140,
+  "bytes": 4124
+ },
+ "client-ferri": {
+  "width": 200,
+  "height": 200,
+  "srcWidth": 200,
+  "bytes": 8730
+ },
+ "client-copegal": {
+  "width": 200,
+  "height": 200,
+  "srcWidth": 200,
+  "bytes": 25940
+ },
+ "client-rcfil": {
+  "width": 200,
+  "height": 200,
+  "srcWidth": 200,
+  "bytes": 19842
+ },
+ "client-merchant-union": {
+  "width": 500,
+  "height": 500,
+  "srcWidth": 500,
+  "bytes": 18254
+ },
+ "client-galpi": {
+  "width": 225,
+  "height": 225,
+  "srcWidth": 225,
+  "bytes": 3022
+ },
+ "client-galmetec": {
+  "width": 900,
+  "height": 471,
+  "srcWidth": 1024,
+  "bytes": 51120
+ },
+ "client-radiovigo": {
+  "width": 480,
+  "height": 336,
+  "srcWidth": 480,
+  "bytes": 18630
+ },
+ "client-sergas": {
+  "width": 900,
+  "height": 365,
+  "srcWidth": 1024,
+  "bytes": 40752
+ },
+ "project-aena": {
+  "width": 2560,
+  "height": 2048,
+  "srcWidth": 1440,
+  "bytes": 404494,
+  "lqip": "data:image/webp;base64,UklGRpgAAABXRUJQVlA4IIwAAAAQBQCdASoYABMAPu1kp02ppaOiMBgMATAdiWcAvdd6wC2EliI94CeVPDKuY/BhkLfAAP5Sz74ljiXB8qnEFsBpAVhlhLKcFBYrAHGNF5zYaivaZTICe+dvOVsxMSN/qJiLNpIFc9mR4HOxo3RQ1AHhEoNl8y2PEYZjAYNV3qcWFaYYDUmkefhXfgAAAA=="
+ },
+ "project-metro": {
+  "width": 1920,
+  "height": 2160,
+  "srcWidth": 960,
+  "bytes": 271234,
+  "lqip": "data:image/webp;base64,UklGRgYBAABXRUJQVlA4IPoAAABwBQCdASoVABgAPu1urlIppiQiqAgBMB2JQBYdu6RwxmWmC+fGVFSAqsqu26Si5Oecdy6wAP7sSte03GWIymWsXYJh++CtR3kdvjcnYNs1GWjAmvj7TLgerKaUxr7DqVhCvAjyrTJDtv7ahX71Q/O+dllCzP+E8AfcKwpY95CtRARyyATEo0/rVGugkTvdRSq1o8Xzj0U00eBwF5fHc0vL1OfXefGPH4mh35w4Ush45rsanmEvHXdbcS843eX1IQtr+DPSVU1LKE2Xyg+9Y9D+ELGpDZ+vZU0oQKg5zkpxk22vRZf23+icBncIxGslyHVSaMeRGo4jHAAA"
+ },
+ "project-buses": {
+  "width": 1600,
+  "height": 467,
+  "srcWidth": 1600,
+  "bytes": 136870,
+  "lqip": "data:image/webp;base64,UklGRoQAAABXRUJQVlA4IHgAAADQAwCdASoYAAcAPu1iqk4ppaQiMAgBMB2JQBdgBA6OsLo+qhXAqcAA/vDZSlQPUQGJnjOhVqnSR203zkPFgNbjNnkTUY0PGy/JDtlORlLVvg1P8MHw+f4m9l/mTQ7CVOUd4FBys+xGJDHrEs0PmtPrHo4Z+tACkAA="
+ },
+ "project-hospitalet": {
+  "width": 2048,
+  "height": 1152,
+  "srcWidth": 1024,
+  "bytes": 455286,
+  "lqip": "data:image/webp;base64,UklGRrgAAABXRUJQVlA4IKwAAACQBACdASoYAA4APu1iqU2ppaOiMAgBMB2JZACdAdwLgTVDGiKmQaNlmL2DkQAA/ozuwDGNJCIRa7Po2VwZWZbXn+s9fkUHN7IoM4QAhUD0bW/pM9aLbAWRC9M6GMHcbstSp3hI1oGHmilx9O9hXyQeJPjWB0Mj4/xmHFNdxWSb/XTGtqGPDx651cZuQcjHdByN+HurXCXIV9YBHUWI4GQQiQvJoa6LAyGExgAA"
+ },
+ "project-navantia": {
+  "width": 1920,
+  "height": 2160,
+  "srcWidth": 960,
+  "bytes": 891202,
+  "lqip": "data:image/webp;base64,UklGRtoAAABXRUJQVlA4IM4AAABQBQCdASoVABgAPu1qrFEppaQiqAqpMB2JYgDAAQz55U8AMZeM8cAvN4XAgRp1YLmKsDgA/dXhe6/0y/vnsSfTaaLqf1Ez84q6ffF4OBGwbrDjslAUp3qVLlZx7jMt5o7cZhIq0JTVlcGIMVO2SVPblqXWjrE0Ml/CCvAKYSFRtHqvwf1ZivqTzlMrZryGK6122mqnddH1/3GUwXbAiK3aGi8vtLLJ6yK9oMDHWUGuQoDeaFTu+HSfd1OP/i83fqsfEPR3+UrJezeHWGAAAA=="
+ },
+ "project-kafd": {
+  "width": 1638,
+  "height": 1118,
+  "srcWidth": 819,
+  "bytes": 204704,
+  "lqip": "data:image/webp;base64,UklGRpYAAABXRUJQVlA4IIoAAADwAwCdASoYABAAPu1iqU2ppaOiMAgBMB2JQBadO4AVz1QPsQstq9ZAAP70nUnu6pgWZ0rkK5Yk66tO+CJdvkLC9XA95CuTHTML30mn57QVSxObHtgbxXJqpEndBd7K6Xh3kLbp2ZhL/kIG/FmqTPcv8ai4fMJRUlXVETLD0dLf4htOmacNVTAAAAA="
+ },
+ "project-qatar": {
+  "width": 1560,
+  "height": 1066,
+  "srcWidth": 780,
+  "bytes": 194406,
+  "lqip": "data:image/webp;base64,UklGRoQAAABXRUJQVlA4IHgAAABQBACdASoYABAAPu1kqU4ppaOiMAgBMB2JYgCdACIG86h9QdY6b8uyZKeAAP6XzI1i3J6s/+OnhWKR7SY3yAj8eJa9z4uQLErZp/RuOSmQo1Q58dEennif4akMfFmgzfNjWkmYgvZ3G5Vo4KevleARdS6RBfS/rgA="
+ },
+ "project-nsu": {
+  "width": 1640,
+  "height": 1120,
+  "srcWidth": 820,
+  "bytes": 375250,
+  "lqip": "data:image/webp;base64,UklGRp4AAABXRUJQVlA4IJIAAADwAwCdASoYABAAPu1iqU2ppaOiMAgBMB2JZAC/OBex9z9067apmBU0AP59H8wCfn2RaZN5BApvkqiuATe9TVdTDviq45zse0JC3m9zUeWSTlIsxXWj6zM0hezkx26EdL1dXzYK/0bMniv2zFuYY9mAIwhl9SwkqTk7TJuFqD1YkFGebL/4mJ/SRs6s0fTWyzDgAA=="
+ },
+ "project-malaysia": {
+  "width": 1108,
+  "height": 1108,
+  "srcWidth": 554,
+  "bytes": 98600,
+  "lqip": "data:image/webp;base64,UklGRq4AAABXRUJQVlA4IKIAAACQBACdASoYABgAPu1kq06ppaQiKA1RMB2JZACdAFHJJafThE53zetADPy2gXAA/urEsSyZ7Xc4VyeeTzQRpE4QKIntJRZz/PbzmzeMKWHnDc3Zb2YlOEhSq4HjpbHA5R7Ojn9+sTIX376e0hKQo6itHzCBU8JAloaB/xHXl04N9n5BcIcJ8hUXK/Uw9dn7eFN/IQi4VMJX8+DWnOhlJsNqcAA="
+ },
+ "sector-security": {
+  "width": 880,
+  "height": 1120,
+  "srcWidth": 440,
+  "bytes": 31822,
+  "lqip": "data:image/webp;base64,UklGRpoAAABXRUJQVlA4II4AAABwBACdASoTABgAPu1oqk+ppiOiKA1RMB2JZQAALavAJY8iKhGXlSajfVqQAAD+6+IVwtb/e5vOivxOAZOxNRVfAvYH/5lHe6klHtequMitGPuZpfMj0UnTPAG3HiSlQCEt8YmRNy3jY826+gcr299PZM7aXXjku7ziXPJJM3M8sVF/b8RRGK7kzC2X9mIA"
+ },
+ "sector-smart-cities": {
+  "width": 880,
+  "height": 1120,
+  "srcWidth": 440,
+  "bytes": 144886,
+  "lqip": "data:image/webp;base64,UklGRsAAAABXRUJQVlA4ILQAAAAQBQCdASoTABgAPu1oqVAppaOiqA1RMB2JbACdOUB1aoB0X8yTjOviK+bcCwUkXbCIAP6sI18EUf62+hx5FuzcKId/Wl7gn4dQJN9TjmPH2X4vY1+Aa9PzL3HCBevy3zXRtFIjW5b/n8YgIXIBebo/AlfTQj+SdhuZaocxOu4HSITaJ1CPm0P0fJHBNyrXm1fwp0AmpXCKrp92nhiVk4h39X//YbmUyBS5Z6VCD484ZtGAAAA="
+ },
+ "sector-industry": {
+  "width": 800,
+  "height": 1120,
+  "srcWidth": 400,
+  "bytes": 188302,
+  "lqip": "data:image/webp;base64,UklGRrgAAABXRUJQVlA4IKwAAACwBQCdASoRABgAPu1qrlCppaQiqAqpMB2JYgC+cLKaA5/8BArJxQn5UDqzTLteyiRIKz1HJYAA/dU7z1822ImKCdl4fskVTj5rtxyyRB57mcFLKUbAGcPzPIq3injRwYQ1FucwC6Xeu2P8wulU7eLPeHePewd9CngVgqaRcdEKPjVc7xR4/gYN2Ry732gQlcNxmoKB72SotegUL0scozO20lqDZeWMsLPXNAAA"
+ },
+ "sector-cyber": {
+  "width": 880,
+  "height": 1120,
+  "srcWidth": 440,
+  "bytes": 28002,
+  "lqip": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAABQBACdASoTABgAPu1irFAppSQisBgIATAdiWUAyJgYPo3knf94b6nPGQngAP7woZforUZD/i9E5qVT3CKSwAL/xfn8C0bV6SUzPk6G3mUwaAlTUgzk+CXOz5dNfa+KAfhEfa3n4AA="
+ },
+ "sector-venues": {
+  "width": 880,
+  "height": 1120,
+  "srcWidth": 440,
+  "bytes": 338632,
+  "lqip": "data:image/webp;base64,UklGRp4AAABXRUJQVlA4IJIAAABwBACdASoTABgAPu1kq06ppaOiKA1RMB2JZwDCgBIzIFUKKeiM95XakxmLAAD3LJfIN53rurL0gIYlPM5qSbWGGjn65dxy6uOYKuO/jTodZy4eCCYxek3Path++1jxhLhG5SgRYliLQEjx5ojYMkwv9hDk5g0wZ5yeeBYDqygnK2H2pLo91B7M1c/CUAGVeyAAAA=="
+ },
+ "sector-transport": {
+  "width": 800,
+  "height": 1120,
+  "srcWidth": 400,
+  "bytes": 148484,
+  "lqip": "data:image/webp;base64,UklGRr4AAABXRUJQVlA4ILIAAABQBQCdASoRABgAPu1srFEppaQiqAqpMB2JZAC+Sq/waugt1eEoPDdgfaivVDZPeUaQlCQA/up6wmimstDk7xsgyHrY4ekDyD7rWdhmDTJR0TLQ0tPqtKvwPgzUgzwdlyK2rxFpZbFC6b7DMyNFadVRAus28j3wRBLuZBSD7jhbqcB1wRfnedOLQ5dZViJl0cy90OxuLhS9fjnDcFtDERS+pl3dYmDnSBZws/c9oVVgGgAA"
+ },
+ "service-integration": {
+  "width": 1152,
+  "height": 1292,
+  "srcWidth": 576,
+  "bytes": 114614,
+  "lqip": "data:image/webp;base64,UklGRvgAAABXRUJQVlA4IOwAAACwBQCdASoVABgAPu1srFEppaQiqAqpMB2JYwDI2agSA4YujxKIRjPUtZ5RnxD03pwdsjP7jDQA/gog37m0OHa/ff8/JZ/J+s60VgP8i9FL8/Ca3x49Kb7itm9So2SZwMU89ivpVj91idHb+iPvlSWBadOcknotZ0pepcVfgFcZ16HxiBlcUO5RXHU75I6MxOWLe1i+IF44qYKiUyIBtWMGXpFUYC9cnbpRVSqkRMZ6fjS6h+nQh6l3WA9v8INI7NLFjuIIzs19FtBmiVq4uPhD1fljIJk47gxyDY6+r5450kKAM8zI8LTN+wAAAA=="
+ },
+ "service-cctv": {
+  "width": 1820,
+  "height": 2048,
+  "srcWidth": 910,
+  "bytes": 357580,
+  "lqip": "data:image/webp;base64,UklGRvIAAABXRUJQVlA4IOYAAABwBgCdASoVABgAPu1sq1EppaOiqAqpMB2JbACxHoR/gN+5tjAaQAaBc3uELJxnspuK1tdir86aQ1f+UYAA/qNyxk4qOGzRvGSCmdaR75jbKYtPa1+KeFGJBgddBNQyHXDFwC6cP4C1L0cq5nMsrmLNltbMTjrHo01ZWXVUrHbYTZwJ3Vd8jStsQ6DKjpYJvbEW9lqs+nv8ucL4Y0SmcjjCAjz/WEbBEJHqWcK7JDkuml1CIQKIUoQMKnMoB8wYR81p+I/73IYwZRSBuj+F4BAfh0nZrD/wJHLbf4pmzq9ruRXRUAAAAA=="
+ },
+ "service-maintenance": {
+  "width": 804,
+  "height": 1086,
+  "srcWidth": 402,
+  "bytes": 153428,
+  "lqip": "data:image/webp;base64,UklGRvoAAABXRUJQVlA4IO4AAACQBQCdASoSABgAPu1ur1IppiQiqAgBMB2JZADA4aglANq2OXSvdxN8Wm7w9htGwARV/DiAAADnlbGD/BQ3Q7Va3U9qUdsj2Oiq+9nmVwgb5FLfGSL/eQMWp82KQDlWRVUth3FH7cNg5EPzkUecBo8HhfkHE5iFBVOXpSRuXrEQ9oWh3yMfyllWeUR+KBbN5RH4oFrR95qyv5NV5YYuZxlcDyJ4veIHGlGRlteXtPx6hqQAOEGP7hYhj0OASbdoh0WqRK6eMv2RhFQG9FnmNcBaja8nDDAZKXAqwr494ZAkXNQGB1od6bO/AKwhIgAA"
+ },
+ "platform-thethings-logo": {
+  "width": 900,
+  "height": 212,
+  "srcWidth": 2048,
+  "bytes": 21262
+ },
+ "platform-thethings-dashboard": {
+  "width": 2500,
+  "height": 1667,
+  "srcWidth": 2500,
+  "bytes": 171894,
+  "lqip": "data:image/webp;base64,UklGRnoAAABXRUJQVlA4IG4AAABwBACdASoYABAAPu1kqU2ppaQiMAgBMB2JYwCdH8G6gAcbd9pxVAg8gC9CpAD+4NmiyWBJPcX1TG6e+8qp5HambJQpdSpjknVKH7qr6wPFdjGKcw8DeElQhj1rxqlLBl6LYAN+KNiGPznimKgAAA=="
+ },
+ "platform-hypervisor-room": {
+  "width": 2400,
+  "height": 862,
+  "srcWidth": 1200,
+  "bytes": 265186,
+  "lqip": "data:image/webp;base64,UklGRogAAABXRUJQVlA4IHwAAADwAwCdASoYAAkAPu1iqU2ppaOiMAgBMB2JQBOmUABUATUo1ccQnMnAAP6poKy4N1qWDWb9UkTllNoFeCkacTrxy9SbCYFchWFomfRU6FBMmIwJ+g46ysVz60VtG+n5J0DxrvNCbPxN4R1Sxxvq4oApeatfHmG954B5EAAA"
+ },
+ "platform-agentic-orchestrator": {
+  "width": 900,
+  "height": 900,
+  "srcWidth": 1080,
+  "bytes": 180162
+ },
+ "bg-cover-network": {
+  "width": 900,
+  "height": 506,
+  "srcWidth": 1920,
+  "bytes": 8242
+ },
+ "bg-closing-network": {
+  "width": 900,
+  "height": 506,
+  "srcWidth": 1920,
+  "bytes": 2984
+ },
+ "icon-pillar-mission": {
+  "width": 100,
+  "height": 100,
+  "srcWidth": 100,
+  "bytes": 926
+ },
+ "icon-pillar-end-to-end": {
+  "width": 100,
+  "height": 100,
+  "srcWidth": 100,
+  "bytes": 510
+ },
+ "icon-pillar-platforms": {
+  "width": 100,
+  "height": 100,
+  "srcWidth": 100,
+  "bytes": 702
+ },
+ "icon-pillar-roi": {
+  "width": 100,
+  "height": 100,
+  "srcWidth": 100,
+  "bytes": 446
+ },
+ "icon-service-design": {
+  "width": 75,
+  "height": 75,
+  "srcWidth": 75,
+  "bytes": 1120
+ },
+ "icon-service-install": {
+  "width": 75,
+  "height": 75,
+  "srcWidth": 75,
+  "bytes": 742
+ },
+ "icon-service-iot": {
+  "width": 75,
+  "height": 75,
+  "srcWidth": 75,
+  "bytes": 798
+ },
+ "icon-service-ai": {
+  "width": 75,
+  "height": 75,
+  "srcWidth": 75,
+  "bytes": 528
+ },
+ "icon-service-twin": {
+  "width": 75,
+  "height": 75,
+  "srcWidth": 75,
+  "bytes": 412
+ },
+ "icon-service-smartcity": {
+  "width": 75,
+  "height": 75,
+  "srcWidth": 75,
+  "bytes": 536
+ },
+ "icon-service-cert": {
+  "width": 75,
+  "height": 75,
+  "srcWidth": 75,
+  "bytes": 910
+ },
+ "icon-service-om": {
+  "width": 75,
+  "height": 75,
+  "srcWidth": 75,
+  "bytes": 1040
+ },
+ "icon-platform-hypervisor": {
+  "width": 219,
+  "height": 219,
+  "srcWidth": 219,
+  "bytes": 906
+ },
+ "icon-platform-thethings": {
+  "width": 219,
+  "height": 219,
+  "srcWidth": 219,
+  "bytes": 3132
+ },
+ "icon-platform-twin": {
+  "width": 219,
+  "height": 219,
+  "srcWidth": 219,
+  "bytes": 1326
+ },
+ "icon-platform-agentic": {
+  "width": 219,
+  "height": 219,
+  "srcWidth": 219,
+  "bytes": 2250
+ },
+ "icon-agent-C01": {
+  "width": 163,
+  "height": 163,
+  "srcWidth": 163,
+  "bytes": 724
+ },
+ "icon-agent-C02": {
+  "width": 163,
+  "height": 163,
+  "srcWidth": 163,
+  "bytes": 616
+ },
+ "icon-agent-C03": {
+  "width": 163,
+  "height": 163,
+  "srcWidth": 163,
+  "bytes": 1438
+ },
+ "icon-agent-C04": {
+  "width": 163,
+  "height": 163,
+  "srcWidth": 163,
+  "bytes": 992
+ },
+ "icon-agent-C05": {
+  "width": 163,
+  "height": 163,
+  "srcWidth": 163,
+  "bytes": 844
+ },
+ "icon-agent-C06": {
+  "width": 163,
+  "height": 163,
+  "srcWidth": 163,
+  "bytes": 434
+ },
+ "icon-agent-C07": {
+  "width": 163,
+  "height": 163,
+  "srcWidth": 163,
+  "bytes": 570
+ },
+ "icon-agent-C08": {
+  "width": 163,
+  "height": 163,
+  "srcWidth": 163,
+  "bytes": 1052
+ },
+ "icon-reason-multibrand": {
+  "width": 88,
+  "height": 88,
+  "srcWidth": 88,
+  "bytes": 898
+ },
+ "icon-reason-itxpt": {
+  "width": 88,
+  "height": 88,
+  "srcWidth": 88,
+  "bytes": 1082
+ },
+ "icon-reason-pm": {
+  "width": 88,
+  "height": 88,
+  "srcWidth": 88,
+  "bytes": 662
+ },
+ "icon-reason-support": {
+  "width": 88,
+  "height": 88,
+  "srcWidth": 88,
+  "bytes": 1046
+ },
+ "icon-reason-hetero": {
+  "width": 88,
+  "height": 88,
+  "srcWidth": 88,
+  "bytes": 1462
+ },
+ "icon-maint-preventive": {
+  "width": 137,
+  "height": 137,
+  "srcWidth": 137,
+  "bytes": 1406
+ },
+ "icon-maint-corrective": {
+  "width": 137,
+  "height": 137,
+  "srcWidth": 137,
+  "bytes": 592
+ },
+ "icon-maint-predictive": {
+  "width": 137,
+  "height": 137,
+  "srcWidth": 137,
+  "bytes": 566
+ },
+ "icon-maint-warranty": {
+  "width": 137,
+  "height": 137,
+  "srcWidth": 137,
+  "bytes": 1268
+ },
+ "icon-lever-process": {
+  "width": 188,
+  "height": 188,
+  "srcWidth": 188,
+  "bytes": 728
+ },
+ "icon-lever-data": {
+  "width": 188,
+  "height": 188,
+  "srcWidth": 188,
+  "bytes": 1798
+ },
+ "icon-lever-ai": {
+  "width": 188,
+  "height": 188,
+  "srcWidth": 188,
+  "bytes": 900
+ },
+ "icon-lever-people": {
+  "width": 188,
+  "height": 188,
+  "srcWidth": 188,
+  "bytes": 2282
+ },
+ "icon-lever-compliance": {
+  "width": 188,
+  "height": 188,
+  "srcWidth": 188,
+  "bytes": 1622
+ },
+ "icon-twin-buildings": {
+  "width": 125,
+  "height": 125,
+  "srcWidth": 125,
+  "bytes": 316
+ },
+ "icon-twin-datacenters": {
+  "width": 125,
+  "height": 125,
+  "srcWidth": 125,
+  "bytes": 704
+ },
+ "icon-twin-industry": {
+  "width": 125,
+  "height": 125,
+  "srcWidth": 125,
+  "bytes": 458
+ },
+ "icon-twin-venues": {
+  "width": 125,
+  "height": 125,
+  "srcWidth": 125,
+  "bytes": 1042
+ },
+ "icon-twin-cities": {
+  "width": 125,
+  "height": 125,
+  "srcWidth": 125,
+  "bytes": 290
+ },
+ "icon-twin-infrastructure": {
+  "width": 125,
+  "height": 125,
+  "srcWidth": 125,
+  "bytes": 274
+ },
+ "ag-case-coplegal": {
+  "width": 2560,
+  "height": 1342,
+  "srcWidth": 1360,
+  "bytes": 261218,
+  "lqip": "data:image/webp;base64,UklGRqAAAABXRUJQVlA4IJQAAAAwBACdASoYAA0APu1iqk2ppaQiMAgBMB2JbAC7ACKm8aOz9Fuf9/d9MVAA/uRHBdOJiuBTRjKZuQNKqX1lvhEX7mTAyULhZj7PXNt2YI4bR+LVfvf/HcaqzeDaNYtnddItyLWV7LFOgcvsQysEBaUzxxkYmJi18CcQjz12viPh49hUn/0I8q5L4Si7Gm2tObMLAAAA"
+ },
+ "ag-case-galmetec": {
+  "width": 2126,
+  "height": 1536,
+  "srcWidth": 1063,
+  "bytes": 247384,
+  "lqip": "data:image/webp;base64,UklGRgoBAABXRUJQVlA4WAoAAAAQAAAAFwAAEAAAQUxQSBgAAAABF/D+/4iIgkDSRp7s0d6fB4jofwbmOFBWUDggzAAAAFAFAJ0BKhgAEQA+7WqtUKmlpCKoCqkwHYlAF2QgkCh3HGda1ekhb/w3K4xdPpmP0nNFAAD+5TrDIQvUwoocFysumwnADmJn5GlVSdcGkcxQ0H/CGhlEuiLnrewaWu462aj9OL5knkDBvCUTCcbkMWM1F6BD/3erX47T73AswgQRG/FtFArhcIYgMtVc27qu2cPamiVdQMWo5sTsPdQzyACveMcqkslFZ4d3MgvU8yDhnHrOiYERY57LDTIVTDgUUj4KCUMPrSQu9gAAAA=="
+ },
+ "ag-case-prisa": {
+  "width": 1080,
+  "height": 1536,
+  "srcWidth": 540,
+  "bytes": 86180,
+  "lqip": "data:image/webp;base64,UklGRpwAAABXRUJQVlA4IJAAAABQBQCdASoRABgAPu1sq1EppaOiqAqpMB2JYwC7ABGcx9Hv/EWioJsBorvJQp9A4FWesgAA/vQmJZ8Dd19Tt5EV6Cgpd25u3xRSGTVv3QQGxOEPnMJ5z0VneNJJ/h4pb/z2JV3Ie6QyzBxnwkG+siHYiakhLu71RFFP6o8agsFfYci2Eq+7oE1G5NEEtKTEAAA="
+ },
+ "ag-case-promega": {
+  "width": 2304,
+  "height": 1536,
+  "srcWidth": 1152,
+  "bytes": 263448,
+  "lqip": "data:image/webp;base64,UklGRvYAAABXRUJQVlA4WAoAAAAQAAAAFwAADwAAQUxQSB4AAAABF6AgbQPGv+V2x0ZExDkIBCFimf/bDIjofxbmMjBWUDggsgAAAHAEAJ0BKhgAEAA+7WKpTamlo6IwCAEwHYloAAPlii54pW4enPWgLYkGS0tQAP7kZzUpSJBNl6zP6Hr5fzh535xh3znZR7F42fKAQHF7dnYCxYR/vbirsQ1ri+Il974g60mfnsAadbLzRW33jl0I+hGtfulEMD6GPSGr0podh//YEPO48kh4XWlxp1J42TdWgPL3uDc3MsRQ+bITPpEuxyEw3VW1ur1DzUxF45U2Ja4AAAA="
+ },
+ "ag-case-sigi": {
+  "width": 1110,
+  "height": 1536,
+  "srcWidth": 555,
+  "bytes": 67754,
+  "lqip": "data:image/webp;base64,UklGRsoAAABXRUJQVlA4IL4AAADwBACdASoRABgAPu1sq1EppaOiqAqpMB2JYwCdAA9o1jmCDOzS2Or+O7mLvzcCAIAA/t7ogi5kKsG4A9CR3x9cWKoQIzJs6qZElnTWXB8/rhR40mkT7NZSzlkpELNXnLgAVgn2Ia3v/vvxYeCkdWFidC7NSWwv0Y1Ch2SlW0w8qPYI7AMhQcnwVSYTy6v+aDcGylto7t8fUQXBsqKHxrOHwkOMLgbZIiQPPROCl0LMswuGuISP4wIKx/FtGAAA"
+ },
+ "ag-case-frioteis": {
+  "width": 2560,
+  "height": 1352,
+  "srcWidth": 1360,
+  "bytes": 435298,
+  "lqip": "data:image/webp;base64,UklGRtgAAABXRUJQVlA4WAoAAAAQAAAAFwAADAAAQUxQSB0AAAABF6AQQADE37nRiIiYQSAIEcv832ZARP+zMAeBAQBWUDgglAAAAJAEAJ0BKhgADQA+7WKpTamlo6IwCAEwHYlmAJ0ygo/4mwBbRbrpTPwhkZCG+AD+8OFs08gnC32f1R40aaEQ5fxnNd4j9yBdcoShepyiaAKnB/RbiCCcvFcf2YDuLVOcwViI3I0j4IIPgUjPED5fDFaFgHHU7D0mKoHDuvHAWhYhBNngT2EzbZb4jGZvY8WMQLIAAAA="
+ },
+ "ag-case-aspol": {
+  "width": 2304,
+  "height": 1536,
+  "srcWidth": 1152,
+  "bytes": 226780,
+  "lqip": "data:image/webp;base64,UklGRsIAAABXRUJQVlA4WAoAAAAQAAAAFwAADwAAQUxQSBcAAAABF/D+/4iIgkAQIpb5v82AiP5nYS4DAwBWUDgghAAAABAEAJ0BKhgAEAA+7WKpTamlo6IwCAEwHYliAKj0GGj1UEO3eOteAIgAAP3ilmr+4DfxOJ3Ifi/OOqvrbeWb0+HvjGgMtAzCe9bTALd5Gtwk2xx0RuMWruBXVEPGT90VVEHlZrvzCF//jRX4ILFgphF7ritD5sXl81Ww6l3Fx2m3eUmAAA=="
+ },
+ "ag-case-nautia": {
+  "width": 2560,
+  "height": 1705,
+  "srcWidth": 5464,
+  "bytes": 871488,
+  "lqip": "data:image/webp;base64,UklGRrQAAABXRUJQVlA4IKgAAAAQBACdASoYABAAPu1iqU2ppaOiMAgBMB2JZgC7ABrRiFNhltBQDcViAADMFwHtqMErAsLaUx/mLF5ixoq/sRQnIhUAta7jRh167bfnqlQHjfJPxUSXQM6Bo9gMnRgf/QAWsaSeAy4VpOUYcYpCPtYG1JkH+jcgUZrYG2KD0YQ5wA0YbTJgiSWUyB+iYLhk1rmjWtuc/CfbVhaJHkSDNvkdrWvpzHnwAAA="
+ },
+ "ag-case-tecnicas": {
+  "width": 2400,
+  "height": 1556,
+  "srcWidth": 1200,
+  "bytes": 289636,
+  "lqip": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAADQAwCdASoYABAAPu1iqk4ppaQiMAgBMB2JQBOgA9WvmA6UC1yodmAA/t8kjLUEkG6lEVAH+3vqE0qzTE/dVf5e1Uk16QYR1YHwZBxgbScVeXuzt5+/oO4AAAA="
+ },
+ "ag-graphic-rcfil": {
+  "width": 900,
+  "height": 472,
+  "srcWidth": 1920,
+  "bytes": 14472
+ },
+ "ag-graphic-regenasa": {
+  "width": 900,
+  "height": 472,
+  "srcWidth": 1920,
+  "bytes": 23730
+ },
+ "ag-logo-regenasa": {
+  "width": 800,
+  "height": 177,
+  "srcWidth": 800,
+  "bytes": 24404
+ },
+ "ag-logo-promega": {
+  "width": 900,
+  "height": 556,
+  "srcWidth": 1280,
+  "bytes": 32990
+ },
+ "ag-logo-ucalsa": {
+  "width": 835,
+  "height": 219,
+  "srcWidth": 835,
+  "bytes": 7564
+ },
+ "ag-logo-frioteis": {
+  "width": 283,
+  "height": 156,
+  "srcWidth": 283,
+  "bytes": 2590
+ },
+ "ag-logo-aspol": {
+  "width": 500,
+  "height": 500,
+  "srcWidth": 500,
+  "bytes": 9798
+ },
+ "icon-ag-C01": {
+  "width": 300,
+  "height": 300,
+  "srcWidth": 300,
+  "bytes": 1582
+ },
+ "icon-ag-C02": {
+  "width": 300,
+  "height": 300,
+  "srcWidth": 300,
+  "bytes": 1882
+ },
+ "icon-ag-C03": {
+  "width": 300,
+  "height": 300,
+  "srcWidth": 300,
+  "bytes": 3424
+ },
+ "icon-ag-C04": {
+  "width": 300,
+  "height": 300,
+  "srcWidth": 300,
+  "bytes": 1398
+ },
+ "icon-ag-C05": {
+  "width": 300,
+  "height": 300,
+  "srcWidth": 300,
+  "bytes": 1646
+ },
+ "icon-ag-C06": {
+  "width": 300,
+  "height": 300,
+  "srcWidth": 300,
+  "bytes": 1304
+ },
+ "icon-ag-C07": {
+  "width": 300,
+  "height": 300,
+  "srcWidth": 300,
+  "bytes": 1744
+ },
+ "icon-ag-C08": {
+  "width": 300,
+  "height": 300,
+  "srcWidth": 300,
+  "bytes": 1734
+ },
+ "icon-ag-autonomous": {
+  "width": 175,
+  "height": 175,
+  "srcWidth": 175,
+  "bytes": 1782
+ },
+ "icon-ag-integrated": {
+  "width": 175,
+  "height": 175,
+  "srcWidth": 175,
+  "bytes": 1248
+ },
+ "icon-ag-explainable": {
+  "width": 175,
+  "height": 175,
+  "srcWidth": 175,
+  "bytes": 2624
+ },
+ "icon-ag-productized": {
+  "width": 175,
+  "height": 175,
+  "srcWidth": 175,
+  "bytes": 1816
+ }
+}

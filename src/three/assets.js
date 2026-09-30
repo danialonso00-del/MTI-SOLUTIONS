@@ -185,6 +185,12 @@ export function findClip(animations, ...names) {
  * Carga toda la biblioteca. Nunca lanza: si un modelo falla, la ciudad se
  * dibuja igual con su versión primitiva (la app no se queda en negro en una demo).
  */
+/**
+ * La última biblioteca cargada. El recorrido corporativo la reutiliza para sus
+ * escenas 3D en vez de descargar y procesar los modelos otra vez.
+ */
+export let sharedLibrary = null;
+
 export async function loadModels(onProgress) {
   const loader = new GLTFLoader();
   const entries = Object.entries(MODELS);
@@ -213,5 +219,6 @@ export async function loadModels(onProgress) {
     })
   );
 
+  sharedLibrary = library;
   return library;
 }

@@ -1,8 +1,15 @@
 # MTI · Solutions Explorer
 
-Plataforma web para presentar las soluciones de **Mingo Things** en reuniones: una
-ciudad 3D viva donde cada caso de uso tiene su punto luminoso, su ficha animada,
-su documentación en PDF y su enlace a demo.
+Plataforma web para presentar **Mingo Things** en reuniones. Son dos experiencias
+conectadas entre sí:
+
+- **Conocer MTI** — un recorrido corporativo de siete capítulos con globo
+  interactivo, escenas animadas y flujos de datos. Sustituye al PowerPoint.
+- **Explorar soluciones** — la ciudad 3D viva donde cada caso de uso tiene su
+  punto luminoso, su ficha animada, su documentación en PDF y su enlace a demo.
+
+Se salta de una a otra en cualquier momento, y al volver se retoma en el punto
+exacto donde se dejó.
 
 ![stack](https://img.shields.io/badge/React_19-Vite_5-0ea5e9?style=flat-square) ![stack](https://img.shields.io/badge/three.js-R3F-E6A817?style=flat-square) ![stack](https://img.shields.io/badge/Node-Express_5-10b981?style=flat-square)
 
@@ -283,15 +290,18 @@ una estación de trabajo. En cuanto arrastras el ratón, la cámara vuelve a ser
 
 ## Estilos de ciudad
 
-La misma geometría real, tres lecturas (tecla `T`, o el panel *Vista de la ciudad*):
+La misma geometría real, cuatro lecturas (tecla `T`, o el panel *Vista de la ciudad*):
 
 | Estilo | Qué es | Cuándo usarlo |
 | ------ | ------ | ------------- |
+| **Moderno** | Fachadas de cristal y piedra clara, bordes de cubierta, agua animada y calles con flujos | Vista inicial para explorar y presentar la ciudad |
 | **Foto aérea** | Ortofoto real del ICGC en suelo y cubiertas | Máximo realismo, el que impresiona |
 | **Maqueta** | Sin fotografía: volúmenes claros sobre calles dibujadas | Se lee mejor al señalar cosas; va muy suelto en equipos flojos |
 | **Técnico** | Plano oscuro de sala de control, calles luminosas | Hablar de gemelo digital y centro de mando |
 
-Cambiar de estilo no reconstruye nada: solo intercambia materiales, es instantáneo.
+Cambiar de estilo no reconstruye nada: solo intercambia materiales. La paleta se conserva durante las transiciones de luz. Al salir de Técnico se recupera la hora anterior.
+
+En **Detalle y movimiento** se pueden activar por separado los bordes y marcas de calle, los flujos de tráfico, la órbita y la animación urbana. La cámara espera ocho segundos después de una interacción antes de volver a orbitar. La preferencia del sistema de reducir movimiento desactiva la animación ambiental al abrir la ciudad.
 
 ### Nitidez al acercarse
 
@@ -308,19 +318,25 @@ Ajustando `--x`, `--z` y `--span` se puede poner la zona de detalle donde intere
 
 ## Capas de datos
 
-Cinco lecturas de la misma ciudad, generadas a partir de sus datos reales y proyectadas
-sobre el suelo con un barrido de entrada:
+Siete lecturas ilustrativas sobre la geometría real de la ciudad. Los mapas de calor se
+funden al cambiar de capa; la conectividad dibuja enlaces elevados con pulsos animados.
+Las intensidades y conexiones son de demostración, no mediciones en vivo:
 
 | Capa | Se calcula a partir de |
 | ---- | ---------------------- |
+| Zonas verdes | polígonos de parques y jardines de OpenStreetMap |
+| Conectividad urbana | nodos de calle distribuidos por los barrios, unidos por enlaces ilustrativos |
 | Intensidad de tráfico | jerarquía real de la trama viaria (primarias, secundarias…) |
-| Cobertura de cámaras | posiciones reales de la red de videovigilancia |
+| Cobertura de cámaras | posiciones de las cámaras de la simulación |
 | Consumo energético | volumen construido de cada edificio |
 | Llenado de contenedores | puntos de acera repartidos por la ciudad |
 | Calidad del aire | campo continuo sobre la zona |
 
 Tecla `L` para recorrerlas. Debajo, la **línea de tiempo del día**: mueve el sol —con sus
-sombras largas a primera y última hora—, el encendido del alumbrado y el modo noche.
+sombras largas a primera y última hora—, el cielo, el encendido del alumbrado y el modo noche.
+Incluye accesos a amanecer, día, atardecer y noche.
+
+Comprobaciones de movimiento y continuidad de la iluminación: `node --test scripts/city-motion.test.mjs`.
 
 ## Simulación de incidente
 
@@ -372,6 +388,155 @@ http://localhost:5181/?ortho=off         # sin foto aérea (solo volúmenes)
 | Ir al caso N        | `1` … `9`                                      |
 | Ayuda               | `H`                                            |
 
+## El recorrido corporativo
+
+Al terminar la carga, la portada ofrece los dos caminos. El recorrido son siete
+capítulos y 50 pasos; cada paso es un movimiento de cámara, una capa que se
+enciende o un dato que avanza sobre la misma escena, no una pantalla nueva.
+Nada avanza solo: quien presenta manda.
+
+### Qué hay detrás de cada escena
+
+Hay dos escenarios 3D y se alternan según la coreografía de
+`src/deck/choreography.js`:
+
+- **La ciudad 3D real**, conducida desde el recorrido (cámara, capas de datos,
+  filtros, hora del día). Las cifras y capacidades se anclan sobre edificios
+  reales y la ciudad las coloca frame a frame, sin solaparse.
+- **Un lienzo 3D propio y persistente** (`src/deck/stage/`) con estaciones
+  separadas en el mismo espacio: el logo de partículas, el globo, la obra que
+  se construye y la cadena de plataformas. La cámara viaja de una a otra
+  atravesando el campo de partículas.
+
+| # | Capítulo | Pasos | Escenario |
+|---|----------|-------|-----------|
+| 01 | MTI en una frase | 7 | Logo de partículas → descenso a Barcelona → cuatro columnas con un holograma por pilar (radar de operaciones críticas, anillo de extremo a extremo, pila de plataformas, barras de resultados) → cifras de grupo sobre edificios |
+| 02 | Presencia global | 4 | Globo con países reales y banderas: sede en Barcelona → oficinas (el globo gira descubriéndolas) → proyectos → exploración |
+| 03 | Dónde trabajamos | 8 | Zonas de la ciudad; cada sector vuela a su zona y activa su sistema (industria y ciberseguridad, con foto, telemetría y red). Cada sector trae su esquema «Cómo funciona»: qué entra → qué hace MTi → qué sale |
+| 04 | Cómo entregamos | 7 | Una infraestructura se construye: plano → equipos → conectividad → integración → centro de control → mantenimiento → operación |
+| 05 | Nuestras plataformas | 7 | Un dato recorre dispositivo → thethings.io → MTi Hypervisor → Digital Twin → Agentic AI → acción |
+| 06 | Proyectos que lo prueban | 10 | Mapa de destinos y nueve proyectos a gran formato con localizador de viaje |
+| 07 | Por qué MTI | 7 | Constelación de logos → cinco razones sobre la ciudad en operación → cierre con contacto |
+
+El esquema «Cómo funciona» es el componente `src/deck/FlowDiagram.jsx`: fichas
+de entrada, núcleo MTi con sus pasos y fichas de salida, unidos por cables SVG
+que se miden sobre la maquetación real. Un pulso recorre el ciclo completo
+(entradas → pasos del núcleo → salidas) en 6,4 s. Sus datos por sector están en
+`SCENES.sectors.flows` de `src/data/deck.js`.
+
+Las oficinas (Barcelona, Madrid, Sabadell, Les Franqueses del Vallès, Dubái,
+Arabia Saudí, Egipto, Kenia, México y Malasia) las facilitó MTI directamente; se
+editan en `PLACES` de `src/data/deck.js`. Al pasar de un paso a otro, el bloque
+de texto saliente se funde mientras entra el nuevo (componente `Swap`).
+
+### Recorridos por línea de servicio: Agentify AI
+
+Además del corporativo hay recorridos por línea de servicio. El primero es
+**Agentify AI** (IA Agentiva), construido a partir de
+`public/MTi_Group_IA_Agentiva_Recort_v.01.pptx`. Tiene seis capítulos y 38 pasos:
+
+| # | Capítulo | Pasos | Escenario |
+|---|----------|-------|-----------|
+| 01 | IA que actúa | 3 | Portada con cifras y clientes → «un chat se queda en la respuesta; un agente sigue trabajando» → cuatro rasgos |
+| 02 | Cómo funciona | 3 | El orquestador 3D detecta (PDF, correo, IoT, CRM, voz) → encamina a los agentes → actúa (ERP, correo, ticket) sobre la capa de datos |
+| 03 | Ocho agentes | 9 | Catálogo → cada agente con su esquema entra→plataforma→sale, su vista de producto animada, su stack y sus clientes en producción |
+| 04 | Catorce despliegues | 15 | Mosaico filtrable por agente → cada caso a pantalla completa con cifras, agentes, qué hace y con qué está conectado |
+| 05 | Cómo lo entregamos | 5 | Discovery → piloto → escalado → operación (el anillo de datos se completa por cuartos) → qué recibes desde el día uno |
+| 06 | Por qué MTi | 3 | Cinco razones → resultados agregados → cierre con contacto |
+
+Cómo se llega y cómo se vuelve:
+
+- **Proyectos** (capítulo 06, mapa): «Explorar más proyectos» abre los casos de
+  Agentify sin alargar el capítulo de proyectos corporativo.
+- **Cierre** (capítulo 07): «Explorar otros servicios» abre el recorrido desde
+  el principio.
+- **Índice** (`Esc`): pestañas por recorrido.
+- En la cabecera, **Presentación MTI** vuelve al punto exacto del recorrido
+  corporativo desde el que se salió. Ir a la ciudad y volver retoma el recorrido
+  y el paso en el que estabas.
+
+Contenido en `src/data/agentic.js` (castellano) y `src/data/agentic.en.js`
+(inglés). La escena 3D es `src/deck/stage/OrchestratorStation.jsx` y las escenas
+están en `src/deck/scenes/agentic/`. Las vistas de producto (borrador de correo,
+hoja de pre-cierre, llamada, CRM, pedido, albarán, consulta con fuentes, no
+conformidad) reproducen los ejemplos de la propia presentación y se rotulan como
+vista ilustrativa.
+
+Los esquemas de los agentes y de los 14 casos llevan los **logos reales** de las
+herramientas que nombra la presentación (Gmail, Outlook, Odoo, SAP, HubSpot,
+Salesforce, WhatsApp, Excel, PDF…): registro en `src/data/logos.js`, archivos en
+`public/assets/logos/`. Cada caso tiene su propio esquema entra → solución →
+sale en `AG_CASE_FLOWS` de `src/data/agentic.js`. Si un contenido no cabe en una
+pantalla baja, `FitBox` lo escala entero en vez de cortarlo.
+
+**Añadir otra línea** (seguridad, smart cities…): un archivo de datos con sus
+capítulos, su entrada en `TRACK_CHAPTERS` de `src/data/tracks.js`, su entrada en
+`SERVICE_TRACKS` de `src/data/deck.js` y sus escenas. Las tarjetas de «Explorar
+otros servicios» y «Explorar más proyectos» y las pestañas del índice la
+recogen solas.
+
+### Cómo se conduce
+
+| Control | Hace |
+|---------|------|
+| `→` `Espacio` `AvPág` · rueda · deslizar | Siguiente paso |
+| `←` `RePág` · rueda · deslizar | Paso anterior |
+| `↑` `↓` | Capítulo anterior / siguiente |
+| `Inicio` `Fin` | Principio / final |
+| `Esc` | Índice (o cierra lo que esté abierto) |
+| `P` | Pausa las animaciones de ambiente |
+| `F` | Panel interno de fuentes y pendientes de validación |
+
+`prefers-reduced-motion` congela el ambiente sin quitar contenido. Sin WebGL, la
+portada lo indica, el recorrido usa sus versiones planas (mapa del mundo en
+SVG, cifras en rejilla) y se ocultan los enlaces a la ciudad.
+
+### Ir y volver entre la presentación y la ciudad
+
+- **Explorar soluciones** (cabecera) lleva a la ciudad libre.
+- Sectores, líneas de servicio, plataformas, proyectos y logos abren su caso de
+  uso **solo si existe de verdad** en el catálogo.
+- Al salir se guardan capítulo, paso y selección (ubicación del globo, agente,
+  logo…) y la ciudad vuelve exactamente a como estaba antes del recorrido.
+  **Volver a la presentación** devuelve a ese punto.
+
+### Recursos de la presentación
+
+```bash
+npm run deck:assets   # extrae y optimiza los medios del .pptx (no lo modifica)
+npm run deck:globe    # hornea los países del globo (Natural Earth 1:110m)
+```
+
+El script lee las dos presentaciones (corporativa y de IA Agentiva); cada
+recurso del manifiesto dice de cuál sale (`source`). Los recursos quedan en
+`public/assets/mti-presentation/` (`brand`, `clients`, `projects`, `sectors`,
+`services`, `platforms`, `backgrounds`, `icons`, `agentic/cases`), en
+WebP (y SVG donde el original lo es), con versión de 960 px para móvil y vista
+previa difuminada. El manifiesto `src/data/presentationAssets.js` relaciona cada
+archivo con cliente, proyecto, sector, plataforma, capítulo, texto alternativo y
+caso de uso. La aplicación nunca abre el `.pptx`.
+
+### Editar los textos
+
+`src/data/deck.js` (castellano) y `src/data/deck.en.js` (inglés, mezclado por
+`id`). Cada bloque lleva `src` (páginas del PDF) y, si falta confirmar algo,
+`review`: no se enseña nunca al cliente, sale en el panel de la tecla `F`. Las
+cifras llevan `scope` —grupo, plataforma o proyecto— y se rotulan así.
+
+### Comprobar el flujo completo
+
+```bash
+npm run dev
+npm run deck:check    # sin ventana, con la GPU del equipo
+```
+
+Recorre los 50 pasos, el recorrido de Agentify AI (entradas desde proyectos y
+cierre, sus 38 pasos, el filtro de casos, ida y vuelta a la ciudad, índice por
+recorridos), el globo (selección, arrastre, redimensionado, reentrada), rueda y
+pausa, el salto a la ciudad y el regreso exacto, la ciudad original, móvil,
+movimiento reducido y un equipo sin WebGL. Falla si hay errores en
+consola. Capturas en `.artifacts/deck/`.
+
 ## Añadir o editar un caso de uso
 
 Todo el catálogo vive en un único archivo: [`src/data/solutions.js`](src/data/solutions.js).
@@ -406,8 +571,20 @@ matriz y la ficha.
 
 ```
 scripts/fetch-city.mjs      descarga y hornea la geometría real de OSM
+scripts/deck-walk.mjs       comprobación de extremo a extremo del recorrido
+scripts/extract-presentation.mjs  extrae y optimiza los recursos del .pptx
+scripts/build-globe.mjs     hornea los países del globo
 src/
   data/solutions.js         catálogo: industrias, soluciones y casos de uso
+  data/deck.js              contenido del recorrido corporativo (+ deck.en.js)
+  data/deckLocale.js        mezcla contenido y traducción; notas de revisión
+  data/presentationAssets.js  manifiesto de recursos extraídos del .pptx
+  deck/Deck.jsx             armazón: navegación, teclado, rueda, gestos, índice, fuentes
+  deck/choreography.js      qué se ve en cada paso: escenario, cámara, capas
+  deck/cityBridge.js        conduce la ciudad 3D desde el recorrido y ancla rótulos
+  deck/scenes/              las siete escenas (capa de texto, fotos y controles)
+  deck/stage/               lienzo 3D propio: logo, globo, obra y cadena de plataformas
+  deck/parts.jsx            fotos, logos, rótulos anclados, contadores, enlaces
   three/realcity.js         ciudad real: edificios, calles, parques, cámaras CCTV
   three/realtraffic.js      tráfico y peatones sobre el grafo de calles real
   three/assets.js           carga de modelos glTF, normalizado e instanciado

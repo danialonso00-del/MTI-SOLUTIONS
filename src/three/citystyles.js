@@ -1,163 +1,73 @@
 import * as THREE from 'three';
-
-/**
- * Estilos de ciudad.
- *
- * La misma geometría real, tres lecturas distintas:
- *
- *  · foto     — ortofoto aérea en suelo y cubiertas (el más realista)
- *  · maqueta  — sin fotografía: volúmenes claros sobre calles dibujadas, como
- *               una maqueta de arquitectura. Se lee mejor al señalar cosas y va
- *               mucho más suelto en equipos flojos.
- *  · tecnico  — plano oscuro de sala de control: calles luminosas, edificios
- *               apagados y ventanas encendidas
- *
- * Cambiar de estilo no reconstruye nada: solo intercambia materiales.
- */
+import { makeModernFacadeTextures } from './moderncity.js';
 
 export const CITY_STYLES = {
-  foto: {
-    id: 'foto',
-    label: 'Foto aérea',
-    hint: 'Ortofoto real del ICGC',
-    icon: 'camera',
-  },
-  maqueta: {
-    id: 'maqueta',
-    label: 'Maqueta',
-    hint: 'Volúmenes limpios, sin fotografía',
-    icon: 'building',
-  },
-  tecnico: {
-    id: 'tecnico',
-    label: 'Técnico',
-    hint: 'Plano oscuro de sala de control',
-    icon: 'command',
-  },
+  moderno: { id: 'moderno', label: 'Moderno', hint: 'Piedra clara, cristal y jardines urbanos', icon: 'city' },
+  foto: { id: 'foto', label: 'Foto aérea', hint: 'Ortofoto real del ICGC', icon: 'camera' },
+  maqueta: { id: 'maqueta', label: 'Maqueta', hint: 'Volúmenes limpios, sin fotografía', icon: 'building' },
+  tecnico: { id: 'tecnico', label: 'Técnico', hint: 'Plano oscuro de sala de control', icon: 'command' },
 };
 
-const C = (hex) => new THREE.Color(hex);
+// Keep each style's palette throughout the lighting transition.
+const PALETTES = {
+  moderno: { ground: ['#a9b9b9', '#182b38'], roof: ['#c1cbc7', '#4b606d'], wall: ['#f7f3e9', '#718a9d'], road: ['#40535a', '#152a39'], walk: ['#acbbb7', '#344c59'], park: ['#54987f', '#194f46'] },
+  foto: { ground: ['#2d3340', '#101a29'], roof: ['#ffffff', '#6a7a8e'], wall: ['#ffffff', '#98a9be'], road: ['#40535a', '#152a39'], walk: ['#acbbb7', '#344c59'], park: ['#54987f', '#194f46'] },
+  maqueta: { ground: ['#9caaa9', '#253646'], roof: ['#c4cdcb', '#607181'], wall: ['#dfded5', '#8796a6'], road: ['#58676d', '#253a49'], walk: ['#929f9f', '#475c69'], park: ['#78a78b', '#2a584c'] },
+  tecnico: { ground: ['#080f1c', '#080f1c'], roof: ['#1d3147', '#1d3147'], wall: ['#183047', '#183047'], road: ['#0d263c', '#0d263c'], walk: ['#102132', '#102132'], park: ['#113c37', '#113c37'] },
+};
+Object.values(PALETTES).forEach((p) => Object.keys(p).forEach((key) => { p[key] = p[key].map((c) => new THREE.Color(c)); }));
 
-/**
- * Crea el conmutador de estilos sobre los materiales ya construidos.
- * @param {object} parts materiales y grupos de la ciudad
- */
 export function createStyleSwitch(parts) {
-  const {
-    groundMats = [],
-    roofMats = [],
-    facadeMat,
-    baseMat,
-    orthoMeshes = [],
-    roadsGroup,
-    parksGroup,
-    detailGroup,
-    facadeTextures,
-    roofTextures,
-  } = parts;
-
+  const { groundMats = [], roofMats = [], facadeMat, baseMat, orthoMeshes = [],
+    roadsGroup, parksGroup, detailGroup, facadeTextures, roofTextures = [] } = parts;
+  const modern = makeModernFacadeTextures();
+  const roadMaterials = [];
+  roadsGroup?.traverse((o) => { if (o.isMesh) roadMaterials.push({ mat: o.material, road: o.userData.kind === 'asphalt' }); });
+  const parkMaterials = [];
+  parksGroup?.traverse((o) => { if (o.isMesh) parkMaterials.push(o.material); });
   let current = 'foto';
-
-  const setMap = (mat, map) => {
-    if (mat.map === map) return;
-    mat.map = map;
-    mat.needsUpdate = true;
+  let night = 0;
+  const white = new THREE.Color('#ffffff');
+  const photoNight = new THREE.Color('#65788e');
+  const tint = (mat, pair) => mat.color.copy(pair[0]).lerp(pair[1], night);
+  const update = (k) => {
+    night = k;
+    const p = PALETTES[current];
+    tint(baseMat, p.ground);
+    roofMats.forEach((m) => tint(m, p.roof));
+    tint(facadeMat, p.wall);
+    groundMats.forEach((m) => m.color.copy(white).lerp(photoNight, k));
+    roadMaterials.forEach(({ mat, road }) => tint(mat, road ? p.road : p.walk));
+    parkMaterials.forEach((m) => tint(m, p.park));
   };
-
   const apply = (style) => {
     if (!CITY_STYLES[style]) return current;
     current = style;
     const photo = style === 'foto';
-
-    // suelo fotográfico
-    orthoMeshes.forEach((m) => (m.visible = photo));
-    if (detailGroup) detailGroup.visible = detailGroup.userData.wanted && photo;
-
-    // calles y zonas verdes dibujadas: solo cuando no hay foto
+    const technical = style === 'tecnico';
+    const textured = photo || style === 'moderno';
+    orthoMeshes.forEach((m) => { m.visible = photo; });
+    if (detailGroup) detailGroup.visible = Boolean(detailGroup.userData.wanted && photo);
     if (roadsGroup) roadsGroup.visible = !photo;
     if (parksGroup) parksGroup.visible = !photo;
-
-    if (style === 'foto') {
-      groundMats.forEach((m) => m.color.set('#ffffff'));
-      roofMats.forEach((m, i) => {
-        setMap(m, roofTextures[i] ?? null);
-        m.color.set('#ffffff');
-        m.roughness = 0.94;
-        m.metalness = 0;
-      });
-      setMap(facadeMat, facadeTextures.map);
-      facadeMat.color.set('#ffffff');
-      facadeMat.emissiveMap = facadeTextures.emissiveMap;
-      facadeMat.emissive.set('#ffffff');
-      facadeMat.needsUpdate = true;
-      facadeMat.roughness = 0.85;
-      facadeMat.metalness = 0.02;
-      baseMat.color.set('#2d3340');
-    }
-
-    if (style === 'maqueta') {
-      // el suelo dejaba de ser blanco puro: si no, la maqueta se quema con la
-      // luz del sol y se pierde el contraste entre calle y manzana
-      groundMats.forEach((m) => m.color.set('#c3cad3'));
-      roofMats.forEach((m) => {
-        setMap(m, null);
-        m.color.set('#bcc3cd');
-        m.roughness = 0.92;
-        m.metalness = 0;
-      });
-      setMap(facadeMat, null);
-      facadeMat.color.set('#dcd8d0');
-      // sin mapa de ventanas, el brillo nocturno se aplicaría a TODA la
-      // fachada y la maqueta se quema: se deja un emisivo casi negro
-      facadeMat.emissiveMap = null;
-      facadeMat.emissive.set('#151a24');
-      facadeMat.needsUpdate = true;
-      facadeMat.roughness = 0.9;
-      facadeMat.metalness = 0;
-      baseMat.color.set('#8b93a1');
-    }
-
-    if (style === 'tecnico') {
-      groundMats.forEach((m) => m.color.set('#070c14'));
-      roofMats.forEach((m) => {
-        setMap(m, null);
-        m.color.set('#16202f');
-        m.roughness = 0.6;
-        m.metalness = 0.25;
-      });
-      setMap(facadeMat, null);
-      facadeMat.color.set('#0f1826');
-      facadeMat.emissiveMap = facadeTextures.emissiveMap;
-      facadeMat.emissive.set('#ffffff');
-      facadeMat.needsUpdate = true;
-      facadeMat.roughness = 0.45;
-      facadeMat.metalness = 0.3;
-      baseMat.color.set('#070b13');
-    }
-
-    // las calles cambian de aspecto con el estilo
-    if (roadsGroup) {
-      roadsGroup.traverse((o) => {
-        if (!o.isMesh) return;
-        const road = o.userData.kind === 'asphalt';
-        if (style === 'maqueta') {
-          o.material.color.copy(C(road ? '#5b6172' : '#8f95a3'));
-          o.material.emissive?.set('#000000');
-        } else {
-          o.material.color.copy(C(road ? '#0a1b2c' : '#0a1420'));
-          o.material.emissive?.set(road ? '#0ea5e9' : '#0c4a6e');
-          o.material.emissiveIntensity = road ? 1.15 : 0.35;
-        }
-      });
-    }
-    if (parksGroup) {
-      parksGroup.traverse((o) => {
-        if (o.isMesh) o.material.color.copy(C(style === 'maqueta' ? '#7fa98a' : '#0f2a22'));
-      });
-    }
-
+    roofMats.forEach((m, i) => {
+      m.map = photo ? roofTextures[i] ?? null : null;
+      m.roughness = style === 'moderno' ? 0.72 : 0.9;
+      m.metalness = technical ? 0.18 : 0.04;
+      m.needsUpdate = true;
+    });
+    facadeMat.map = style === 'moderno' ? modern.map : photo ? facadeTextures.map : null;
+    facadeMat.emissiveMap = style === 'moderno' ? modern.emissiveMap : facadeTextures.emissiveMap;
+    facadeMat.emissive.set(style === 'maqueta' ? '#8498af' : '#ffffff');
+    facadeMat.roughness = textured ? 0.68 : 0.8;
+    facadeMat.metalness = style === 'moderno' ? 0.12 : technical ? 0.22 : 0.02;
+    facadeMat.needsUpdate = true;
+    roadMaterials.forEach(({ mat, road }) => {
+      mat.emissive.set(technical ? (road ? '#298bb2' : '#163f57') : '#000000');
+      mat.emissiveIntensity = technical ? (road ? 0.4 : 0.12) : 0;
+    });
+    update(night);
     return current;
   };
-
-  return { apply, get current() { return current; } };
+  return { apply, update, get current() { return current; } };
 }

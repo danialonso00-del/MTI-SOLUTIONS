@@ -21,15 +21,19 @@ const FLEET = [
 ];
 
 const LANE = 2.7;
+const roadTarget = new THREE.Vector3();
 
 /** Recorre la red saltando de segmento en segmento por los cruces reales. */
-class RoadAgent {
+export class RoadAgent {
   constructor(network, speed, laneOffset = LANE) {
     this.net = network;
     this.speed = speed;
     this.lane = laneOffset;
     this.pick(Math.floor(Math.random() * network.segments.length));
     this.t = Math.random() * this.seg.len;
+    this.visual = new THREE.Vector3();
+    this.rawPosition(this.visual);
+    this.heading = this.targetHeading;
   }
 
   pick(index, dir = Math.random() > 0.5 ? 0 : 1) {
@@ -46,12 +50,13 @@ class RoadAgent {
     const len = Math.hypot(dx, dz) || 1;
     this.dx = dx / len;
     this.dz = dz / len;
-    this.heading = Math.atan2(this.dx, this.dz);
+    this.targetHeading = Math.atan2(this.dx, this.dz);
   }
 
   step(dt) {
     this.t += this.speed * dt;
-    if (this.t >= this.seg.len) {
+    while (this.t >= this.seg.len) {
+      const remainder = this.t - this.seg.len;
       const node = this.net.nodes.get(this.net.key(this.to));
       const options = node ? node.filter((e) => e.index !== this.index) : [];
       if (options.length) {
@@ -61,11 +66,20 @@ class RoadAgent {
         // final de calle: media vuelta
         this.pick(this.index, this.dir === 0 ? 1 : 0);
       }
+      this.t = remainder;
     }
+    this.rawPosition(roadTarget);
+    const alpha = 1 - Math.exp(-dt * 10);
+    this.visual.lerp(roadTarget, alpha);
+    // Interpolate across the shortest angle, including the -PI / PI seam.
+    const angle = Math.atan2(Math.sin(this.targetHeading - this.heading), Math.cos(this.targetHeading - this.heading));
+    this.heading += angle * (1 - Math.exp(-dt * 7));
   }
 
+  position(out) { return out.copy(this.visual); }
+
   /** Posición con desplazamiento al carril derecho. */
-  position(out) {
+  rawPosition(out) {
     const p = this.t / this.seg.len;
     const x = this.from[0] + (this.to[0] - this.from[0]) * p;
     const z = this.from[1] + (this.to[1] - this.from[1]) * p;
@@ -101,6 +115,7 @@ export function buildRealTraffic(network, library = {}, options = {}) {
         new THREE.MeshStandardMaterial({ color: 0x94a3b8 }),
         def.count
       );
+    mesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
     mesh.frustumCulled = false;
     mesh.castShadow = true;
     root.add(mesh);

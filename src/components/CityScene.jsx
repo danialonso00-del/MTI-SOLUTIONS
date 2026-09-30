@@ -8,9 +8,11 @@ import { buildHotspots } from '../three/hotspots.js';
 import { applyDayNight, PALETTE } from '../three/theme.js';
 import { createDirector } from '../three/cinematics.js';
 import { buildDataLayers } from '../three/datalayers.js';
+import { buildCityDetails } from '../three/moderncity.js';
+import { buildAtmosphere, lightAtHour } from '../three/atmosphere.js';
 import { createIncident, INCIDENT_DURATION } from '../three/incident.js';
 import { toShotList, evaluateSequence } from '../three/shots.js';
-import { useStore, cameraGoal, labelNodes } from '../store.js';
+import { useStore, cameraGoal, labelNodes, deckAnchors } from '../store.js';
 import { useSolutions } from '../i18n.js';
 import PhotoCity from './PhotoCity.jsx';
 
@@ -45,6 +47,11 @@ function World({ onReady, world }) {
   const lastShot = useRef(-1);
   const playedId = useRef(null);
   const projected = useMemo(() => new THREE.Vector3(), []);
+  const ambientTime = useRef(0);
+  const cityDetails = useRef(null);
+  const atmosphere = useRef(null);
+  const stars = useRef(null);
+  const interactionUntil = useRef(0);
 
   // ciudad y tráfico ya construidos en App (la ortofoto se carga antes)
   const { city, traffic, cityData } = world;
@@ -82,11 +89,24 @@ function World({ onReady, world }) {
   useEffect(() => () => director.stop(), [director]);
 
   // capas de datos sobre el suelo
-  const layers = useMemo(() => buildDataLayers(city, cityData), [city, cityData]);
+  const layers = useRef(null);
   useEffect(() => {
-    scene.add(layers.mesh, layers.sweep);
-    return () => scene.remove(layers.mesh, layers.sweep);
-  }, [scene, layers]);
+    const data = buildDataLayers(city, cityData);
+    const detail = buildCityDetails(cityData);
+    const sky = buildAtmosphere();
+    layers.current = data;
+    cityDetails.current = detail;
+    atmosphere.current = sky;
+    data.setLayer(useStore.getState().dataLayer, performance.now() / 1000);
+    scene.add(data.root, detail.root, sky.mesh);
+    return () => {
+      scene.remove(data.root, detail.root, sky.mesh);
+      data.dispose();
+      detail.dispose();
+      sky.dispose();
+      layers.current = cityDetails.current = atmosphere.current = null;
+    };
+  }, [scene, city, cityData]);
   // estilo de ciudad
   const cityStyle = useStore((s) => s.cityStyle);
   useEffect(() => {
@@ -95,8 +115,8 @@ function World({ onReady, world }) {
 
   const dataLayer = useStore((s) => s.dataLayer);
   useEffect(() => {
-    layers.setLayer(dataLayer, performance.now() / 1000);
-  }, [layers, dataLayer]);
+    layers.current?.setLayer(dataLayer, performance.now() / 1000);
+  }, [dataLayer]);
 
   // simulación de incidente
   const incident = useMemo(
@@ -160,8 +180,8 @@ function World({ onReady, world }) {
 
   useEffect(() => {
     scene.background = PALETTE.skyDay.clone();
-    scene.fog = new THREE.Fog(PALETTE.fogDay.clone(), 900, 5200);
-    applyDayNight(nightTargets, 0);
+    scene.fog = new THREE.Fog(PALETTE.fogDay.clone(), 1600, 6500);
+    applyDayNight(nightTargets, nightK.current);
     gl.shadowMap.enabled = !lowQ;
     gl.shadowMap.type = THREE.PCFSoftShadowMap;
     const id = requestAnimationFrame(() => onReady?.());
@@ -192,7 +212,7 @@ function World({ onReady, world }) {
   };
 
   useFrame((_, rawDt) => {
-    const dt = Math.min(rawDt, 0.05);
+    const dt = Math.min(rawDt, 0.1);
     // la transición día/noche usa un dt menos recortado: con el clamp normal,
     // en equipos lentos el cambio tardaba una eternidad en completarse
     const dtSlow = Math.min(rawDt, 0.4);
@@ -216,13 +236,17 @@ function World({ onReady, world }) {
     }
 
     /* animación de la ciudad */
+    const motionDt = s.motionEnabled ? dt : 0;
+    ambientTime.current += motionDt;
+    const motionT = ambientTime.current;
     const ctx = { camera };
-    for (const u of city.updaters) u(t, dt, ctx);
-    for (const u of traffic.updaters) u(t, dt, ctx);
-    for (const u of hotspots.updaters) u(t, dt, ctx);
+    for (const u of city.updaters) u(motionT, motionDt, ctx);
+    for (const u of traffic.updaters) u(motionT, motionDt, ctx);
+    for (const u of hotspots.updaters) u(motionT, motionDt, ctx);
 
     /* día / noche */
-    const targetK = s.night ? 1 : 0;
+    const lighting = lightAtHour(s.hour);
+    const targetK = lighting.night;
     if (Math.abs(nightK.current - targetK) > 0.001) {
       nightK.current += (targetK - nightK.current) * damp(dtSlow, 1.9);
       const k = nightK.current;
@@ -234,25 +258,30 @@ function World({ onReady, world }) {
       const ambientLight = ambient.current ?? scene.getObjectByName('ambient');
       if (sunLight) {
         sunLight.color.copy(PALETTE.sunDay).lerp(PALETTE.sunNight, k);
-        sunLight.intensity = THREE.MathUtils.lerp(3.1, 0.16, k);
+        sunLight.intensity = THREE.MathUtils.lerp(2.25, 0.48, k);
       }
       if (hemiLight) {
         hemiLight.color.copy(PALETTE.hemiSkyDay).lerp(PALETTE.hemiSkyNight, k);
         hemiLight.groundColor.copy(PALETTE.hemiGroundDay).lerp(PALETTE.hemiGroundNight, k);
-        hemiLight.intensity = THREE.MathUtils.lerp(2.1, 0.14, k);
+        hemiLight.intensity = THREE.MathUtils.lerp(1.25, 0.8, k);
       }
-      if (ambientLight) ambientLight.intensity = THREE.MathUtils.lerp(0.55, 0.05, k);
+      if (ambientLight) ambientLight.intensity = THREE.MathUtils.lerp(0.28, 0.3, k);
     }
+
+    city.styles?.update(nightK.current);
+    cityDetails.current?.update(motionT, nightK.current, s);
+    atmosphere.current?.update(camera, s.hour, nightK.current, lighting.golden, dtSlow, scene.fog, sun.current);
+    if (stars.current) stars.current.visible = nightK.current > 0.65;
 
     /* sombras: la caja sigue al punto que mira la cámara, así son nítidas
        en la zona visible aunque la ciudad mida kilómetros */
-    if (!lowQ && controls.current) {
+    if (controls.current) {
       const sunLight = sun.current ?? scene.getObjectByName('sun');
       if (sunLight) {
         const c = controls.current.target;
         // el sol describe su arco según la hora: sombras largas a primera y
         // última hora, cenitales al mediodía
-        const dayK = THREE.MathUtils.clamp((s.hour - 6) / 12, 0, 1);
+        const dayK = THREE.MathUtils.clamp((s.hour - 7) / 13.5, 0, 1);
         const azimuth = Math.PI * (0.15 + dayK * 0.7);
         const altitude = Math.sin(dayK * Math.PI) * 0.85 + 0.12;
         sunLight.position.set(
@@ -330,6 +359,12 @@ function World({ onReady, world }) {
     if (goalVersion.current !== cameraGoal.version) {
       goalVersion.current = cameraGoal.version;
       followGoal.current = true;
+      if (cameraGoal.snap && controls.current) {
+        camera.position.set(...cameraGoal.position);
+        controls.current.target.set(...cameraGoal.target);
+        controls.current.update();
+        followGoal.current = false;
+      }
     }
 
     if (rig.current && controls.current) {
@@ -378,7 +413,7 @@ function World({ onReady, world }) {
     } else if (followGoal.current && controls.current) {
       const [px, py, pz] = cameraGoal.position;
       const [tx, ty, tz] = cameraGoal.target;
-      const f = damp(dt, 2.1);
+      const f = damp(dtSlow, 2.1);
       camera.position.lerp({ x: px, y: py, z: pz }, f);
       controls.current.target.lerp(new THREE.Vector3(tx, ty, tz), f);
       if (camera.position.distanceTo(new THREE.Vector3(px, py, pz)) < 0.6) followGoal.current = false;
@@ -386,7 +421,17 @@ function World({ onReady, world }) {
 
     /* giro suave cuando no hay nada seleccionado */
     if (controls.current && !rig.current) {
-      controls.current.autoRotate = s.phase === 'explore' && !s.activeId && !followGoal.current;
+      // en el recorrido corporativo la ciudad es decorado: gira despacio
+      // mientras se habla, salvo que el presentador haya pausado
+      const inDeck = s.mode === 'deck' && s.cityLive;
+      controls.current.autoRotate =
+        s.autoOrbit &&
+        s.motionEnabled &&
+        t > interactionUntil.current &&
+        (inDeck ? !s.deckPaused : s.phase === 'explore') &&
+        !s.activeId &&
+        !followGoal.current;
+      controls.current.autoRotateSpeed = inDeck ? 0.28 : 0.14;
       controls.current.update();
     }
 
@@ -402,7 +447,7 @@ function World({ onReady, world }) {
     }
 
     /* capas de datos e incidente */
-    layers.update(t, dt);
+    layers.current?.update(t, dt, motionT, s.photoMode);
     if (s.incident) {
       const elapsed = t - incidentStart.current;
       incident.update(t, dt, elapsed);
@@ -434,6 +479,60 @@ function World({ onReady, world }) {
     /* etiquetas HTML proyectadas, ordenadas por cercanía y sin solaparse */
     const w = gl.domElement.clientWidth;
     const h2 = gl.domElement.clientHeight;
+
+    /* anclajes del recorrido corporativo: cifras y rótulos sobre edificios.
+       Si dos se pisan, el más lejano sube su tallo; si ya no cabe, se oculta. */
+    if (s.mode === 'deck' && deckAnchors.size) {
+      const items = [];
+      for (const a of deckAnchors.values()) {
+        projected.set(a.pos[0], a.pos[1], a.pos[2]).project(camera);
+        const x = (projected.x * 0.5 + 0.5) * w;
+        const y = (-projected.y * 0.5 + 0.5) * h2;
+        const out = projected.z > 1 || x < 20 || x > w - 20 || y < 90 || y > h2 - 70;
+        if (!a.w) {
+          const body = a.el.firstElementChild;
+          if (body?.offsetWidth) {
+            a.w = body.offsetWidth;
+            a.h = body.offsetHeight;
+          }
+        }
+        items.push({ a, x, y, out, z: projected.z });
+      }
+      items.sort((p, q) => p.z - q.z); // los más cercanos se colocan primero
+      const boxes = [];
+      for (const it of items) {
+        const { a, x, y } = it;
+        const edge = x > w - 230 ? 'r' : x < 230 ? 'l' : '';
+        const bw = a.w || 180;
+        const bh = a.h || 48;
+        const left = edge === 'r' ? x - bw + 22 : edge === 'l' ? x - 22 : x - bw / 2;
+        let stack = 0;
+        let hidden = it.out;
+        for (let k = 0; k < 4 && !hidden; k++) {
+          const bottom = y - 64 - stack;
+          const top = bottom - bh;
+          const hit = boxes.find((b) => left < b.r && left + bw > b.l && top < b.b && bottom > b.t);
+          if (!hit) {
+            if (top < 84) {
+              // demasiado arriba: se acorta el tallo (hasta 24 px) antes de ocultarlo
+              const room = y - 64 - bh - 84;
+              if (room >= -40 && k === 0) {
+                stack = room;
+                boxes.push({ l: left - 6, r: left + bw + 6, t: 78, b: y - 64 - stack + 6 });
+              } else hidden = true;
+            } else boxes.push({ l: left - 6, r: left + bw + 6, t: top - 6, b: bottom + 6 });
+            break;
+          }
+          stack += bottom - hit.t + 4;
+          if (k === 3) hidden = true;
+        }
+        a.el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0)`;
+        a.el.style.visibility = hidden ? 'hidden' : 'visible';
+        a.el.style.setProperty('--stack', `${Math.round(stack)}px`);
+        if (a.el.dataset.edge !== edge) a.el.dataset.edge = edge;
+      }
+    }
+
     const placed = [];
     const candidates = [];
     for (const h of hotspots.hotspots) {
@@ -505,12 +604,12 @@ function World({ onReady, world }) {
 
   return (
     <>
-      <hemisphereLight ref={hemi} name="hemi" args={['#cfe0f5', '#6b7285', 2.1]} />
+      <hemisphereLight ref={hemi} name="hemi" args={['#d6e5e9', '#708985', 1.25]} />
       <directionalLight
         ref={sun}
         name="sun"
         position={[900, 1400, 700]}
-        intensity={3.1}
+        intensity={2.25}
         color="#fff4dd"
         castShadow={!lowQ}
         shadow-mapSize={[2048, 2048]}
@@ -522,8 +621,10 @@ function World({ onReady, world }) {
         shadow-bias={-0.0012}
         shadow-normalBias={0.6}
       />
-      <ambientLight ref={ambient} name="ambient" intensity={0.55} />
-      <Stars radius={4200} depth={600} count={3200} factor={26} saturation={0} fade speed={0.6} />
+      <ambientLight ref={ambient} name="ambient" intensity={0.28} />
+      <group ref={stars} visible={false}>
+        <Stars radius={4200} depth={600} count={1400} factor={12} saturation={0} fade speed={0} />
+      </group>
 
       <primitive object={city.root} onClick={handlePick} visible={!photoMode} />
       <primitive object={traffic.root} visible={!photoMode} />
@@ -540,11 +641,15 @@ function World({ onReady, world }) {
         makeDefault
         enableDamping
         dampingFactor={0.07}
-        autoRotateSpeed={0.22}
+        autoRotateSpeed={0.14}
+        rotateSpeed={0.65}
+        zoomSpeed={0.75}
         minDistance={70}
         maxDistance={4200}
         maxPolarAngle={Math.PI * 0.47}
+        onEnd={() => { interactionUntil.current = performance.now() / 1000 + 8; }}
         onStart={() => {
+          interactionUntil.current = Infinity;
           followGoal.current = false;
           rig.current = null; // el usuario toma el control de la cámara
           if (Math.abs(camera.fov - 42) > 0.1) {
@@ -566,10 +671,13 @@ function PerfHint() {
   return null;
 }
 
-export default function CityScene({ onReady, world }) {
+export default function CityScene({ onReady, world, deckOpen = false }) {
   const mapMode = useStore((s) => s.mapMode);
+  // el recorrido usa la ciudad como decorado en algunas escenas
+  const cityLive = useStore((s) => s.cityLive);
   const lang = useStore((s) => s.lang);
   const night = useStore((s) => s.night);
+  const perfLevel = useStore((s) => s.perfLevel);
   const quality = useStore((s) => s.quality);
   const lowQ = quality === 'baja';
   const [dpr] = useState(() => (typeof window !== 'undefined' && window.devicePixelRatio > 1 ? [1, 1.75] : [1, 1]));
@@ -578,28 +686,29 @@ export default function CityScene({ onReady, world }) {
     <Canvas
       className="scene-canvas"
       style={{ position: 'fixed', inset: 0, width: '100vw', height: '100vh' }}
-      /* con el mapa delante, la ciudad 3D deja de dibujar: libera la GPU para
-         MapLibre y el mapa va suelto */
-      frameloop={mapMode ? 'never' : 'always'}
+      /* con el mapa delante, o con una escena del recorrido que no usa la
+         ciudad, la ciudad 3D deja de dibujar: libera la GPU para MapLibre o
+         para las escenas propias del recorrido */
+      frameloop={mapMode || (deckOpen && !cityLive) ? 'never' : 'always'}
       shadows={!lowQ}
       dpr={lowQ ? 1 : dpr}
       camera={{ position: [420, 1900, 2400], fov: 42, near: 2, far: 12000 }}
       gl={{ antialias: true, powerPreference: 'high-performance' }}
       onCreated={({ gl }) => {
         gl.toneMapping = THREE.ACESFilmicToneMapping;
-        gl.toneMappingExposure = 1.18;
+        gl.toneMappingExposure = 1.04;
       }}
     >
       <World onReady={onReady} world={world} />
-      {!lowQ && (
+      {!lowQ && perfLevel > 0 && (
       <EffectComposer disableNormalPass multisampling={0}>
         <Bloom
-          intensity={night ? 0.95 : 0.4}
-          luminanceThreshold={night ? 0.45 : 0.6}
+          intensity={night ? 0.55 : 0.14}
+          luminanceThreshold={night ? 0.72 : 0.9}
           luminanceSmoothing={0.22}
           mipmapBlur
         />
-        <Vignette eskil={false} offset={0.28} darkness={0.55} />
+        <Vignette eskil={false} offset={0.2} darkness={0.3} />
       </EffectComposer>
       )}
     </Canvas>

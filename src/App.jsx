@@ -4,6 +4,10 @@ import CityScene from './components/CityScene.jsx';
 // El modo mapa (MapLibre) solo se descarga si se pulsa el botón: no lastra la
 // carga inicial de la ciudad 3D, que es lo que se usa el 99% del tiempo.
 const MapView = lazy(() => import('./components/MapView.jsx'));
+
+// El recorrido corporativo tampoco lastra el arranque: solo se descarga cuando
+// alguien elige "Conocer MTI".
+const Deck = lazy(() => import('./deck/Deck.jsx'));
 import {
   Loader,
   Intro,
@@ -26,9 +30,11 @@ import { useStore } from './store.js';
 import { loadModels } from './three/assets.js';
 import { loadCityData, buildRealCity } from './three/realcity.js';
 import { buildRealTraffic } from './three/realtraffic.js';
+import { LAYERS } from './three/datalayers.js';
 
 export default function App() {
   const setPhase = useStore((s) => s.setPhase);
+  const mode = useStore((s) => s.mode);
   const mapMode = useStore((s) => s.mapMode);
   const setProgress = useStore((s) => s.setProgress);
   const loadSolutions = useStore((s) => s.loadSolutions);
@@ -44,6 +50,14 @@ export default function App() {
   const applyCityCenter = useStore((s) => s.applyCityCenter);
 
   useEffect(() => {
+    /* Sin WebGL la ciudad 3D no puede dibujarse: antes la carga se quedaba
+       esperando para siempre. Ahora se salta y la portada ofrece el recorrido,
+       que tiene versión plana de cada escena. */
+    if (!useStore.getState().webgl) {
+      setProgress(1);
+      setPhase('intro');
+      return undefined;
+    }
     let alive = true;
     /* Ojo con `??` aquí: una variable de entorno vacía —VITE_CITY= en el panel
        de Vercel, por ejemplo— NO es null, así que `??` la daba por buena y se
@@ -102,6 +116,9 @@ export default function App() {
   useEffect(() => {
     const onKey = (e) => {
       const s = useStore.getState();
+      // con el recorrido delante, las teclas las gobierna Deck
+      if (s.mode === 'deck') return;
+      if (e.target instanceof HTMLElement && (e.target.matches('input, textarea, select') || (e.target.matches('button') && e.code === 'Space') || e.target.isContentEditable)) return;
       if (e.code === 'Space' && s.phase !== 'loading') {
         e.preventDefault();
         s.toggleTour();
@@ -125,7 +142,7 @@ export default function App() {
         s.toggleIncident();
       } else if (e.key === 'l' || e.key === 'L') {
         // recorre las capas de datos
-        const ids = ['traffic', 'coverage', 'energy', 'waste', 'air'];
+        const ids = Object.keys(LAYERS);
         const i = ids.indexOf(s.dataLayer);
         s.setDataLayer(i === ids.length - 1 ? null : ids[i + 1]);
       } else if (/^[1-9]$/.test(e.key)) {
@@ -141,9 +158,11 @@ export default function App() {
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
+  const deckOpen = mode === 'deck';
+
   return (
     <>
-      {world && <CityScene onReady={handleSceneReady} world={world} />}
+      {world && <CityScene onReady={handleSceneReady} world={world} deckOpen={deckOpen} />}
       {/* el mapa se prepara en cuanto la ciudad está lista, aunque no se vea:
           al pulsar "Mapa" ya está cargado */}
       {world && (
@@ -151,22 +170,42 @@ export default function App() {
           <MapView cityData={world.cityData} />
         </Suspense>
       )}
-      <Labels />
-      <TopBar />
-      <Sidebar />
-      <CutFade />
-      <SceneIntro />
-      <CityControls />
-      <IncidentNarration />
-      <DetailPanel />
-      <TourFlag />
-      <MatrixOverlay />
-      <Credits />
-      <HelpBox />
-      <Hud />
+      {/* La interfaz de la ciudad no se desmonta al abrir el recorrido: se
+          oculta. Así las etiquetas 3D conservan sus nodos DOM y al volver todo
+          está exactamente donde se dejó. */}
+      <div className={`city-ui${deckOpen ? ' city-ui--away' : ''}`}>
+        <Labels />
+        <TopBar />
+        <Sidebar />
+        <CutFade />
+        <SceneIntro />
+        <CityControls />
+        <IncidentNarration />
+        <DetailPanel />
+        <TourFlag />
+        <MatrixOverlay />
+        <Credits />
+        <HelpBox />
+        <Hud />
+        <DocViewer />
+      </div>
+      {deckOpen && (
+        <Suspense fallback={<DeckFallback />}>
+          <Deck />
+        </Suspense>
+      )}
       <Intro />
-      <DocViewer />
       <Loader />
     </>
+  );
+}
+
+/** Mientras se descarga el recorrido: el fondo ya es el suyo, no un salto. */
+function DeckFallback() {
+  return (
+    <div className="deck-boot">
+      <img src="/brand/logo-mti.png" alt="MTi · Mingo Things" />
+      <i />
+    </div>
   );
 }

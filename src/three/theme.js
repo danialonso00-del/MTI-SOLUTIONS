@@ -42,7 +42,7 @@ export const PALETTE = {
   sunDay: new THREE.Color('#fff4dd'),
   sunNight: new THREE.Color('#5b73b8'),
   hemiSkyDay: new THREE.Color('#bcd6f2'),
-  hemiSkyNight: new THREE.Color('#16233f'),
+  hemiSkyNight: new THREE.Color('#7699c3'),
   hemiGroundDay: new THREE.Color('#5b6272'),
-  hemiGroundNight: new THREE.Color('#080d18'),
+  hemiGroundNight: new THREE.Color('#344c65'),
 };

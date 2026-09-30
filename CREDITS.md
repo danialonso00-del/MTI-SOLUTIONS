@@ -109,6 +109,63 @@ Todos los archivos están en [`public/models/`](public/models) y se cargan desde
 | `building-office.glb` | Large Building      | Kenney          | CC0      | https://poly.pizza/m/sxXonOmtct     |
 | `building-tower.glb`  | Skyscraper          | Kenney          | CC0      | https://poly.pizza/m/obYD8hWLTZ     |
 
+## Recorrido corporativo — recursos de la presentación de MTI
+
+Fotografías, logos, capturas e iconos del recorrido «Conocer MTI» se extraen de
+`public/MTI_GROUP_Presentation_v.01.pptx` con `npm run deck:assets` y se guardan
+optimizados en `public/assets/mti-presentation/`. El manifiesto
+`src/data/presentationAssets.js` recoge de qué diapositiva sale cada uno.
+
+Son material de la propia presentación corporativa de MTI: los logotipos de
+clientes y las fotografías conservan los derechos de sus titulares. Dos imágenes
+están marcadas para revisión (tecla F dentro del recorrido): la de KAFD lleva la
+marca de agua de un fotógrafo y la de Qatar no identifica la ciudad retratada.
+
+## Recorrido Agentify AI — recursos de la presentación de IA Agentiva
+
+Las fotografías de los casos, los dos gráficos (RCFIL, REGENASA), los logos de
+clientes que no estaban en la corporativa (Regenasa, Promega, Ucalsa, Frioteis,
+Aspol) y los iconos de los ocho agentes y de los cuatro rasgos salen de
+`public/MTi_Group_IA_Agentiva_Recort_v.01.pptx`, con el mismo
+`npm run deck:assets`, a `public/assets/mti-presentation/agentic/`, `clients/` e
+`icons/`. Material de MTI; logos y fotografías conservan los derechos de sus
+titulares. Las diapositivas de NAUTIA y Técnicas del Mar llevan el logo de
+Merchant Union: no se usa hasta confirmar la relación.
+
+## Logos de herramientas (Agentify AI y esquemas «Cómo funciona»)
+
+Los logos de las herramientas que nombra la presentación de IA Agentiva están en
+`public/assets/logos/` y se registran en `src/data/logos.js`. Los que trae el
+PowerPoint son mapas de bits de 16 px, así que se han sustituido por versiones
+vectoriales:
+
+- **Simple Icons** (CC0, v16.33.0), coloreados con el color oficial de cada
+  marca: Odoo, SAP, Sage, HubSpot, Zoho, WhatsApp, Python, React, Neo4j, Qdrant,
+  Google Chrome, LangChain, LangGraph y Model Context Protocol. Odoo, Sage y Zoho
+  se han recortado a su contorno y guardado en PNG para que se lean en ficha
+  pequeña.
+- **Wikimedia Commons**: Microsoft Outlook, Word, Excel y SharePoint (iconos
+  2019–2025), Microsoft Dynamics 365, Microsoft Azure, Salesforce, OpenAI
+  (símbolo 2025), Adobe Acrobat (PDF) y Gmail (icono 2020).
+
+Son marcas registradas de sus titulares; se muestran solo para identificar las
+integraciones que describe la presentación. Para cambiar uno basta con
+sustituir su archivo manteniendo el nombre.
+
+## Globo del recorrido — Natural Earth (dominio público)
+
+Los contornos y la malla de puntos del globo salen de Natural Earth a escala
+1:110m, vía el paquete `world-atlas@2.0.2`. Se hornean una sola vez con
+`npm run deck:globe` en `public/geo/world-110m.json`; la aplicación no consulta
+ninguna red en ejecución.
+
+## Banderas — flag-icons (MIT)
+
+Las banderas del globo y de las fichas de ubicación son los SVG de
+[flag-icons](https://github.com/lipis/flag-icons) 7.2.3, licencia MIT, copiados
+en `public/assets/flags/` (añadidas Alemania, Polonia, Francia, Italia, Chile,
+Argentina y Camerún).
+
 ## Qué implica cada licencia
 
 - **CC0** — dominio público. Uso libre, también comercial, sin atribución.

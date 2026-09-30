@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { buildConnectivity } from './connectivity.js';
 
 /**
  * Capas de datos sobre la ciudad.
@@ -12,6 +13,14 @@ import * as THREE from 'three';
  */
 
 export const LAYERS = {
+  greenery: {
+    id: 'greenery', label: 'Zonas verdes', unit: 'Superficie verde', color: '#34d399',
+    icon: 'leaf', legend: ['Menos', 'Medio', 'Más'],
+  },
+  network: {
+    id: 'network', label: 'Conectividad urbana', unit: 'Red ilustrativa', color: '#67e8f9',
+    icon: 'signal', legend: ['Nodos', 'Enlaces', 'Conectado'],
+  },
   traffic: {
     id: 'traffic',
     label: 'Intensidad de tráfico',
@@ -79,7 +88,7 @@ function makeNoise(seed = 7) {
 
 /** Rampa de color de la capa: transparente → color → blanco caliente. */
 function rampStyle(ctx, color, x, y, r, intensity) {
-  const c = new THREE.Color(color);
+  const c = new THREE.Color(color).convertLinearToSRGB();
   const rgb = `${Math.round(c.r * 255)}, ${Math.round(c.g * 255)}, ${Math.round(c.b * 255)}`;
   const g = ctx.createRadialGradient(x, y, 0, x, y, r);
   g.addColorStop(0, `rgba(${rgb}, ${0.85 * intensity})`);
@@ -103,6 +112,36 @@ function drawLayer(id, data, world) {
   ctx.clearRect(0, 0, SIZE, SIZE);
   ctx.globalCompositeOperation = 'lighter';
 
+  if (id === 'greenery') {
+    for (const park of data.parks ?? []) {
+      if (park.r.length < 3) continue;
+      ctx.fillStyle = 'rgba(52, 211, 153, 0.58)';
+      ctx.strokeStyle = 'rgba(167, 243, 208, 0.8)';
+      ctx.lineWidth = 2;
+      ctx.shadowBlur = 16;
+      ctx.shadowColor = '#34d399';
+      ctx.beginPath();
+      park.r.forEach((p, i) => i ? ctx.lineTo(toX(p[0]), toY(p[1])) : ctx.moveTo(toX(p[0]), toY(p[1])));
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+    }
+    ctx.shadowBlur = 0;
+    // Land-use polygons can include roads: keep the green overlay off pavement.
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.strokeStyle = '#000000';
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    for (const road of data.roads) {
+      if (road.p.length < 2) continue;
+      ctx.lineWidth = (road.w + 7) * scale;
+      ctx.beginPath();
+      road.p.forEach((p, i) => i ? ctx.lineTo(toX(p[0]), toY(p[1])) : ctx.moveTo(toX(p[0]), toY(p[1])));
+      ctx.stroke();
+    }
+    ctx.globalCompositeOperation = 'lighter';
+  }
+
   if (id === 'traffic') {
     // la intensidad sale del tipo de vía: las primarias concentran el tráfico
     const weight = { motorway: 1, trunk: 0.95, primary: 0.85, secondary: 0.7, tertiary: 0.5 };
@@ -113,7 +152,7 @@ function drawLayer(id, data, world) {
       const local = 0.55 + noise(toX(mid[0]) / SIZE, toY(mid[1]) / SIZE) * 0.75;
       const intensity = Math.min(w * local, 1);
       ctx.strokeStyle = rampStyle(ctx, intensity > 0.82 ? '#ef4444' : color, 0, 0, 1, 1);
-      const c = new THREE.Color(intensity > 0.82 ? '#ef4444' : color);
+      const c = new THREE.Color(intensity > 0.82 ? '#ef4444' : color).convertLinearToSRGB();
       ctx.strokeStyle = `rgba(${Math.round(c.r * 255)}, ${Math.round(c.g * 255)}, ${Math.round(c.b * 255)}, ${0.42 * intensity})`;
       ctx.lineWidth = Math.max(road.w * scale * 1.9, 6);
       ctx.lineCap = 'round';
@@ -170,7 +209,7 @@ function drawLayer(id, data, world) {
       for (let i = 0; i < cells; i++) {
         const n = noise(i / cells, j / cells);
         const tone = n > 0.68 ? '#f59e0b' : n > 0.5 ? color : '#34d399';
-        const c = new THREE.Color(tone);
+        const c = new THREE.Color(tone).convertLinearToSRGB();
         ctx.fillStyle = `rgba(${Math.round(c.r * 255)}, ${Math.round(c.g * 255)}, ${Math.round(c.b * 255)}, ${0.05 + n * 0.3})`;
         ctx.fillRect(i * cell, j * cell, cell + 1, cell + 1);
       }
@@ -190,86 +229,86 @@ function drawLayer(id, data, world) {
 
 export function buildDataLayers(city, cityData) {
   const { extent } = city.bounds;
-  const world = {
-    minX: extent.minX - 200,
-    maxX: extent.maxX + 200,
-    minZ: extent.minZ - 200,
-    maxZ: extent.maxZ + 200,
-  };
-  // el lienzo es cuadrado: se ajusta al lado mayor para no deformar
-  const span = Math.max(world.maxX - world.minX, world.maxZ - world.minZ);
-  const cx = (world.minX + world.maxX) / 2;
-  const cz = (world.minZ + world.maxZ) / 2;
+  const span = Math.max(extent.maxX - extent.minX, extent.maxZ - extent.minZ) + 400;
+  const cx = (extent.minX + extent.maxX) / 2;
+  const cz = (extent.minZ + extent.maxZ) / 2;
   const square = { minX: cx - span / 2, maxX: cx + span / 2, minZ: cz - span / 2, maxZ: cz + span / 2 };
-
-  const material = new THREE.MeshBasicMaterial({
-    transparent: true,
-    opacity: 0,
-    depthWrite: false,
-    blending: THREE.AdditiveBlending,
-  });
-  const mesh = new THREE.Mesh(new THREE.PlaneGeometry(span, span), material);
+  const root = new THREE.Group();
+  root.name = 'data-layers';
+  const material = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false });
+  const geometry = new THREE.PlaneGeometry(span, span);
+  const mesh = new THREE.Mesh(geometry, material);
   mesh.rotation.x = -Math.PI / 2;
   mesh.position.set(cx, 1.6, cz);
   mesh.renderOrder = 6;
   mesh.visible = false;
-  mesh.name = 'datalayer';
+  const previousMaterial = material.clone();
+  const previous = new THREE.Mesh(geometry, previousMaterial);
+  previous.rotation.copy(mesh.rotation);
+  previous.position.copy(mesh.position);
+  previous.position.y = 1.55;
+  previous.renderOrder = 5;
+  previous.visible = false;
+  root.add(previous, mesh);
 
-  // frente de barrido que revela la capa al activarla
   const sweepMat = new THREE.MeshBasicMaterial({
-    color: '#ffffff',
-    transparent: true,
-    opacity: 0,
-    depthWrite: false,
+    color: '#a5f3fc', transparent: true, opacity: 0, depthWrite: false,
     blending: THREE.AdditiveBlending,
   });
-  const sweep = new THREE.Mesh(new THREE.PlaneGeometry(span, span * 0.055), sweepMat);
+  const sweep = new THREE.Mesh(new THREE.PlaneGeometry(span, 5), sweepMat);
   sweep.rotation.x = -Math.PI / 2;
   sweep.position.set(cx, 2.2, cz);
   sweep.renderOrder = 7;
   sweep.visible = false;
-
+  root.add(sweep);
+  const network = buildConnectivity(city);
+  root.add(network.root);
   const cache = new Map();
   const source = {
-    roads: cityData.roads,
-    buildings: cityData.buildings,
-    cameras: city.cameraState,
-    streetPoints: city.streetPoints,
+    roads: cityData.roads, buildings: cityData.buildings, parks: cityData.parks,
+    cameras: city.cameraState, streetPoints: city.streetPoints,
   };
-
-  let active = null;
-  let shownAt = 0;
-  let fade = 0;
-
+  let active = null, shownAt = -10, fade = 0;
   const setLayer = (id, now = 0) => {
-    if (!id || !LAYERS[id]) {
-      active = null;
-      return;
+    if (id === active) return;
+    previousMaterial.map = material.map;
+    previousMaterial.opacity = material.opacity;
+    previousMaterial.needsUpdate = true;
+    fade = 0;
+    active = LAYERS[id] ? id : null;
+    if (active && active !== 'network') {
+      if (!cache.has(active)) cache.set(active, drawLayer(active, source, square));
+      material.map = cache.get(active);
+      material.needsUpdate = true;
     }
-    if (!cache.has(id)) cache.set(id, drawLayer(id, source, square));
-    material.map = cache.get(id);
-    material.needsUpdate = true;
-    material.color.set('#ffffff');
-    active = id;
+    material.opacity = 0;
     shownAt = now;
   };
-
-  const update = (t, dt) => {
-    const goal = active ? 1 : 0;
-    fade += (goal - fade) * Math.min(1, dt * 4);
-    material.opacity = fade * (0.78 + Math.sin(t * 1.1) * 0.07);
-    mesh.visible = fade > 0.01;
-
-    // el barrido recorre la capa una vez al activarla
+  const update = (t, dt, motionT = t, photoMode = false) => {
+    root.visible = !photoMode;
+    const goal = active && active !== 'network' ? 1 : 0;
+    fade += (goal - fade) * (1 - Math.exp(-dt * 3.5));
+    material.opacity = fade * 0.72;
+    mesh.visible = material.opacity > 0.005;
+    previousMaterial.opacity *= Math.exp(-dt * 4.5);
+    previous.visible = previousMaterial.opacity > 0.005;
+    network.update(motionT, dt, active === 'network');
     const since = t - shownAt;
-    const sweeping = active && since < 1.9;
-    sweep.visible = Boolean(sweeping);
-    if (sweeping) {
-      const k = since / 1.9;
-      sweep.position.z = square.minZ + (square.maxZ - square.minZ) * k;
-      sweepMat.opacity = 0.22 * Math.sin(k * Math.PI);
+    sweep.visible = Boolean(goal && since >= 0 && since < 1.8);
+    if (sweep.visible) {
+      const k = since / 1.8;
+      sweep.position.z = square.minZ + span * k;
+      sweepMat.color.set(LAYERS[active].color);
+      sweepMat.opacity = 0.28 * Math.sin(k * Math.PI);
     }
   };
-
-  return { mesh, sweep, setLayer, update, get active() { return active; } };
+  return {
+    root, mesh, sweep, setLayer, update,
+    get active() { return active; },
+    dispose() {
+      cache.forEach((tex) => tex.dispose());
+      geometry.dispose(); material.dispose(); previousMaterial.dispose();
+      sweep.geometry.dispose(); sweepMat.dispose(); network.dispose();
+    },
+  };
 }

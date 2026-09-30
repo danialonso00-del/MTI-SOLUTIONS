@@ -97,7 +97,7 @@ function ribbon(points, width, y) {
   }
   for (let i = 0; i < points.length - 1; i++) {
     const a = i * 2;
-    idx.push(a, a + 1, a + 2, a + 1, a + 3, a + 2);
+    idx.push(a, a + 2, a + 1, a + 1, a + 2, a + 3);
   }
   const g = new THREE.BufferGeometry();
   g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
@@ -264,6 +264,7 @@ export async function buildRealCity(data, library = {}, onProgress) {
   base.rotation.x = -Math.PI / 2;
   base.position.y = -0.5;
   base.name = 'ground';
+  base.receiveShadow = true;
   root.add(base);
 
   /* --- calles y zonas verdes dibujadas (estilos sin fotografía) -------- */
@@ -303,7 +304,8 @@ export async function buildRealCity(data, library = {}, onProgress) {
       try {
         const g = new THREE.ShapeGeometry(ringToShape(park.r));
         g.rotateX(-Math.PI / 2);
-        g.translate(0, 0.16, 0);
+        // Vegetation stays below sidewalks (0.06) and asphalt (0.12).
+        g.translate(0, 0.02, 0);
         geoms.push(g);
       } catch {
         /* polígono degenerado */

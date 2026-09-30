@@ -14,7 +14,10 @@
     "city:fetch": "node scripts/fetch-city.mjs",
     "city:ortho": "node scripts/fetch-ortho.mjs",
     "city:photos": "node scripts/fetch-photos.mjs",
-    "city:ortho:detail": "node scripts/fetch-ortho.mjs -- --detail"
+    "city:ortho:detail": "node scripts/fetch-ortho.mjs -- --detail",
+    "deck:assets": "node scripts/extract-presentation.mjs",
+    "deck:globe": "node scripts/build-globe.mjs",
+    "deck:check": "node scripts/deck-walk.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.8",
@@ -33,6 +36,7 @@
     "@vitejs/plugin-react": "^4.7.0",
     "concurrently": "^10.0.5",
     "puppeteer": "^25.10.0",
+    "sharp": "^0.35.5",
     "vite": "^5.4.10"
   }
 }

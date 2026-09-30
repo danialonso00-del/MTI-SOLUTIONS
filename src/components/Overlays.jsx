@@ -145,12 +145,19 @@ export function Intro() {
   const setLang = useStore((s) => s.setLang);
   const phase = useStore((s) => s.phase);
   const enterCity = useStore((s) => s.enterCity);
+  const openDeck = useStore((s) => s.openDeck);
+  const webgl = useStore((s) => s.webgl);
   const startTour = useStore((s) => s.startTour);
   const toggleMatrix = useStore((s) => s.toggleMatrix);
   const solutions = useSolutions();
   const industries = useIndustries();
   const capabilities = useCapabilities();
-  const open = phase === 'intro';
+  const mode = useStore((s) => s.mode);
+  /* La portada se retira en cuanto se elige camino. Con el recorrido abierto la
+     fase sigue siendo 'intro' —no se ha entrado a la ciudad—, así que hay que
+     mirar también el modo: si no, la portada se queda encima y se come los
+     clics del recorrido. */
+  const open = phase === 'intro' && mode === 'choice';
 
   return (
     <div className={`intro${open ? '' : ' hidden'}`}>
@@ -215,13 +222,47 @@ export function Intro() {
             <span>{t('soluciones')}</span>
           </div>
         </div>
-        <div className="intro__actions">
-          <button className="btn btn--primary" onClick={enterCity}>
-            {t('Explorar la ciudad')}
-            <svg viewBox="0 0 24 24">
+        {/* Dos caminos, uno al lado del otro: la historia de MTI o el
+            catálogo vivo. Se puede saltar de uno a otro en cualquier momento. */}
+        <div className="intro__choice">
+          <button className="choice choice--deck" onClick={() => openDeck(0, 0)}>
+            <span className="choice__icon">
+              <Icon name="spark" />
+            </span>
+            <span className="choice__body">
+              <strong>{t('Conocer MTI')}</strong>
+              <span>
+                {lang === 'en'
+                  ? 'Seven chapters: who we are, where we operate, how we deliver and the projects that prove it.'
+                  : 'Siete capítulos: quiénes somos, dónde operamos, cómo entregamos y los proyectos que lo prueban.'}
+              </span>
+            </span>
+            <svg viewBox="0 0 24 24" className="choice__arrow">
               <path d="M5 12h14M13 6l6 6-6 6" />
             </svg>
           </button>
+
+          <button className="choice choice--city" onClick={enterCity} disabled={!webgl} title={webgl ? undefined : t('Este navegador no puede mostrar la ciudad 3D')}>
+            <span className="choice__icon">
+              <Icon name="city" />
+            </span>
+            <span className="choice__body">
+              <strong>{t('Explorar soluciones')}</strong>
+              <span>
+                {!webgl
+                  ? t('Este navegador no puede mostrar la ciudad 3D')
+                  : lang === 'en'
+                    ? 'Straight into the 3D city: every use case, live, with its documentation and its demo.'
+                    : 'Directo a la ciudad 3D: cada caso de uso, en vivo, con su documentación y su demo.'}
+              </span>
+            </span>
+            <svg viewBox="0 0 24 24" className="choice__arrow">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </button>
+        </div>
+
+        <div className="intro__actions">
           <button
             className="btn btn--ghost"
             onClick={() => {
@@ -263,6 +304,10 @@ export function TopBar() {
   const togglePhoto = useStore((s) => s.togglePhoto);
   const toggleMapMode = useStore((s) => s.toggleMapMode);
   const mapMode = useStore((s) => s.mapMode);
+  const deckReturn = useStore((s) => s.deckReturn);
+  const deckSeen = useStore((s) => s.deckSeen);
+  const resumeDeck = useStore((s) => s.resumeDeck);
+  const openDeck = useStore((s) => s.openDeck);
 
   return (
     <header className={`topbar${phase === 'explore' ? '' : ' hidden'}${mapMode ? ' over-map' : ''}`}>
@@ -277,6 +322,18 @@ export function TopBar() {
         </div>
       </div>
       <div className="topbar__right">
+        {/* Solo aparece si ya se ha estado en el recorrido: devuelve al
+            capítulo y al paso exactos que se dejaron. */}
+        {(deckReturn || deckSeen) && (
+          <button
+            className="chip-btn chip-btn--deck"
+            onClick={deckReturn ? resumeDeck : () => openDeck()}
+            title={t('Volver a la presentación')}
+          >
+            <Icon name="spark" />
+            <span>{t('Volver a la presentación')}</span>
+          </button>
+        )}
         {photoAvailable && (
           <button
             className={`chip-btn${photoMode ? ' active' : ''}`}
@@ -1106,6 +1163,12 @@ export function CityControls() {
   const setCityStyle = useStore((s) => s.setCityStyle);
   const open = useStore((s) => s.controlsOpen);
   const toggleControls = useStore((s) => s.toggleControls);
+  const cityDetails = useStore((s) => s.cityDetails);
+  const streetFlow = useStore((s) => s.streetFlow);
+  const autoOrbit = useStore((s) => s.autoOrbit);
+  const motionEnabled = useStore((s) => s.motionEnabled);
+  const mapMode = useStore((s) => s.mapMode);
+  const toggleCityOption = useStore((s) => s.toggleCityOption);
   const layers = Object.values(LAYERS);
   const active = dataLayer ? LAYERS[dataLayer] : null;
 
@@ -1113,8 +1176,8 @@ export function CityControls() {
   const mm = String(Math.round((hour % 1) * 60)).padStart(2, '0');
 
   return (
-    <div className={`citycontrols${phase === 'explore' && !incident ? '' : ' hidden'}${open ? ' open' : ''}`}>
-      <button className="citycontrols__toggle" onClick={toggleControls}>
+    <div className={`citycontrols${phase === 'explore' && !incident && !mapMode ? '' : ' hidden'}${open ? ' open' : ''}`}>
+      <button className="citycontrols__toggle" onClick={toggleControls} aria-expanded={open} aria-controls="city-view-options">
         <Icon name="layers" />
         <span>{t('Vista de la ciudad')}</span>
         <b>
@@ -1126,7 +1189,7 @@ export function CityControls() {
         </svg>
       </button>
 
-      <div className="citycontrols__body">
+      <div id="city-view-options" className="citycontrols__body" inert={!open}>
       <div className="styleswitch">
         <span className="layers__title">{t('Estilo de ciudad')}</span>
         <div className="styleswitch__row">
@@ -1136,6 +1199,7 @@ export function CityControls() {
               className={`style-chip${cityStyle === st.id ? ' on' : ''}`}
               onClick={() => setCityStyle(st.id)}
               title={t(st.hint)}
+              aria-pressed={cityStyle === st.id}
             >
               <Icon name={st.icon} />
               <span>{t(st.label)}</span>
@@ -1154,22 +1218,40 @@ export function CityControls() {
               style={{ '--c': l.color, animationDelay: `${i * 40}ms` }}
               onClick={() => setDataLayer(l.id)}
               title={t(l.label)}
+              aria-pressed={dataLayer === l.id}
+              aria-label={t(l.label)}
             >
               <Icon name={l.icon} />
-              <span>{t(l.label).split(' ')[0]}</span>
+              <span>{t(l.label)}</span>
             </button>
           ))}
         </div>
+        <p className="layers__source">{t('Capas ilustrativas sobre cartografía real')}</p>
         {active && (
           <div className="layers__legend" style={{ '--c': active.color }}>
-            <span>{active.legend[0]}</span>
+            <span>{t(active.legend[0])}</span>
             <i />
-            <span>{active.legend[2]}</span>
-            <b>{active.unit}</b>
+            <span>{t(active.legend[2])}</span>
+            <b>{t(active.unit)}</b>
           </div>
         )}
       </div>
 
+      <div className="city-ambience">
+        <span className="layers__title">{t('Detalle y movimiento')}</span>
+        <div className="city-ambience__grid">
+          {[
+            ['cityDetails', cityDetails, 'building', 'Detalle urbano'],
+            ['streetFlow', streetFlow, 'route', 'Flujos de calle'],
+            ['autoOrbit', autoOrbit, 'route', 'Órbita suave'],
+            ['motionEnabled', motionEnabled, 'play', 'Animación urbana'],
+          ].map(([key, enabled, icon, label]) => (
+            <button key={key} className={enabled ? 'on' : ''} aria-pressed={enabled} onClick={() => toggleCityOption(key)}>
+              <Icon name={icon} /><span>{t(label)}</span><i />
+            </button>
+          ))}
+        </div>
+      </div>
       <div className="timeline">
         <span className="timeline__clock">
           {hh}:{mm}
@@ -1184,6 +1266,11 @@ export function CityControls() {
           aria-label={t('Hora del día')}
         />
         <span className="timeline__hint">{t('Hora del día')}</span>
+        <div className="timeline__presets">
+          {[[8, 'Amanecer'], [13, 'Día'], [19, 'Atardecer'], [22, 'Noche']].map(([value, label]) => (
+            <button key={value} onClick={() => setHour(value)} aria-pressed={Math.abs(hour - value) < 0.2}>{t(label)}</button>
+          ))}
+        </div>
       </div>
       </div>
     </div>
