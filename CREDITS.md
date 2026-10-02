@@ -152,6 +152,41 @@ Son marcas registradas de sus titulares; se muestran solo para identificar las
 integraciones que describe la presentación. Para cambiar uno basta con
 sustituir su archivo manteniendo el nombre.
 
+## Fotografías de sectores y proyectos — Wikimedia Commons
+
+Las fotos de sectores, los fondos de proyecto y las imágenes de los «monitores» del
+reel de cada proyecto no vienen de las presentaciones (las de la presentación son
+de 400-900 px y no aguantan ir a toda la altura o a sangre). Se descargan con
+`npm run deck:stock` desde Wikimedia Commons (manifiesto en
+`src/data/stockPhotos.js`) y se optimizan con `npm run deck:assets` en
+`public/assets/mti-presentation/stock/`. Las de licencia CC BY-SA se publican con
+esta atribución; no se han modificado salvo recorte y compresión.
+
+| Archivo | Título original | Autor | Licencia | Fuente |
+|---|---|---|---|---|
+| sector-seguridad-camaras-cctv-noche | CCTV cameras in Mumbai.jpg | Punit Rajpal | CC0 | https://commons.wikimedia.org/wiki/File:CCTV_cameras_in_Mumbai.jpg |
+| sector-smart-city-barcelona-noche | Barcelona desde El Carmel (1).JPG | Jcca76 | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Barcelona_desde_El_Carmel_(1).JPG |
+| sector-industria-robots | Factory Automation Robotics Palettizing Bread.jpg | KUKA Roboter GmbH, Bachmann | Public domain | https://commons.wikimedia.org/wiki/File:Factory_Automation_Robotics_Palettizing_Bread.jpg |
+| sector-ciber-cables-red | Wikimedia Foundation Servers 2015-88 | VGrigas (WMF) | CC BY-SA 3.0 | https://commons.wikimedia.org/w/index.php?curid=44043649 |
+| sector-recintos-camp-nou | Camp Nou during El Clasico October 2012.jpg | Jackpollock | CC BY-SA 3.0 | https://commons.wikimedia.org/wiki/File:Camp_Nou_during_El_Clasico_October_2012.jpg |
+| sector-transporte-tmb | 3409 TMB - Flickr - antoniovera1.jpg | Antonio Vera | CC BY-SA 2.0 | https://commons.wikimedia.org/wiki/File:3409_TMB_-_Flickr_-_antoniovera1.jpg |
+| aena-t1-barcelona | Terminal 1 of Barcelona Airport - 23 | Little Savage | CC BY-SA 3.0 | https://commons.wikimedia.org/w/index.php?curid=27084032 |
+| aena-t1-pasajeros | Terminal 1 of Barcelona Airport - 07 | Little Savage | CC BY-SA 3.0 | https://commons.wikimedia.org/w/index.php?curid=27083849 |
+| metro-l9-tunel | Barcelona Metro Line 9 (16049118954) | International Railway Summit | CC BY-SA 2.0 | https://commons.wikimedia.org/w/index.php?curid=78375052 |
+| metro-l9-vagon | Barcelona Metro Line 9 (16645826306) | International Railway Summit | CC BY-SA 2.0 | https://commons.wikimedia.org/w/index.php?curid=78375069 |
+| tmb-autobus-noche | TMB (Barcelona) driver of bus 1766 - has a moment to himself (36696335140) | Paul Burroughs | CC BY-SA 2.0 | https://commons.wikimedia.org/w/index.php?curid=90077492 |
+| autobus-interior | Bus interior with yellow grabrails and handholds BCC bus P1290479.jpg | John Robert McPherson | CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Bus_interior_with_yellow_grabrails_and_handholds_BCC_bus_P1290479.jpg |
+| hospitalet-plaza-europa | Hospitalet de Llobregat - Plaza de Europa, Torres de Toyo Ito (Torres Porta Fira), Hotel Porta Fira y Torre Realia BCN 08 edited | Zarateman | CC0 1.0 | https://commons.wikimedia.org/w/index.php?curid=142924647 |
+| sala-de-control | Celebro Studios Gallery | RuslonV | CC BY-SA 4.0 | https://commons.wikimedia.org/w/index.php?curid=79812581 |
+| navantia-astillero-bam | Puesta en quilla del BAM 'Audaz' | PEPE GADEIRAS | CC BY-SA 4.0 | https://commons.wikimedia.org/w/index.php?curid=179371901 |
+| soldadura-taller | Making sparks for parts (8625884).jpg | U.S. Air Force photo by Senior Airman Luis E. Rios Calderon | Public domain | https://commons.wikimedia.org/wiki/File:Making_sparks_for_parts_(8625884).jpg |
+| kafd-riad-noche | King Abdullah Financial District 201553 | Ahmed | CC BY-SA 4.0 | https://commons.wikimedia.org/w/index.php?curid=120250309 |
+| kafd-riad-dia | King Abdullah Financial District 20230411 114859 | Ahmed | CC BY-SA 4.0 | https://commons.wikimedia.org/w/index.php?curid=157318656 |
+| doha-skyline-noche | Doha Skyline Nacht night | FLASHPACKER TRAVELGUIDE | CC BY-SA 2.0 | https://commons.wikimedia.org/w/index.php?curid=87285877 |
+| contenedores-reciclaje | File:Vancouver street recycling.JPG | Daylen | CC0 1.0 | https://commons.wikimedia.org/w/index.php?curid=66184719 |
+| kuala-lumpur-noche | Kuala Lumpur skyline at night (2019) | Lee Wei | CC BY 2.0 | https://commons.wikimedia.org/w/index.php?curid=115902236 |
+| kuala-lumpur-calima | Kuala Lumpur skyline thunderstorm 03 | Pradana Aumars (talk · contribs) | CC BY-SA 4.0 | https://commons.wikimedia.org/w/index.php?curid=75362513 |
+
 ## Globo del recorrido — Natural Earth (dominio público)
 
 Los contornos y la malla de puntos del globo salen de Natural Earth a escala

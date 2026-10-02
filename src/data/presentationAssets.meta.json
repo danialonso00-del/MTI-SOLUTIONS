@@ -716,5 +716,159 @@
   "height": 175,
   "srcWidth": 175,
   "bytes": 1816
+ },
+ "stock-sector-security": {
+  "width": 2400,
+  "height": 1200,
+  "srcWidth": 3840,
+  "bytes": 118784,
+  "lqip": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAADwAwCdASoYAAwAPu1iqU2ppaQiMAgBMB2JZQDA3CG7UpZjEvQsY8AAAP7uh9grxAD8fUbwcq7cAGDAxDfs5BhvnpEfWliqdRbPN+nnRDrMGRtmBE+xqHzuN7/AAA=="
+ },
+ "stock-sector-smart-cities": {
+  "width": 2400,
+  "height": 1602,
+  "srcWidth": 3840,
+  "bytes": 346512,
+  "lqip": "data:image/webp;base64,UklGRogAAABXRUJQVlA4IHwAAADwAwCdASoYABAAPu1iqU2ppaOiMAgBMB2JZAC06CHfWPCvGqtzEcUQAP7r6QGGPrMdhgwsVVau6zZc5aOa+0Hsf+BnlCB8phujuZdk8/Au6aZsm+KiTO8CD8hv7fgagTAMR6tvIHCl3ZxUEjVSrflvCsHCGwAYBGBQQAAA"
+ },
+ "stock-sector-industry": {
+  "width": 2400,
+  "height": 1800,
+  "srcWidth": 3417,
+  "bytes": 984122,
+  "lqip": "data:image/webp;base64,UklGRtwAAABXRUJQVlA4INAAAABwBQCdASoYABIAPu1qrlCppaQiqAqpMB2JagCdMt8BoXO45ABNm3hfUn3uxRa/DekoZxWAAPv688miAp0KewyFC068Hc1xCpOsxLJc7XhwuqvCgtiB81yUfTQxj7vpiGOxnf+gWF+x/Py2ftjmd+mXtxbI6zvEQz3B8jdXiZTwNe7FdpWCk8IXM9ph+CD4ymctYLEASKjPlhOECPiWdNy0Kkgnel8HAABFVHVtLR5S1DEnIITq27ou94Qod70e4fhB9MhX1j4xIsTwqzSqz6AA"
+ },
+ "stock-sector-cyber": {
+  "width": 2400,
+  "height": 1600,
+  "srcWidth": 3840,
+  "bytes": 234416,
+  "lqip": "data:image/webp;base64,UklGRrIAAABXRUJQVlA4IKYAAABQBACdASoYABAAPu1iqU2ppaOiMAgBMB2JagCsAdwLgnXL3ZQwoxIr0pxAAP5GamIuSb76ObQleGZilNz8Q9YmcxnCB0/FfeY1rFF9gBKH9W6oUnTELbyYiZAj2n7Zu/7Qyi4w7m+xA5obxNCaj6S7UFqSWRsVW5uloWCNYh9I3H0ENtRzHChbBbYa+ZcfnMfIIqnfmWyLc2Zb+CWBcHGp+aD+KgAA"
+ },
+ "stock-sector-venues": {
+  "width": 2400,
+  "height": 1800,
+  "srcWidth": 3264,
+  "bytes": 230384,
+  "lqip": "data:image/webp;base64,UklGRqYAAABXRUJQVlA4IJoAAABQBQCdASoYABIAPu1qq1EppaOiqAqpMB2JYgDCr3+A6N4DjRH+7GXYzvJuoagf3Z8aKYAA/vEP/hYAVRDsvmbD4TvWqSsFGOAOzWOBTRyT4lzU9g9Ux/8M38yAr5B+eOhZx29jrMSgBC+zr9i2HcffkCZIhTBu4JUxndDw4XPS3AwqA/vFhLwKLFIE/hf1FEV2jQI3EO7IAAAA"
+ },
+ "stock-sector-transport": {
+  "width": 2400,
+  "height": 1800,
+  "srcWidth": 2536,
+  "bytes": 424176,
+  "lqip": "data:image/webp;base64,UklGRrYAAABXRUJQVlA4IKoAAABQBACdASoYABIAPu1qr1CppaQiqAqpMB2JQBjmMZtJpQsUCi6Ja2+HIB9gAP7tqeGs1AOie9e9X6QkRw40s7EWlSBEvEV/xPHry8s8EL9zC2HK84JShgSpnEQDsSdDSJ1ESVPOvKIR/W8Kap/QhKbZkipIXreGiYpByGjbCIastZKcTWI8HvfyCQU3bSrEingisfnltSHH3p2SQTbbPvxFck1CXrGHMVwAAA=="
+ },
+ "stock-aena-bg": {
+  "width": 2400,
+  "height": 1800,
+  "srcWidth": 3264,
+  "bytes": 203488,
+  "lqip": "data:image/webp;base64,UklGRn4AAABXRUJQVlA4IHIAAABwBACdASoYABIAPu1sq08ppqQiMBgIATAdiWcAABinZ/wfluLIlme4xYkaQADhvhPKpAdNyq0GeVpkcsrnOV8j88CALezZAAmSuSguE8S2cX6eYXUJfEzSXRapBahb1NrE+TEJElbreFwAOF2HvPhAAAA="
+ },
+ "stock-aena-feed": {
+  "width": 2400,
+  "height": 1800,
+  "srcWidth": 3840,
+  "bytes": 338096,
+  "lqip": "data:image/webp;base64,UklGRpgAAABXRUJQVlA4IIwAAADwBACdASoYABIAPu1sq1EppaOiqAqpMB2JZwAALnE3lxSzopyUe4Ief2C97rKtwAAA/oxPBau3PGFha0PSD28hr18Z0mOT6sLbQOMF0MtIUOa+73B1HoLPUutypjdgQogDGwWDhMUC4PFhqH8eroY8QdlI3PylYdWtdvqW/QhQ2neyjKEFWW8H88AAAA=="
+ },
+ "stock-metro-bg": {
+  "width": 2400,
+  "height": 1602,
+  "srcWidth": 3840,
+  "bytes": 599332,
+  "lqip": "data:image/webp;base64,UklGRqQAAABXRUJQVlA4IJgAAAAQBACdASoYABAAPu1iqU2ppaOiMAgBMB2JQBOgA+W3zRwoTRRQGRPDAADh0OrOnKyfYnVoyJCg0XIEeV5KKhHRauf2pP4VrwdgYl4Cm3sIbFSGbROekKs560WQ8xoI7Hs+Dtp4rPEaF+uE1NeDDShqeNhXFbSlfmoYywT4zAYBV/cYI69/TswQIaFdLBaZri2K8zu11TKgAA=="
+ },
+ "stock-metro-feed": {
+  "width": 2400,
+  "height": 1602,
+  "srcWidth": 3840,
+  "bytes": 472274,
+  "lqip": "data:image/webp;base64,UklGRsIAAABXRUJQVlA4ILYAAACQBACdASoYABAAPu1iqU2ppaOiMAgBMB2JYgCdBagSAIsT/cfVgoDEsbzl+WAA/qobK1SgOefT4ir/LR2uJg8dNFB5uVj4FDvOhW8cMOPQA9Ac8uzfHsuW/b9G+HpL7d/9I9mbHyoOrljialBlqfFS0kC4Y4f+QlXmZ/qrftlBgaU8nwaZj5bn+UvYG5ykCWJC+tI7JXjmPFywd0UTc5Zas4x4emNaVWZ2T0lhxTR3uylutmAAAA=="
+ },
+ "stock-buses-bg": {
+  "width": 2400,
+  "height": 1554,
+  "srcWidth": 3840,
+  "bytes": 754264,
+  "lqip": "data:image/webp;base64,UklGRqQAAABXRUJQVlA4IJgAAACwBACdASoYABAAPu1iqU2ppaOiMAgBMB2JZgCdMoMh1EIfdld/4HzIBwS9giAAAP5PkC7ylBzA4GNC3CvcKVaTmfhonOamsg0xgCaFSBLSqqrGCkcldHx9rQZdy/4MWhIoZgeXiG0DM3KNawQLT2DrdfOpzQI9GRyEuC9sBnQ8/O6jmtBvPzujhdwqaXUxFkAkmNSDdLoAAA=="
+ },
+ "stock-buses-feed": {
+  "width": 2400,
+  "height": 1800,
+  "srcWidth": 3840,
+  "bytes": 512056,
+  "lqip": "data:image/webp;base64,UklGRtYAAABXRUJQVlA4IMoAAADQBQCdASoYABIAPu1qrVCppaQiqAqpMB2JbACsLpXesMsAKeM+RCW36hW5ZWcUA+4/T2iuhuAAAP7wNeNvHOjnmMk8FK2YLMffZKxf89lXCZ36DZgiTmpxQof8BvjTXltg1i14ZFXCxuXbtjAPHz0yPOj9UTvn/by2PoZFP9UxssJbj1sQ03+KLuN7wfaUeI+D1JRHauU1x7Lw9ASLbSIyRlJT7S1Zc5UnH2If8h848/lLSv1i2LmlzVHl3V/RvXkCI4Vu9sCsAAAA"
+ },
+ "stock-hospitalet-bg": {
+  "width": 2315,
+  "height": 1904,
+  "srcWidth": 2315,
+  "bytes": 654976,
+  "lqip": "data:image/webp;base64,UklGRsgAAABXRUJQVlA4ILwAAACwBQCdASoYABQAPu1usFIppiSiqAgBMB2JbACdMoSCwBi89tgAChYeXsLezc9LDL1nXojVMAAA/kSFDlya7G1QclmlrJkKxQcDOtVmGD6iLh1gXQjByp6mSy6mE8kCDguGXXt1PuTDdXIWFqS7ys0OxgZqaCQF9wQy63ag6BAAkagGNGmgpKeaBKMbgAs7Szf/1aSNfl9KvtMp0AcWLN281uoC9GyfVjBh3zMtWpXffzbAxObOk/f1HyAAAA=="
+ },
+ "stock-control-room": {
+  "width": 2400,
+  "height": 1412,
+  "srcWidth": 3840,
+  "bytes": 345894,
+  "lqip": "data:image/webp;base64,UklGRo4AAABXRUJQVlA4IIIAAAAQBACdASoYAA4APu1iqU2ppaQiMAgBMB2JYwCdAB6SEO0KXZB8O8St8AD+7vD9d1Y2PnQfYQYviVqywFMxGPpk5Nr5ZMiBjJQ4VFpTqBcuTOP3VGIjDGzJVN8N+B7RFdZvNBcPPxuTV/Axf9KiK2XvNJioq7rTVC2E8vpvasI6QcAA"
+ },
+ "stock-navantia-bg": {
+  "width": 2400,
+  "height": 3585,
+  "srcWidth": 2592,
+  "bytes": 301330,
+  "lqip": "data:image/webp;base64,UklGRpoAAABXRUJQVlA4II4AAABQBACdASoQABgAPu1iqU2ppaOiMAgBMB2JYwCdACHw1YKLwWBYDQ9s+t3AAP7TLHnMmRDKi7ZDIFzBPwN61Jqsia0rZuKgUyBvS8dFnG1hQop/iVt4JjJW/WVTCKvkrRYtiTwUAFyf4sr2eW4AtdSavvqwo61Wv3KXODE0Pp5EeRFi9zRdUYzZdaW9nKAA"
+ },
+ "stock-navantia-feed": {
+  "width": 2400,
+  "height": 1600,
+  "srcWidth": 3840,
+  "bytes": 256008,
+  "lqip": "data:image/webp;base64,UklGRqQAAABXRUJQVlA4IJgAAACwBACdASoYABAAPu1iqU2ppaOiMAgBMB2JbACdMoCGACJzSpkH4B4mt1g7ZdPgAP7sMIyrCLyyy7OsluEMcRgC+r71vlTqzEcE7SKXANRbd+iCxA7I7McSs0sfBxj+9IoGjcntsqMWkNQjO4Yr3OwLB8gkXonJdhyqren3+OVfCSqCGDkpH2kfTirwf6/PZd48Zh6PxcJwAA=="
+ },
+ "stock-kafd-bg": {
+  "width": 2400,
+  "height": 1800,
+  "srcWidth": 3648,
+  "bytes": 344108,
+  "lqip": "data:image/webp;base64,UklGRowAAABXRUJQVlA4IIAAAACQBACdASoYABIAPu1srFEppaQiqAqpMB2JYgBUgo/4B52CJen2HJ+uAq3rxYAA/vDZavNR+EB7ihjyAHsfchUfeoMn3w14//S86JCrYxOSb4ZGXcCKPGq1YhVnw8Ip78f+0PxSfGmuy0XjTd2ywebtmj2hiVMYvocM9C9CzVkAAA=="
+ },
+ "stock-kafd-feed": {
+  "width": 2400,
+  "height": 1800,
+  "srcWidth": 3840,
+  "bytes": 396110,
+  "lqip": "data:image/webp;base64,UklGRrQAAABXRUJQVlA4IKgAAAAQBQCdASoYABIAPu1qrFEppaQiqAqpMB2JQBOgAX6BiVKvTE5RslCcHCZd588p42gAAO0oFsgiUQ2Upek2qpxOQqgeWDGXkrN0RUtD9xCCyPfTnjxn2zDj6n9DtobRbnRLUaQQ9WI6UPHC89RYZja4yTGWNYGL0BOcEO/kZpCAZNP9SukOkPuELL91GPplddvkaSKYQssos/iyzH/gKt5G/MO4Ff8WAAA="
+ },
+ "stock-qatar-bg": {
+  "width": 2400,
+  "height": 1800,
+  "srcWidth": 3840,
+  "bytes": 348134,
+  "lqip": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAABwBACdASoYABIAPuVgpk2pJaOiMAwBIByJZwC/OCHfrwzPZ04w/KkEqXuKAAD+3sbiiweRp7FoC3UW5e3UktPbXA7NmgfWbwhpStKWm2is1SodciZ9iPu9RuU06GnbvwbiiAAA"
+ },
+ "stock-qatar-feed": {
+  "width": 2400,
+  "height": 1800,
+  "srcWidth": 3264,
+  "bytes": 612760,
+  "lqip": "data:image/webp;base64,UklGRqgAAABXRUJQVlA4IJwAAABwBQCdASoYABIAPu1krE+ppSQiMBgIATAdiWMAyLkgAQ2qLSgknfRhIv2IOzrvycw+ZThgAP3B11yMoI8jLqGwvQo/dBIQVSZtL3Yo7SI7mB+7qPR7SnF4Rb2+nRvJpBfUIRRRLZC63+l5zaGSB11I8k23xAnqCXdv/lTLqXKoA4O0ZSx/L2H9GMfdShhDp5d2DFm1a5rgMIg/wAA="
+ },
+ "stock-malaysia-bg": {
+  "width": 2400,
+  "height": 871,
+  "srcWidth": 3840,
+  "bytes": 143150,
+  "lqip": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAABwAwCdASoYAAkAPu1iqk2ppaQiMAgBMB2JZQAAPlPkfuG17YAA/rvqBqR0qacjyR3V914bR/5ZDKy9z33glk87SrBFO1+nevbBgto1/f8HVMyYa5JSwq2iYEAAAA=="
+ },
+ "stock-malaysia-feed": {
+  "width": 2400,
+  "height": 1800,
+  "srcWidth": 3840,
+  "bytes": 125616,
+  "lqip": "data:image/webp;base64,UklGRoQAAABXRUJQVlA4IHgAAACQBACdASoYABIAPu1uq1CppqOiqAqpMB2JZwC45BESjBMlwwbi3G5yRHch+ugA/uEbcycGqMAy+L+nL5HzmxyKEZ5+0t1ZzTnmyIfpfrHSjap7T1qNF3QrEHudLxjq7dPYFFiEKNnIZii2VqWzcJPoHet+CDKAAAA="
  }
 }

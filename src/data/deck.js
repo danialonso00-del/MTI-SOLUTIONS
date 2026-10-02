@@ -23,6 +23,7 @@
  */
 
 import { AGENTIFY } from './agentic.js';
+import { PROJECT_REELS, PROJECT_REELS_UI } from './projectReels.js';
 
 export const CONTACT = {
   email: 'info@mingothings.com',
@@ -66,40 +67,6 @@ export const OPENING = {
       body:
         'Plataformas y software propios —IoT, Digital Twin, Smart City OS e IA agéntica— desplegados en producción en ciudades, industria y utilities.',
       tags: ['MTi Hypervisor', 'thethings.io', 'Digital Twin', 'Agentic AI'],
-    },
-  ],
-  pillars: [
-    {
-      id: 'mission',
-      num: '01',
-      icon: 'shield',
-      title: 'Foco en operaciones críticas',
-      body:
-        'Entregamos donde fallar no es una opción: aeropuertos, metros, hospitales, plantas industriales, infraestructura soberana.',
-    },
-    {
-      id: 'end-to-end',
-      num: '02',
-      icon: 'integration',
-      title: 'Entrega de extremo a extremo',
-      body:
-        'Concepto, ingeniería, integración, despliegue y operación. Un único responsable desde el RFQ hasta el mantenimiento 24/7.',
-    },
-    {
-      id: 'platforms',
-      num: '03',
-      icon: 'command',
-      title: 'Plataformas propias',
-      body:
-        'IoT, Digital Twin, Smart City OS e IA agéntica desarrollados por MTi, con hoja de ruta y propiedad intelectual propias.',
-    },
-    {
-      id: 'roi',
-      num: '04',
-      icon: 'chart',
-      title: 'Resultados medibles',
-      body:
-        'Cada proyecto reporta impacto cuantificado: horas ahorradas, ofertas generadas, paradas evitadas. ROI desde el primer día.',
     },
   ],
   stats: [
@@ -997,12 +964,28 @@ export const PROJECTS = [
   },
 ];
 
+/** Líneas de negocio de cada proyecto insignia (filtro del capítulo 6), según su ficha. */
+export const PROJECT_LINES = {
+  aena: ['security', 'transport'],
+  metro: ['security', 'transport'],
+  buses: ['transport', 'security'],
+  hospitalet: ['iot', 'smartcity'],
+  navantia: ['industry', 'iot'],
+  kafd: ['smartcity', 'security'],
+  'qatar-waste': ['smartcity', 'iot'],
+  nsu: ['iot', 'smartcity'],
+  'malaysia-aqi': ['iot', 'smartcity'],
+};
+
 export const PROJECTS_META = {
   kicker: 'Proyectos insignia',
   title: ['Proyectos reales.', 'Resultados reales.'],
   lead:
     'Del aeropuerto insignia de España a las fábricas digitales de buques de guerra — los proyectos que definen qué entendemos por crítico.',
   labels: { challenge: 'El reto', solution: 'La solución', outcome: 'El resultado', client: 'Cliente' },
+  clientsKicker: 'Clientes',
+  clientsTitle: ['Confían', 'en nosotros.'],
+  clientsLine: 'Administraciones, operadores de transporte, grupos industriales y empresas privadas.',
   customers: {
     title: 'Una década de despliegues críticos',
     lead:
@@ -1113,13 +1096,13 @@ export const CLOSING = {
  * a paso y solo cambia de capítulo al agotar los suyos: nada avanza solo.
  */
 export const CHAPTERS = [
-  { id: 'opening', num: '01', label: 'MTI en una frase', short: 'MTI', steps: 7, src: [1, 2, 4, 5, 8] },
+  { id: 'opening', num: '01', label: 'MTI en una frase', short: 'MTI', steps: 4, src: [1, 2, 4, 5, 8] },
   { id: 'world', num: '02', label: 'Presencia global', short: 'Mundo', steps: 4, src: [3, 23, 28] },
   { id: 'sectors', num: '03', label: 'Dónde trabajamos', short: 'Sectores', steps: 8, src: [6] },
-  { id: 'delivery', num: '04', label: 'Cómo entregamos', short: 'Entrega', steps: 7, src: [9, 10, 11, 12, 13, 14] },
+  { id: 'delivery', num: '04', label: 'Cómo entregamos', short: 'Entrega', steps: 8, src: [9, 10, 11, 12, 13, 14] },
   { id: 'platforms', num: '05', label: 'Nuestras plataformas', short: 'Plataformas', steps: 7, src: [15, 16, 17, 18, 19, 20, 21] },
-  { id: 'projects', num: '06', label: 'Proyectos que lo prueban', short: 'Proyectos', steps: 10, src: [22, 23, 24, 25, 26, 27, 28] },
-  { id: 'why', num: '07', label: 'Por qué MTI', short: 'Por qué', steps: 7, src: [5, 7, 29, 30] },
+  { id: 'projects', num: '06', label: 'Proyectos que lo prueban', short: 'Proyectos', steps: 11, src: [22, 23, 24, 25, 26, 27, 28] },
+  { id: 'contact', num: '07', label: 'Hablemos', short: 'Contacto', steps: 1, src: [30] },
 ];
 
 /**
@@ -1134,34 +1117,43 @@ export const SCENES = {
     facts: ['25+ países', 'Experiencia en IA', '150K+ dispositivos IoT'],
     arrival: ['Integrador tecnológico.', 'Barcelona, 2016.'],
     arrivalLine: 'Ingeniería, integración y operación de sistemas críticos para el sector público y privado.',
-    pillarsLabel: 'Cuatro pilares',
-    pillars: {
-      mission: { head: 'Donde fallar no es una opción.', line: 'Aeropuertos, metros, hospitales, plantas industriales, infraestructura soberana.', layer: 'Red de cámaras' },
-      'end-to-end': { head: 'Un único responsable.', line: 'Concepto, ingeniería, integración, despliegue y operación. Del RFQ al 24/7.', layer: 'Conectividad urbana' },
-      platforms: { head: 'Tecnología desarrollada por MTi.', line: 'IoT, Digital Twin, Smart City OS e IA agéntica, con hoja de ruta propia.', layer: 'Todos los sistemas' },
-      roi: { head: 'Impacto cuantificado.', line: 'Horas ahorradas, ofertas generadas, paradas evitadas. ROI desde el primer día.', layer: 'Consumo energético' },
-    },
-    /** Lo que muestra el holograma de cada pilar. */
-    pillarViz: {
-      mission: {
-        core: 'Operaciones críticas',
-        items: ['Aeropuertos', 'Metros', 'Hospitales', 'Plantas industriales', 'Infraestructura soberana'],
+    /**
+     * «¿Cómo?» (HowStory): una secuencia que se reproduce sola. Las líneas de
+     * servicio son las de la presentación (p. 10); las industrias, las del
+     * capítulo 3 y la lista «también damos servicio a».
+     */
+    how: {
+      how: '¿Cómo?',
+      client: 'Empresa o gobierno',
+      captions: {
+        need: 'Cuando una empresa o un gobierno tiene una necesidad…',
+        mti: 'MTi interviene.',
+        help: 'Y le ayuda con hardware y software.',
+        ops: 'Todo con nuestra instalación y mantenimiento 24/7.',
+        e2e: 'De extremo a extremo.',
+        industries: 'Así hemos ayudado a todas estas industrias.',
       },
-      'end-to-end': {
-        stages: ['Concepto', 'Ingeniería', 'Integración', 'Despliegue', 'Operación'],
-        from: 'Del RFQ',
-        core: 'Un único responsable',
-        to: 'al mantenimiento 24/7',
-      },
-      roi: {
-        note: 'Resultados medidos en proyectos de IA agéntica',
-        bars: [
-          { client: 'COPEGAL', value: 80, label: 'tiempo de generación de ofertas' },
-          { client: 'FERRI', value: 70, label: 'preparación de ofertas' },
-          { client: 'RCFIL', value: 65, label: 'gestión manual' },
+      needs: ['Integrar todos mis sistemas', 'Un software que automatice mis procesos', 'Un hardware que mida mis instalaciones', 'Ver toda mi operación desde un solo sitio'],
+      hardware: {
+        label: 'Hardware',
+        items: [
+          { mti: 'service-design', label: 'Diseño e ingeniería' },
+          { mti: 'service-install', label: 'Instalación e integración' },
+          { mti: 'service-cert', label: 'Certificación y auditoría' },
         ],
-        src: [20],
       },
+      software: {
+        label: 'Software',
+        items: [
+          { mti: 'service-iot', label: 'IoT y conectividad' },
+          { mti: 'platform-thethings', label: 'Plataformas propias' },
+          { mti: 'service-ai', label: 'IA agentiva' },
+          { mti: 'service-smartcity', label: 'Smart City' },
+          { mti: 'service-twin', label: 'Digital Twin' },
+        ],
+      },
+      ops: { label: 'Instalación y mantenimiento 24/7', sub: 'Un único responsable, durante años' },
+      replay: 'Ver de nuevo',
     },
     metricsHead: 'Probado a escala.',
     metrics: [
@@ -1290,6 +1282,46 @@ export const SCENES = {
     },
   },
   delivery: {
+    /**
+     * Primer paso del capítulo: el camino completo de un proyecto, como diagrama
+     * de flujo con sus preguntas. Todo sale de las líneas de servicio (diseño e
+     * ingeniería con prototipado, instalación multimarca, integración con SCADA,
+     * CCTV, ITS y ERP, plataformas propias, mantenimiento 24/7).
+     */
+    e2e: {
+      kicker: 'Cómo trabajamos',
+      title: ['De extremo a extremo.', 'Un único responsable.'],
+      line: 'Cada proyecto recorre el mismo camino: entender el reto, diseñar la solución, construirla con el hardware y el software que haga falta, instalarla en casa del cliente y mantenerla funcionando.',
+      replay: 'Ver de nuevo',
+      nodes: [
+        { id: 'discover', type: 'step', num: '01', col: 1, row: '1 / span 4', t: 0.3, icon: 'people', title: 'Descubrimiento', body: 'Visitamos la operación y entendemos la necesidad real.' },
+        { id: 'design', type: 'step', num: '02', col: 2, row: '1 / span 4', t: 1.9, mti: 'service-design', title: 'Diseñamos la solución', body: 'Oficina técnica e ingeniería de proyecto.' },
+        { id: 'hw', type: 'decision', col: 3, row: '1 / span 2', t: 3.4, title: '¿Necesita hardware?' },
+        { id: 'sw', type: 'decision', col: 3, row: '3 / span 2', t: 3.7, title: '¿Necesita software?' },
+        { id: 'hw-market', type: 'answer', tone: 'hw', col: 5, row: 1, t: 5.2, icon: 'camera', title: 'Equipos multimarca', body: 'CCTV, IoT, sistemas embarcados.' },
+        { id: 'hw-custom', type: 'answer', tone: 'hw', col: 5, row: 2, t: 6.0, icon: 'cube', title: 'Lo diseñamos', body: 'Electrónica, mecánica y prototipado.' },
+        { id: 'sw-platform', type: 'answer', tone: 'sw', col: 5, row: 3, t: 7.2, icon: 'layers', title: 'Plataformas propias', chips: [{ mti: 'platform-thethings', label: 'thethings.io' }, { mti: 'platform-hypervisor', label: 'Hypervisor' }, { mti: 'platform-twin', label: 'Digital Twin' }, { mti: 'platform-agentic', label: 'Agentic AI' }] },
+        { id: 'sw-existing', type: 'answer', tone: 'sw', col: 5, row: 4, t: 8.0, icon: 'integration', title: 'Integramos lo que ya hay', body: 'SCADA, CCTV, ITS, ERP.' },
+        { id: 'install', type: 'step', num: '03', col: 6, row: '1 / span 4', t: 9.6, mti: 'service-install', title: 'Instalamos en casa del cliente', body: 'El hardware, en campo. El software, desplegado e integrado.' },
+        { id: 'maintain', type: 'step', num: '04', col: 7, row: '1 / span 4', t: 11.4, mti: 'service-om', title: 'Mantenimiento continuo', body: 'Preventivo, correctivo y predictivo, 24/7.' },
+      ],
+      edges: [
+        { from: 'discover', to: 'design', t: 1.4 },
+        { from: 'design', to: 'hw', t: 3.0 },
+        { from: 'design', to: 'sw', t: 3.2 },
+        { from: 'hw', to: 'hw-market', t: 4.8, label: 'Mercado' },
+        { from: 'hw', to: 'hw-custom', t: 5.6, label: 'A medida' },
+        { from: 'sw', to: 'sw-platform', t: 6.8, label: 'Propio' },
+        { from: 'sw', to: 'sw-existing', t: 7.6, label: 'Existente' },
+        { from: 'hw-market', to: 'install', t: 9.0 },
+        { from: 'hw-custom', to: 'install', t: 9.1 },
+        { from: 'sw-platform', to: 'install', t: 9.2 },
+        { from: 'sw-existing', to: 'install', t: 9.3 },
+        { from: 'install', to: 'maintain', t: 11.0 },
+        { from: 'maintain', to: 'discover', t: 12.6, loop: true, label: 'Evolución continua' },
+      ],
+      src: [9, 10, 11, 12, 13, 14],
+    },
     stages: ['Diseñar', 'Desplegar', 'Integrar', 'Operar'],
     beats: [
       { stage: 0, head: 'Primero, el plano.', lines: ['design'] },
@@ -1319,6 +1351,34 @@ export const SCENES = {
     agentsHint: 'Ocho agentes productizados · pulsa uno para verlo',
   },
   projects: {
+    /** Entrada del capítulo: mosaico de fondo y tres formas de ver los proyectos. */
+    hub: {
+      kicker: 'Proyectos',
+      title: ['Estos son', 'nuestros proyectos.'],
+      line: 'Aeropuertos, metros, ciudades, astilleros y empresas industriales. Sistemas críticos en producción en todo el mundo.',
+      stats: [
+        { value: '9', label: 'proyectos insignia' },
+        { value: '14', label: 'despliegues de IA agentiva' },
+        { value: '25+', label: 'países de operación' },
+      ],
+      walk: { title: 'Recorre los más relevantes', sub: 'Nueve proyectos insignia, uno a uno' },
+      filter: { title: 'Explora y filtra', sub: 'Por línea de negocio: CCTV, smart city, IA…' },
+      map: { title: 'Míralos en el mapa', sub: 'Navega por país y por proyecto' },
+      back: 'Proyectos',
+      all: 'Todos',
+      filterTitle: ['Todos nuestros proyectos,', 'por línea de negocio.'],
+      mapTitle: ['Proyectos', 'en el mapa.'],
+      mapHint: 'Pulsa un punto para viajar al proyecto.',
+      agentic: 'IA agentiva · Agentify AI',
+      lines: [
+        { id: 'security', label: 'Seguridad y CCTV', icon: 'camera' },
+        { id: 'transport', label: 'Transporte', icon: 'bus' },
+        { id: 'smartcity', label: 'Smart city', icon: 'city' },
+        { id: 'iot', label: 'IoT y datos', icon: 'sensor' },
+        { id: 'industry', label: 'Industria y gemelo digital', icon: 'factory' },
+        { id: 'ai', label: 'IA agentiva', icon: 'ai' },
+      ],
+    },
     overview: ['Proyectos reales.', 'Resultados reales.'],
     overviewLine: 'Del aeropuerto insignia de España a las fábricas digitales de buques de guerra.',
     travel: 'Viajar al proyecto',
@@ -1452,6 +1512,7 @@ export const DECK = {
   PLATFORMS_META,
   PROJECTS,
   PROJECTS_META,
+  PROJECT_LINES,
   REASONS,
   CLOSING,
   CHAPTERS,
@@ -1460,6 +1521,8 @@ export const DECK = {
   DECK_UI,
   SERVICE_TRACKS,
   AGENTIFY,
+  PROJECT_REELS,
+  PROJECT_REELS_UI,
 };
 
 export default DECK;

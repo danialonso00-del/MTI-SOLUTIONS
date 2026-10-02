@@ -17,7 +17,8 @@
     "city:ortho:detail": "node scripts/fetch-ortho.mjs -- --detail",
     "deck:assets": "node scripts/extract-presentation.mjs",
     "deck:globe": "node scripts/build-globe.mjs",
-    "deck:check": "node scripts/deck-walk.mjs"
+    "deck:check": "node scripts/deck-walk.mjs",
+    "deck:stock": "node scripts/fetch-stock.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.8",

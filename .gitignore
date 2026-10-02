@@ -4,3 +4,6 @@ dist
 *.log
 
 .artifacts/
+
+# originales de fotos descargadas (npm run deck:stock); se publican ya optimizadas en public/
+assets-src/

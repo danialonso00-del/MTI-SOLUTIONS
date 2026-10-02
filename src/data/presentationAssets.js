@@ -26,6 +26,8 @@
 
 export const ASSET_BASE = '/assets/mti-presentation';
 
+import { STOCK_PHOTOS } from './stockPhotos.js';
+
 export const PRESENTATION_ASSETS = [
   /* ------------------------------------------------------------ marca */
   {
@@ -205,11 +207,30 @@ export const AGENTIC_ASSETS = [
 PRESENTATION_ASSETS.push(...AGENTIC_ASSETS);
 
 /* ------------------------------------------------------------------ */
+/* Fotografías de alta resolución que no vienen de las presentaciones   */
+/* (ver stockPhotos.js): sectores, fondos de proyecto y sus «monitores»  */
+/* ------------------------------------------------------------------ */
+
+export const STOCK_ASSETS = STOCK_PHOTOS.map((s) => ({
+  id: s.id,
+  source: 'stock',
+  file: `${s.name}.jpg`,
+  kind: 'photo',
+  folder: 'stock',
+  name: s.name,
+  alt: s.alt,
+  altEn: s.altEn,
+  credit: s.credit,
+}));
+
+PRESENTATION_ASSETS.push(...STOCK_ASSETS);
+
+/* ------------------------------------------------------------------ */
 /* Resolución de rutas                                                  */
 /* ------------------------------------------------------------------ */
 
 /** Extensión de salida según el tipo de recurso. */
-export const outputExt = (a) => (a.media.endsWith('.svg') ? 'svg' : 'webp');
+export const outputExt = (a) => ((a.media ?? a.file ?? '').endsWith('.svg') ? 'svg' : 'webp');
 
 /** Ruta pública del recurso optimizado (versión completa). */
 export const assetPath = (a) => `${ASSET_BASE}/${a.folder}/${a.name}.${outputExt(a)}`;

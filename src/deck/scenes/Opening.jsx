@@ -1,27 +1,44 @@
 import React from 'react';
 import { useStore } from '../../store.js';
-import { Kicker, Headline, CityPin, Counter, MtiIcon, Swap, useGlider, useDeck } from '../parts.jsx';
-import { PILLAR_STEPS } from '../choreography.js';
+import { Kicker, Headline, CityPin, Counter, Swap, useDeck } from '../parts.jsx';
+import HowStory from '../HowStory.jsx';
 
 /**
  * Capítulo 1 · MTI en una frase.
  *
- * 0  el logo se construye con partículas (en el lienzo 3D) y aparece el claim
- * 1  la cámara atraviesa el logo y aterriza sobre Barcelona
- * 2-5 los cuatro pilares: columnas y hologramas en el lienzo 3D
- * 6  las cifras de grupo aparecen ancladas sobre edificios
+ * 0   el logo se construye con partículas (en el lienzo 3D) y aparece el claim
+ * 1   la cámara atraviesa el logo y aterriza sobre Barcelona
+ * 2   ¿cómo?: una secuencia que se reproduce sola (HowStory) — la necesidad,
+ *     entra MTi, hardware y software, instalación y mantenimiento, industrias
+ * 3   las cifras de grupo aparecen ancladas sobre edificios
  */
 
-const PILLAR_ICON = { mission: 'pillar-mission', 'end-to-end': 'pillar-end-to-end', platforms: 'pillar-platforms', roi: 'pillar-roi' };
+const INDUSTRY_ICON = {
+  security: 'shield',
+  'smart-cities': 'city',
+  'industry-naval': 'factory',
+  cybersecurity: 'lock',
+  venues: 'stadium',
+  transport: 'bus',
+  water: 'gauge',
+  datacenter: 'database',
+  telecom: 'signal',
+  health: 'people',
+  public: 'building',
+  retail: 'cart',
+};
 
-export default function Opening({ step, goto, openInfo }) {
+export default function Opening({ step, paused, goto, openInfo }) {
   const deck = useDeck();
   const sc = deck.SCENES.opening;
   const o = deck.OPENING;
   const cityLive = useStore((s) => s.cityLive);
-  const pillarId = PILLAR_STEPS[step];
-  const pillarIdx = o.pillars.findIndex((p) => p.id === pillarId);
-  const railRef = useGlider(pillarIdx);
+  const how = sc.how;
+  // industrias: las seis del capítulo 3 y las de «también damos servicio a»
+  const industries = [
+    ...deck.SECTORS.map((x) => ({ label: x.title, icon: INDUSTRY_ICON[x.id] ?? 'grid' })),
+    ...deck.SECTORS_ALSO.map((x) => ({ label: x.label, icon: INDUSTRY_ICON[x.id] ?? 'grid' })),
+  ];
 
   return (
     <div className={`scene scene--opening s${step}`}>
@@ -38,7 +55,7 @@ export default function Opening({ step, goto, openInfo }) {
       </div>
 
       {/* cada tramo releva al anterior con un fundido: nada desaparece de golpe */}
-      <Swap id={step === 1 ? 'arrival' : pillarId ?? (step === 6 ? 'metrics' : 'none')}>
+      <Swap id={step === 1 ? 'arrival' : step === 3 ? 'metrics' : 'none'}>
       {/* 1 · llegada a la ciudad */}
       {step === 1 && (
         <div className="scene-lead" key="arrival">
@@ -57,29 +74,8 @@ export default function Opening({ step, goto, openInfo }) {
         </div>
       )}
 
-      {/* 2-5 · pilares: el holograma está en el lienzo 3D; aquí, el relato */}
-      {pillarId && (
-        <div className="pillar-copy">
-          <span className="pillar-copy__num" aria-hidden="true">
-            {o.pillars[pillarIdx].num}
-          </span>
-          <div className="pillar-copy__meta">
-            <span className="pillar-copy__icon">
-              <MtiIcon name={PILLAR_ICON[pillarId]} />
-            </span>
-            <Kicker>
-              {sc.pillarsLabel} · {pillarIdx + 1}/{o.pillars.length}
-            </Kicker>
-          </div>
-          <Headline parts={[o.pillars[pillarIdx].title]} size="xl" className="pillar-copy__title" />
-          <p className="pillar-copy__head">{sc.pillars[pillarId].head}</p>
-          <p className="pillar-copy__line">{sc.pillars[pillarId].line}</p>
-          {pillarId === 'roi' && sc.pillarViz?.roi?.note && <p className="pillar-copy__note">{sc.pillarViz.roi.note}</p>}
-        </div>
-      )}
-
-      {/* 6 · cifras sobre edificios */}
-      {step === 6 && (
+      {/* 3 · cifras sobre edificios */}
+      {step === 3 && (
         <>
           <div className="scene-lead scene-lead--top">
             <Headline parts={sc.metricsHead} size="xl" />
@@ -109,21 +105,8 @@ export default function Opening({ step, goto, openInfo }) {
       )}
       </Swap>
 
-      {(pillarId || step === 6) && (
-        <nav className="pillar-rail has-glider" ref={railRef} aria-label={sc.pillarsLabel}>
-          {o.pillars.map((p, i) => (
-            <button
-              key={p.id}
-              className={`pillar-rail__item${p.id === pillarId ? ' is-active' : ''}${step === 6 || i < pillarIdx ? ' is-done' : ''}`}
-              onClick={() => goto(0, 2 + i)}
-            >
-              <MtiIcon name={PILLAR_ICON[p.id]} />
-              <span>{p.title}</span>
-            </button>
-          ))}
-        </nav>
-      )}
-
+      {/* 2 · ¿cómo?: se reproduce sola, sin pasar pasos */}
+      {step === 2 && <HowStory data={sc.how} industries={industries} paused={paused} />}
     </div>
   );
 }

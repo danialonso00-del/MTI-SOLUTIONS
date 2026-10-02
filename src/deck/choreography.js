@@ -29,11 +29,8 @@ export const CHOREO = {
   opening: [
     { stage: 'logo', city: null },
     { stage: 'void', city: { from: 'high', look: 'overview', hour: DUSK }, cover: 0.25 },
-    // pilares: escena propia, cuatro columnas y un holograma por pilar
-    { stage: 'pillars', city: null },
-    { stage: 'pillars', city: null },
-    { stage: 'pillars', city: null },
-    { stage: 'pillars', city: null },
+    // ¿cómo?: la secuencia se reproduce sola sobre el campo de partículas
+    { stage: 'void', city: null },
     { stage: null, city: { look: { fit: ['command-control', 'water-metering', 'smart-lighting', 'urban-security', 'waste-management', 'mobility-fleet'], az: 65, elev: 60, lead: 0.55, pad: 1.5 }, layer: 'traffic', hour: NIGHT }, cover: 0.2 },
   ],
   world: [
@@ -52,18 +49,13 @@ export const CHOREO = {
     { stage: null, city: { look: { sol: 'mobility-fleet', az: 160, dist: 460, elev: 26 }, inds: ['transport'], layer: 'traffic', hour: DUSK }, cover: 0.15 },
     { stage: null, city: { look: 'wide', hour: DUSK }, cover: 0.3 },
   ],
-  delivery: Array.from({ length: 7 }, () => ({ stage: 'build', city: null })),
+  // 0: el camino de extremo a extremo (diagrama) con la obra de fondo; 1-7: la obra se construye
+  delivery: [{ stage: 'build', stageStep: 0, city: null }, ...Array.from({ length: 7 }, (_, i) => ({ stage: 'build', stageStep: i, city: null }))],
   platforms: Array.from({ length: 7 }, () => ({ stage: 'flow', city: null })),
-  projects: [{ stage: 'void', city: null }, ...Array.from({ length: 9 }, () => ({ stage: null, city: null }))],
-  why: [
-    { stage: 'void', city: null },
-    { stage: null, city: { look: { sol: 'urban-security', az: 250, dist: 460, elev: 30 }, caps: ['security'], layer: 'coverage', hour: NIGHT }, cover: 0.2 },
-    { stage: null, city: { look: { sol: 'mobility-fleet', az: 40, dist: 480, elev: 28 }, inds: ['transport'], layer: 'traffic', hour: NIGHT }, cover: 0.2 },
-    { stage: null, city: { look: { sol: 'smart-crane', az: 110, dist: 520, elev: 30 }, inds: ['construction'], hour: NIGHT }, cover: 0.2 },
-    { stage: null, city: { look: { sol: 'building-management', az: 300, dist: 520, elev: 30 }, layer: 'energy', hour: NIGHT }, cover: 0.2 },
-    { stage: null, city: { look: { sol: 'command-control', az: 80, dist: 1300, elev: 42 }, layer: 'network', hour: NIGHT }, cover: 0.2 },
-    { stage: null, city: { look: 'wide', layer: 'traffic', hour: NIGHT }, cover: 0.35 },
-  ],
+  // mapa, nueve proyectos y, al final, los clientes en órbita sobre el campo de partículas
+  projects: [{ stage: 'void', city: null }, ...Array.from({ length: 9 }, () => ({ stage: null, city: null })), { stage: 'void', city: null }],
+  // cierre: la ciudad entera en operación, detrás del contacto
+  contact: [{ stage: null, city: { look: 'wide', layer: 'traffic', hour: NIGHT }, cover: 0.45 }],
 
   /* ---------------- Agentify AI: la ciudad no participa ---------------- */
   // `orch` es el modo de la escena del orquestador (ver OrchestratorStation)
@@ -88,23 +80,12 @@ export const CHOREO = {
   ],
 };
 
-/** Qué pilar enciende cada paso del capítulo 1. */
-export const PILLAR_STEPS = { 2: 'mission', 3: 'end-to-end', 4: 'platforms', 5: 'roi' };
 
 /** Sectores que se señalan sobre la ciudad en la vista de zonas (paso 0 del capítulo 3). */
 export const SECTOR_ZONES = ['security', 'smart-cities', 'transport'];
 
 /** Qué sector enseña cada paso del capítulo 3. */
 export const SECTOR_STEPS = { 1: 'security', 2: 'smart-cities', 3: 'industry-naval', 4: 'cybersecurity', 5: 'venues', 6: 'transport' };
-
-/** Qué razón activa cada paso del capítulo 7, y sobre qué caso se ancla. */
-export const REASON_STEPS = {
-  1: { id: 'multibrand', anchor: 'urban-security' },
-  2: { id: 'itxpt', anchor: 'mobility-fleet' },
-  3: { id: 'pm', anchor: 'smart-crane' },
-  4: { id: 'support', anchor: 'building-management' },
-  5: { id: 'hetero', anchor: 'command-control' },
-};
 
 /** Proyecto de cada paso del capítulo 6 (el paso 0 es el mapa). */
 export const PROJECT_ORDER = ['aena', 'metro', 'buses', 'hospitalet', 'navantia', 'kafd', 'qatar-waste', 'nsu', 'malaysia-aqi'];

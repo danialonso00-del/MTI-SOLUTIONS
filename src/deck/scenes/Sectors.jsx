@@ -14,14 +14,18 @@ import FlowDiagram from '../FlowDiagram.jsx';
  * bloqueado, sin inventar un caso que no existe.
  */
 
+/* fotos de 2.400 px (las de la presentación, de 440 px, no aguantan la altura completa) */
 const SECTOR_PHOTO = {
-  security: 'sector-security',
-  'smart-cities': 'sector-smart-cities',
-  'industry-naval': 'project-navantia',
-  cybersecurity: 'sector-cyber',
-  venues: 'sector-venues',
-  transport: 'sector-transport',
+  security: 'stock-sector-security',
+  'smart-cities': 'stock-sector-smart-cities',
+  'industry-naval': 'stock-sector-industry',
+  cybersecurity: 'stock-sector-cyber',
+  venues: 'stock-sector-venues',
+  transport: 'stock-sector-transport',
 };
+
+/** Encuadre de cada foto en la franja vertical (lo importante no siempre está en el centro). */
+const SECTOR_POS = { security: '46% 40%', 'smart-cities': '60% 50%', 'industry-naval': '40% 50%', cybersecurity: '50% 50%', venues: '62% 50%', transport: '38% 60%' };
 
 const SECTOR_ICON = {
   security: 'pillar-mission',
@@ -123,7 +127,7 @@ export default function Sectors({ step, paused, goto, openInfo }) {
         <>
           <div className="sector-side" key={`side-${sector.id}`}>
             <div className="sector-window">
-              <Photo id={SECTOR_PHOTO[sector.id]} depth={1} kenBurns eager className="sector-window__photo" sizes="(max-width: 900px) 100vw, 40vw" />
+              <Photo id={SECTOR_PHOTO[sector.id]} depth={1} kenBurns eager className="sector-window__photo" position={SECTOR_POS[sector.id]} sizes="(max-width: 900px) 100vw, 45vw" />
               {sector.id === 'industry-naval' && <Telemetry rows={sc.scada} paused={paused} className="sector-window__telemetry" />}
               {sector.id === 'cybersecurity' && <CyberNet paused={paused} labels={sc} />}
               <span className="sector-window__num">{sector.num}</span>
@@ -138,7 +142,7 @@ export default function Sectors({ step, paused, goto, openInfo }) {
                 <span>{sc.flowTitle}</span>
                 <i aria-hidden="true" />
               </header>
-              <FlowDiagram {...sc.flows[sector.id]} labels={sc.flowLabels} paused={paused} size="lg" />
+              <FlowDiagram {...sc.flows[sector.id]} labels={sc.flowLabels} paused={paused} size="lg" className="fd--xl" />
             </section>
           )}
 

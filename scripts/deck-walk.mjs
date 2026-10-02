@@ -133,7 +133,7 @@ if (st.chapter !== 2 || st.step !== 1) fail('no se volvió al punto exacto');
 /* ------------------------------------------------------------------ */
 
 const chapters = await store(() => window.__mtiStore.getState().chapterSteps?.() ?? null);
-const steps = [7, 4, 8, 7, 7, 10, 7];
+const steps = [4, 4, 8, 8, 7, 11, 1];
 const report = [];
 for (let c = 0; c < steps.length; c++) {
   for (let s = 0; s < steps[c]; s++) {
@@ -160,14 +160,34 @@ log('escenas:', report.join(' '));
 
 const track = () => store(() => window.__mtiStore.getState().deckTrack);
 
-log('Agentify AI: entrada desde «Explorar más proyectos»');
-await go(5, 0, 2200);
-await page.click('.track-cards--projects .track-card');
+log('Proyectos: portada, filtro por línea de negocio y mapa');
+await go(5, 0, 2500);
+await shot('p0-proyectos-portada');
+await page.click('.ph-btn--map');
+await wait(1500);
+if (!(await page.$('.ph-map .proj-map__pin'))) fail('el mapa de proyectos no aparece');
+await shot('p1-proyectos-mapa');
+await page.click('.ph-back');
+await wait(600);
+await page.click('.ph-btn--filter');
+await wait(1200);
+const nAll = await page.$$eval('.ph-card', (l) => l.length);
+await page.click('.ph-chips [data-line="ai"]');
+await wait(900);
+const nAi = await page.$$eval('.ph-card', (l) => l.length);
+if (!(nAi > 0 && nAi < nAll)) fail(`el filtro de proyectos no filtra: ${nAll} → ${nAi}`);
+log(`filtro de proyectos: ${nAll} → ${nAi} (IA agentiva)`);
+await shot('p2-proyectos-filtro');
+
+log('Agentify AI: entrada desde un caso de IA del filtro de proyectos');
+await page.click('.ph-card');
 await wait(2500);
 st = await state();
 const tProj = await track();
-if (tProj !== 'agentify' || st.chapter !== 3 || st.step !== 0) fail(`«Explorar más proyectos» no abre los casos de Agentify: ${JSON.stringify({ tProj, c: st.chapter, s: st.step })}`);
-await shot('a0-casos-desde-proyectos');
+if (tProj !== 'agentify' || st.chapter !== 3 || st.step !== 1) fail(`el caso de IA no abre Agentify: ${JSON.stringify({ tProj, c: st.chapter, s: st.step })}`);
+await shot('a0-caso-desde-proyectos');
+await store(() => window.__mtiStore.getState().deckGoto(3, 0));
+await wait(1500);
 
 // filtro por agente: deja solo los casos donde trabaja
 await page.evaluate(() => [...document.querySelectorAll('.agc-filter .ag-badge')].find((x) => x.textContent.includes('C03'))?.click()); // C03 · voz
@@ -185,7 +205,7 @@ st = await state();
 if ((await track()) !== 'mti' || st.chapter !== 5 || st.step !== 0) fail(`«Presentación MTI» no devuelve al punto de salida: ${JSON.stringify(st)}`);
 
 log('Agentify AI: entrada desde «Explorar otros servicios» y recorrido completo');
-await go(6, 6, 2200);
+await go(6, 0, 2200);
 await page.click('.track-cards--closing .track-card');
 await wait(2500);
 if ((await track()) !== 'agentify') fail('«Explorar otros servicios» no abre Agentify');
@@ -355,14 +375,16 @@ await page.waitForSelector('.deck', { timeout: 60000 });
 await wait(2500);
 for (const [c, s, n] of [
   [0, 0, 'm1-apertura'],
-  [0, 6, 'm2-cifras'],
+  [0, 2, 'm2a-como'],
+  [0, 3, 'm2-cifras'],
   [1, 3, 'm3-globo'],
   [2, 3, 'm4-sector'],
+  [3, 0, 'm5a-extremo-a-extremo'],
   [3, 3, 'm5-entrega'],
   [4, 5, 'm6-plataforma'],
   [5, 1, 'm7-proyecto'],
-  [6, 0, 'm8-clientes'],
-  [6, 6, 'm9-cierre'],
+  [5, 10, 'm8-clientes'],
+  [6, 0, 'm9-cierre'],
 ]) {
   await go(c, s, 2000);
   const over = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
@@ -436,7 +458,7 @@ await noGl.evaluate(() => window.__mtiStore.getState().deckGoto(1, 2));
 await wait(1200);
 if (!(await noGl.$('.flatglobe'))) fail('sin WebGL no aparece el mapa plano');
 await noGl.screenshot({ path: `${OUT}/w1-sin-webgl-globo.png` });
-await noGl.evaluate(() => window.__mtiStore.getState().deckGoto(0, 6));
+await noGl.evaluate(() => window.__mtiStore.getState().deckGoto(0, 3));
 await wait(1000);
 await noGl.screenshot({ path: `${OUT}/w2-sin-webgl-cifras.png` });
 await noGl.evaluate(() => window.__mtiStore.getState().openTrack('agentify', 2, 1));

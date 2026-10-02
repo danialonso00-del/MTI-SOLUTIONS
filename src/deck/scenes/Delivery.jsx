@@ -1,10 +1,13 @@
 import React from 'react';
 import { Kicker, Headline, Photo, MtiIcon, SolutionButton, Icon, useDeck, useDeckUi , Swap } from '../parts.jsx';
+import FlowChart from '../FlowChart.jsx';
 
 /**
  * Capítulo 4 · cómo entrega MTI (la infraestructura se construye en el lienzo 3D).
  *
- * Cada paso añade una capa a la obra y en ese momento entra la línea de
+ * 0  el camino completo de un proyecto, como diagrama de flujo que se
+ *    construye despacio (con la obra 3D de fondo)
+ * 1-7 cada paso añade una capa a la obra y en ese momento entra la línea de
  * servicio que la hace posible: nunca aparecen las ocho de golpe. Las cuatro
  * líneas con desarrollo propio en la presentación (CCTV, integración,
  * mantenimiento, transformación) entran como ventana fotográfica con su dato.
@@ -31,14 +34,16 @@ const FEATURE_PHOTO = {
 const MAINT_ICONS = ['maint-preventive', 'maint-corrective', 'maint-predictive', 'maint-warranty'];
 const LEVER_ICONS = ['lever-process', 'lever-data', 'lever-ai', 'lever-people', 'lever-compliance'];
 
-export default function Delivery({ step, openInfo }) {
+export default function Delivery({ step, paused, openInfo }) {
   const deck = useDeck();
   const ui = useDeckUi();
   const sc = deck.SCENES.delivery;
-  const beat = sc.beats[Math.min(step, sc.beats.length - 1)];
+  if (step === 0) return <EndToEnd e2e={sc.e2e} paused={paused} />;
+  const b = step - 1; // los pasos de la obra empiezan en el 1
+  const beat = sc.beats[Math.min(b, sc.beats.length - 1)];
   const lines = beat.lines.map((id) => deck.SERVICE_LINES.find((l) => l.id === id)).filter(Boolean);
   const feature = beat.feature ? deck.SERVICE_FEATURES.find((f) => f.id === beat.feature) : null;
-  const done = sc.beats.slice(0, step + 1).flatMap((b) => b.lines);
+  const done = sc.beats.slice(0, b + 1).flatMap((x) => x.lines);
 
   return (
     <div className={`scene scene--delivery s${step}`}>
@@ -56,7 +61,7 @@ export default function Delivery({ step, openInfo }) {
       <Swap id={`b${step}`}>
       <div className="scene-lead scene-lead--left scene-lead--low">
         <Kicker>
-          {deck.DELIVERY_META.kicker} · {step + 1}/{sc.beats.length}
+          {deck.DELIVERY_META.kicker} · {b + 1}/{sc.beats.length}
         </Kicker>
         <Headline parts={[beat.head]} size="l" />
         <ul className="service-list">
@@ -70,7 +75,7 @@ export default function Delivery({ step, openInfo }) {
             </li>
           ))}
         </ul>
-        {step === sc.beats.length - 1 && (
+        {b === sc.beats.length - 1 && (
           <div className="service-all">
             {deck.SERVICE_LINES.map((l, i) => (
               <span key={l.id} style={{ '--i': i }} className={done.includes(l.id) ? 'is-on' : ''}>
@@ -130,6 +135,24 @@ export default function Delivery({ step, openInfo }) {
         </aside>
       )}
       </Swap>
+    </div>
+  );
+}
+
+/** Paso 0: de extremo a extremo, como diagrama de flujo con sus preguntas. */
+function EndToEnd({ e2e, paused }) {
+  return (
+    <div className="scene scene--delivery scene--e2e">
+      <div className="e2e">
+        <header className="e2e__head">
+          <div>
+            <Kicker>{e2e.kicker}</Kicker>
+            <Headline parts={e2e.title} size="l" />
+          </div>
+          <p className="scene-lead__line">{e2e.line}</p>
+        </header>
+        <FlowChart nodes={e2e.nodes} edges={e2e.edges} paused={paused} replayLabel={e2e.replay} />
+      </div>
     </div>
   );
 }

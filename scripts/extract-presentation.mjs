@@ -36,6 +36,8 @@ const SOURCES = {
   agentic: path.join(ROOT, 'public', 'MTi_Group_IA_Agentiva_Recort_v.01.pptx'),
 };
 const OUT = path.join(ROOT, 'public', 'assets', 'mti-presentation');
+// fotografías descargadas aparte (npm run deck:stock)
+const STOCK_DIR = path.join(ROOT, 'assets-src', 'stock');
 const META = path.join(ROOT, 'src', 'data', 'presentationAssets.meta.json');
 const GOLD = { r: 230, g: 168, b: 23 };
 
@@ -115,13 +117,14 @@ async function processAsset(a, data) {
        la foto queda blanda. Aquí se remuestrean a doble tamaño con Lanczos y un
        enfoque suave, que es lo más nítido que se puede sacar de esos píxeles
        sin inventar detalle. */
-    const target2x = Math.min(2560, meta.width < 1600 ? meta.width * 2 : meta.width);
+    // las descargadas ya son grandes (3.840 px): a 2.400 sobran para ir a sangre
+    const target2x = a.source === 'stock' ? Math.min(2400, meta.width) : Math.min(2560, meta.width < 1600 ? meta.width * 2 : meta.width);
     const full = sharp(data)
       .rotate()
       .resize({ width: target2x, kernel: 'lanczos3' })
       .sharpen({ sigma: meta.width < 1600 ? 0.8 : 0.4, m1: 0.6, m2: 1.4 });
     // las originales muy grandes ya tienen detalle de sobra: menos calidad, mucho menos peso
-    out = await full.webp({ quality: meta.width > 3000 ? 80 : 90, effort: 6, smartSubsample: true }).toBuffer();
+    out = await full.webp({ quality: a.source === 'stock' ? 78 : meta.width > 3000 ? 80 : 90, effort: 6, smartSubsample: true }).toBuffer();
     const small = await sharp(data)
       .rotate()
       .resize({ width: Math.min(1280, meta.width * 2), kernel: 'lanczos3' })
@@ -171,8 +174,18 @@ const seen = new Set();
 for (const a of PRESENTATION_ASSETS) {
   if (seen.has(a.id)) throw new Error(`id repetido: ${a.id}`);
   seen.add(a.id);
-  const zip = zips[a.source ?? 'corporate'];
-  const data = zip?.read(`ppt/media/${a.media}`);
+  let data;
+  if (a.source === 'stock') {
+    const f = path.join(STOCK_DIR, a.file);
+    data = fs.existsSync(f) ? fs.readFileSync(f) : null;
+    if (!data) {
+      console.warn(`  ! falta ${path.relative(ROOT, f)}: ejecuta npm run deck:stock`);
+      continue;
+    }
+  } else {
+    const zip = zips[a.source ?? 'corporate'];
+    data = zip?.read(`ppt/media/${a.media}`);
+  }
   if (!data) {
     console.warn(`  ! ${a.media} no está en el .pptx «${a.source ?? 'corporate'}» (${a.id})`);
     continue;

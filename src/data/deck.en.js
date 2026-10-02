@@ -9,6 +9,7 @@
  */
 
 import { AGENTIFY_EN } from './agentic.en.js';
+import { PROJECT_REELS_EN, PROJECT_REELS_UI_EN } from './projectReels.js';
 
 export const DECK_EN = {
   OPENING: {
@@ -37,28 +38,6 @@ export const DECK_EN = {
         body:
           'Proprietary platforms and software — IoT, Digital Twin, Smart City OS and Agentic AI — deployed in production across cities, industry and utilities.',
         tags: ['MTi Hypervisor', 'thethings.io', 'Digital Twin', 'Agentic AI'],
-      },
-    },
-    pillars: {
-      mission: {
-        title: 'Mission-critical focus',
-        body:
-          'We deliver where failure is not an option — airports, metros, hospitals, industrial plants, sovereign infrastructure.',
-      },
-      'end-to-end': {
-        title: 'End-to-end delivery',
-        body:
-          'Concept, engineering, integration, deployment and operations. One accountable partner from RFQ to 24/7 maintenance.',
-      },
-      platforms: {
-        title: 'Proprietary platforms',
-        body:
-          'IoT, Digital Twin, Smart City OS and Agentic AI developed by MTi, with our own roadmap and IP.',
-      },
-      roi: {
-        title: 'Measurable ROI',
-        body:
-          'Every project reports quantified impact — hours saved, quotes generated, downtime avoided. ROI from day one.',
       },
     },
     stats: [
@@ -575,6 +554,9 @@ export const DECK_EN = {
 
   PROJECTS_META: {
     kicker: 'Flagship projects',
+    clientsKicker: 'Clients',
+    clientsTitle: ['They trust', 'us.'],
+    clientsLine: 'Public administrations, transport operators, industrial groups and private companies.',
     title: ['Real projects.', 'Real results.'],
     lead:
       "From Spain's flagship airport to warship digital factories — the projects that define what MTi means by mission-critical.",
@@ -646,32 +628,22 @@ export const DECK_EN = {
       facts: ['25+ Countries', 'AI Expertise', '150K+ IoT Devices'],
       arrival: ['Technology integrator.', 'Barcelona, 2016.'],
       arrivalLine: 'Engineering, integration and operation of mission-critical systems for the public and private sectors.',
-      pillarsLabel: 'Four pillars',
-      pillars: {
-        mission: { head: 'Where failure is not an option.', line: 'Airports, metros, hospitals, industrial plants, sovereign infrastructure.', layer: 'Camera network' },
-        'end-to-end': { head: 'One accountable partner.', line: 'Concept, engineering, integration, deployment and operations. From RFQ to 24/7.', layer: 'Urban connectivity' },
-        platforms: { head: 'Technology developed by MTi.', line: 'IoT, Digital Twin, Smart City OS and Agentic AI, with our own roadmap.', layer: 'Every system' },
-        roi: { head: 'Quantified impact.', line: 'Hours saved, quotes generated, downtime avoided. ROI from day one.', layer: 'Energy consumption' },
-      },
-      pillarViz: {
-        mission: {
-          core: 'Mission-critical operations',
-          items: ['Airports', 'Metros', 'Hospitals', 'Industrial plants', 'Sovereign infrastructure'],
+      how: {
+        how: 'How?',
+        client: 'Company or government',
+        captions: {
+          need: 'When a company or a government has a need…',
+          mti: 'MTi steps in.',
+          help: 'And helps with hardware and software.',
+          ops: 'All with our installation and 24/7 maintenance.',
+          e2e: 'End to end.',
+          industries: 'This is how we have helped all these industries.',
         },
-        'end-to-end': {
-          stages: ['Concept', 'Engineering', 'Integration', 'Deployment', 'Operations'],
-          from: 'From RFQ',
-          core: 'One accountable partner',
-          to: 'to 24/7 maintenance',
-        },
-        roi: {
-          note: 'Results measured in Agentic AI projects',
-          bars: [
-            { label: 'quote generation time' },
-            { label: 'offer preparation' },
-            { label: 'manual management' },
-          ],
-        },
+        needs: ['Integrate all my systems', 'Software that automates my processes', 'Hardware that measures my facilities', 'See my whole operation from one place'],
+        hardware: { items: [{ label: 'Design and engineering' }, { label: 'Installation and integration' }, { label: 'Certification and audit' }] },
+        software: { items: [{ label: 'IoT and connectivity' }, { label: 'Proprietary platforms' }, { label: 'Agentic AI' }, { label: 'Smart City' }, { label: 'Digital Twin' }] },
+        ops: { label: 'Installation and 24/7 maintenance', sub: 'One single owner, for years' },
+        replay: 'Play again',
       },
       metricsHead: 'Proven at scale.',
       metrics: {
@@ -748,6 +720,25 @@ export const DECK_EN = {
       },
     },
     delivery: {
+      e2e: {
+        kicker: 'How we work',
+        title: ['End to end.', 'One single owner.'],
+        line: 'Every project follows the same path: understand the challenge, design the solution, build it with whatever hardware and software it needs, install it on the client site and keep it running.',
+        replay: 'Play again',
+        nodes: {
+          discover: { title: 'Discovery', body: 'We visit the operation and understand the real need.' },
+          design: { title: 'We design the solution', body: 'Technical office and project engineering.' },
+          hw: { title: 'Does it need hardware?' },
+          sw: { title: 'Does it need software?' },
+          'hw-market': { title: 'Multi-brand equipment', body: 'CCTV, IoT, onboard systems.' },
+          'hw-custom': { title: 'We design it', body: 'Electronics, mechanics and prototyping.' },
+          'sw-platform': { title: 'Proprietary platforms' },
+          'sw-existing': { title: 'We integrate what exists', body: 'SCADA, CCTV, ITS, ERP.' },
+          install: { title: 'We install on the client site', body: 'Hardware in the field. Software deployed and integrated.' },
+          maintain: { title: 'Ongoing maintenance', body: 'Preventive, corrective and predictive, 24/7.' },
+        },
+        edges: [{}, {}, {}, { label: 'Market' }, { label: 'Custom' }, { label: 'Our own' }, { label: 'Existing' }, {}, {}, {}, {}, {}, { label: 'Continuous evolution' }],
+      },
       stages: ['Design', 'Deploy', 'Integrate', 'Operate'],
       beats: [
         { head: 'First, the plan.' },
@@ -777,6 +768,22 @@ export const DECK_EN = {
       agentsHint: 'Eight productised agents · tap one to see it',
     },
     projects: {
+      hub: {
+        kicker: 'Projects',
+        title: ['These are', 'our projects.'],
+        line: 'Airports, metros, cities, shipyards and industrial companies. Critical systems in production all over the world.',
+        stats: [{ label: 'flagship projects' }, { label: 'agentic AI deployments' }, { label: 'countries of operation' }],
+        walk: { title: 'Walk through the key ones', sub: 'Nine flagship projects, one by one' },
+        filter: { title: 'Explore and filter', sub: 'By business line: CCTV, smart city, AI…' },
+        map: { title: 'See them on the map', sub: 'Browse by country and by project' },
+        back: 'Projects',
+        all: 'All',
+        filterTitle: ['All our projects,', 'by business line.'],
+        mapTitle: ['Projects', 'on the map.'],
+        mapHint: 'Tap a point to travel to the project.',
+        agentic: 'Agentic AI · Agentify AI',
+        lines: [{ label: 'Security and CCTV' }, { label: 'Transport' }, { label: 'Smart city' }, { label: 'IoT and data' }, { label: 'Industry and digital twin' }, { label: 'Agentic AI' }],
+      },
       overview: ['Real projects.', 'Real results.'],
       overviewLine: "From Spain's flagship airport to warship digital factories.",
       travel: 'Travel to the project',
@@ -820,7 +827,7 @@ export const DECK_EN = {
     delivery: { label: 'How we deliver', short: 'Delivery' },
     platforms: { label: 'Our platforms', short: 'Platforms' },
     projects: { label: 'Projects that prove it', short: 'Projects' },
-    why: { label: 'Why MTi', short: 'Why' },
+    contact: { label: "Let's talk", short: 'Contact' },
   },
 
   DECK_UI: {
@@ -872,6 +879,8 @@ export const DECK_EN = {
   },
 
   AGENTIFY: AGENTIFY_EN,
+  PROJECT_REELS: PROJECT_REELS_EN,
+  PROJECT_REELS_UI: PROJECT_REELS_UI_EN,
 };
 
 export default DECK_EN;

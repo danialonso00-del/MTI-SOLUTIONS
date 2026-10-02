@@ -13,7 +13,7 @@ import Sectors from './scenes/Sectors.jsx';
 import Delivery, { buildLabels } from './scenes/Delivery.jsx';
 import Platforms, { flowLabels } from './scenes/Platforms.jsx';
 import Projects from './scenes/Projects.jsx';
-import Why from './scenes/Why.jsx';
+import Contact from './scenes/Contact.jsx';
 import AgIntro from './scenes/agentic/AgIntro.jsx';
 import AgArch from './scenes/agentic/AgArch.jsx';
 import AgAgents from './scenes/agentic/AgAgents.jsx';
@@ -33,7 +33,7 @@ const SCENES = {
   delivery: Delivery,
   platforms: Platforms,
   projects: Projects,
-  why: Why,
+  contact: Contact,
   'ag-intro': AgIntro,
   'ag-arch': AgArch,
   'ag-agents': AgAgents,
@@ -104,7 +104,7 @@ const CHAPTER_THUMB = {
   delivery: 'service-integration',
   platforms: 'platform-thethings-dashboard',
   projects: 'project-aena',
-  why: 'project-navantia',
+  contact: 'project-navantia',
   'ag-intro': 'ag-case-frioteis',
   'ag-arch': 'ag-case-nautia',
   'ag-agents': 'ag-case-prisa',
@@ -346,7 +346,8 @@ export default function Deck() {
     station: stageOk ? beat.stage : null,
     nextStation: stageOk ? upcoming?.stage ?? null : null,
     chapterId: current.id,
-    step,
+    // algunos pasos llevan su propia secuencia 3D (p. ej. Entrega empieza con un diagrama)
+    step: beat.stageStep ?? step,
     sel,
     paused: frozen,
     lowPower,
@@ -358,13 +359,7 @@ export default function Deck() {
       onSelect: onPlace,
       countryHighlights: COUNTRY_HIGHLIGHTS,
     },
-    pillars: {
-      viz: deck.SCENES.opening.pillarViz,
-      pillars: deck.OPENING.pillars,
-      // de abajo arriba: del dato del sensor a la decisión
-      layers: ['thethings', 'hypervisor', 'twin', 'agentic'].map((id) => deck.PLATFORMS.find((x) => x.id === id)).filter(Boolean),
-    },
-    build: { labels: current.id === 'delivery' ? buildLabels(deck, step, BUILD_TAG_POS) : [] },
+    build: { labels: current.id === 'delivery' ? buildLabels(deck, step - 1, BUILD_TAG_POS) : [] },
     orch: orchProps(deck, current.id, step, sel, beat),
     flow: {
       labels: current.id === 'platforms' ? flowLabels(deck) : [],

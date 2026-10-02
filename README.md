@@ -391,7 +391,7 @@ http://localhost:5181/?ortho=off         # sin foto aérea (solo volúmenes)
 ## El recorrido corporativo
 
 Al terminar la carga, la portada ofrece los dos caminos. El recorrido son siete
-capítulos y 50 pasos; cada paso es un movimiento de cámara, una capa que se
+capítulos y 43 pasos; cada paso es un movimiento de cámara, una capa que se
 enciende o un dato que avanza sobre la misma escena, no una pantalla nueva.
 Nada avanza solo: quien presenta manda.
 
@@ -410,13 +410,18 @@ Hay dos escenarios 3D y se alternan según la coreografía de
 
 | # | Capítulo | Pasos | Escenario |
 |---|----------|-------|-----------|
-| 01 | MTI en una frase | 7 | Logo de partículas → descenso a Barcelona → cuatro columnas con un holograma por pilar (radar de operaciones críticas, anillo de extremo a extremo, pila de plataformas, barras de resultados) → cifras de grupo sobre edificios |
+| 01 | MTI en una frase | 4 | Logo de partículas → descenso a Barcelona → **¿Cómo?**, una secuencia de ~34 s que se reproduce sola (`src/deck/HowStory.jsx`): la necesidad de un cliente, entra MTi, hardware y software, instalación y mantenimiento 24/7, vista completa e industrias → cifras de grupo sobre edificios |
 | 02 | Presencia global | 4 | Globo con países reales y banderas: sede en Barcelona → oficinas (el globo gira descubriéndolas) → proyectos → exploración |
-| 03 | Dónde trabajamos | 8 | Zonas de la ciudad; cada sector vuela a su zona y activa su sistema (industria y ciberseguridad, con foto, telemetría y red). Cada sector trae su esquema «Cómo funciona»: qué entra → qué hace MTi → qué sale |
-| 04 | Cómo entregamos | 7 | Una infraestructura se construye: plano → equipos → conectividad → integración → centro de control → mantenimiento → operación |
+| 03 | Dónde trabajamos | 8 | Foto de alta resolución a toda la altura a la derecha. Zonas de la ciudad; cada sector vuela a su zona y activa su sistema (industria y ciberseguridad, con foto, telemetría y red). Cada sector trae su esquema «Cómo funciona»: qué entra → qué hace MTi → qué sale |
+| 04 | Cómo entregamos | 8 | **De extremo a extremo**: diagrama de flujo con preguntas (¿hardware? ¿software?) que se construye despacio → una infraestructura se construye: plano → equipos → conectividad → integración → centro de control → mantenimiento → operación |
 | 05 | Nuestras plataformas | 7 | Un dato recorre dispositivo → thethings.io → MTi Hypervisor → Digital Twin → Agentic AI → acción |
-| 06 | Proyectos que lo prueban | 10 | Mapa de destinos y nueve proyectos a gran formato con localizador de viaje |
-| 07 | Por qué MTI | 7 | Constelación de logos → cinco razones sobre la ciudad en operación → cierre con contacto |
+| 06 | Proyectos que lo prueban | 11 | Portada con mosaico de proyectos en movimiento y tres accesos (recorrer los más relevantes, filtrar por línea de negocio —incluidos los casos de IA agentiva— o verlos en el mapa) → nueve proyectos con la foto real a sangre y un reel «qué hicimos» (monitor + instalamos → captamos → integramos → resultado) → los clientes en órbita alrededor de MTi |
+| 07 | Hablemos | 1 | Contacto sobre la ciudad en operación y salto a las presentaciones de cada línea de servicio (Agentify AI…), a la ciudad 3D o a un proyecto |
+
+«¿Cómo?» (`src/deck/HowStory.jsx`) vive en un plano virtual de 1440 × 760; una
+cámara recorre el guion de tiempos (`T`, `CAMERA`) y una frase grande narra cada
+momento. Se para con la pausa y tiene botón «Ver de nuevo». Contenido en
+`SCENES.opening.how`.
 
 El esquema «Cómo funciona» es el componente `src/deck/FlowDiagram.jsx`: fichas
 de entrada, núcleo MTi con sus pasos y fichas de salida, unidos por cables SVG
@@ -446,9 +451,9 @@ Además del corporativo hay recorridos por línea de servicio. El primero es
 
 Cómo se llega y cómo se vuelve:
 
-- **Proyectos** (capítulo 06, mapa): «Explorar más proyectos» abre los casos de
-  Agentify sin alargar el capítulo de proyectos corporativo.
-- **Cierre** (capítulo 07): «Explorar otros servicios» abre el recorrido desde
+- **Proyectos** (capítulo 06, portada): el filtro por línea de negocio incluye los
+  casos de IA agentiva; al pulsar uno se abre en Agentify.
+- **Hablemos** (capítulo 07): «Explorar otros servicios» abre el recorrido desde
   el principio.
 - **Índice** (`Esc`): pestañas por recorrido.
 - En la cabecera, **Presentación MTI** vuelve al punto exacto del recorrido
@@ -503,7 +508,8 @@ SVG, cifras en rejilla) y se ocultan los enlaces a la ciudad.
 ### Recursos de la presentación
 
 ```bash
-npm run deck:assets   # extrae y optimiza los medios del .pptx (no lo modifica)
+npm run deck:stock    # descarga las fotos de alta resolución (Wikimedia Commons) a assets-src/stock
+npm run deck:assets   # extrae y optimiza los medios del .pptx (no lo modifica) y esas fotos
 npm run deck:globe    # hornea los países del globo (Natural Earth 1:110m)
 ```
 
@@ -530,7 +536,7 @@ npm run dev
 npm run deck:check    # sin ventana, con la GPU del equipo
 ```
 
-Recorre los 50 pasos, el recorrido de Agentify AI (entradas desde proyectos y
+Recorre los 43 pasos, el recorrido de Agentify AI (entradas desde proyectos y
 cierre, sus 38 pasos, el filtro de casos, ida y vuelta a la ciudad, índice por
 recorridos), el globo (selección, arrastre, redimensionado, reentrada), rueda y
 pausa, el salto a la ciudad y el regreso exacto, la ciudad original, móvil,

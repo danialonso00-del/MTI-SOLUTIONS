@@ -6,7 +6,6 @@ import LogoStation from './LogoStation.jsx';
 import GlobeStation, { globePose } from './GlobeStation.jsx';
 import BuildStation, { buildPose } from './BuildStation.jsx';
 import FlowStation, { flowPose } from './FlowStation.jsx';
-import PillarStation, { pillarPose } from './PillarStation.jsx';
 import OrchestratorStation, { orchPose } from './OrchestratorStation.jsx';
 
 /**
@@ -34,8 +33,6 @@ function poseFor(station, step, sel, aspect, orch) {
   switch (station) {
     case 'logo':
       return logoPose(step);
-    case 'pillars':
-      return pillarPose(step, aspect);
     case 'globe':
       return globePose(step, sel.place, aspect);
     case 'build':
@@ -116,7 +113,6 @@ export default function DeckStage({
   globe,
   build,
   flow,
-  pillars,
   orch,
   onContextLost,
 }) {
@@ -178,7 +174,6 @@ export default function DeckStage({
 
         {(mounted.has('logo') || chapterId === 'opening') && <LogoStation phase={logoPhase} paused={paused} count={lowPower ? 2600 : 4800} />}
         <Suspense fallback={null}>
-          {mounted.has('pillars') && <PillarStation active={station === 'pillars'} step={step} paused={paused} {...pillars} />}
           {mounted.has('globe') && <GlobeStation active={station === 'globe'} step={step} paused={paused} lowPower={lowPower} {...globe} />}
           {mounted.has('build') && <BuildStation active={station === 'build'} step={step} paused={paused} {...build} />}
           {mounted.has('flow') && <FlowStation active={station === 'flow'} step={step} paused={paused} {...flow} />}
